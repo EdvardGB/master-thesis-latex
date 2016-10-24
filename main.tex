@@ -1,4 +1,6 @@
-%%===================================
+%% Main
+%%=========================================
+
 \documentclass[12pt]{report}
 \input{packages}
 \input{settings}
@@ -6,28 +8,28 @@
 
 %%===================================
 \begin{document}
-\include{content/front}
-
 \setcounter{page}{0}
 \pagenumbering{roman}
-\include{content/preface}
-\include{content/acknowledgment}
-\include{content/summary}
+\include{content/lookup/glossaries}
+\include{content/pre/abstract}
+\include{content/pre/sammendrag}
+\include{content/pre/acknowledgment}
 \tableofcontents
 \setcounter{page}{0}
 \pagenumbering{arabic}
-\include{content/chapters/1}
-\include{content/chapters/2}
-\include{content/chapters/3}
+\include{content/chapters/introduction}
+%%\include{content/chapters/2}
+%%\include{content/chapters/3}
 
 %%=========================================
 \appendix
-\include{content/acronyms}
-\include{content/appendix}
+\include{content/other/glossary}
+\include{content/other/acronyms}
+\include{content/other/appendix}
 
 %%=========================================
-\bibliographystyle{apa}
+\bibliographystyle{vancouver}
 \addcontentsline{toc}{chapter}{\bibname}
-\bibliography{content/bib/refs}  
+\bibliography{content/lookup/refs}  
 
 \end{document}

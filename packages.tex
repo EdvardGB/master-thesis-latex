@@ -1,4 +1,7 @@
-%% ?
+%% Packages
+%%=========================================
+
+%% Translates various standard and other input encodings into a LaTeX internal language
 \usepackage[utf8]{inputenc}
 
 %% ??
@@ -9,6 +12,9 @@
 
 %% ??
 \usepackage[pdftex]{graphicx}
+
+%% Compiling lists of glossaries
+\usepackage[xindy,nonumberlist]{glossaries}
 
 %% ??
 \usepackage[margin=2.5cm]{geometry}
@@ -26,14 +32,10 @@
 \usepackage{url}
 
 %% ??
-\usepackage{natbib}
-
-%% ??
 \usepackage[numbers]{natbib}
 
 %% ??
 \usepackage{setspace}
 
-%% ??
-\usepackage[colorlinks=true, a4paper=true, pdfstartview=FitV,
-linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref}
+%% Handles cross-referencing commands to produce hyper text links in the document
+\usepackage[colorlinks=true, pdfstartview=FitV, linkcolor=black, citecolor=black, urlcolor=black]{hyperref}
