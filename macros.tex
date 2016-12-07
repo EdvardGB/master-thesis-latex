@@ -3,3 +3,12 @@
 
 %% Shortcut for red text
 \newcommand{\red}[1]{\textcolor{red}{#1}}
+
+\usepackage{afterpage}
+
+%% Create empty page (http://tex.stackexchange.com/a/36881/69298)
+\newcommand\blankpage{%
+    \null
+    \thispagestyle{empty}%
+    \addtocounter{page}{-1}%
+    \newpage}

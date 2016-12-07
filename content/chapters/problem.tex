@@ -1,5 +1,45 @@
 %% Problem elaboration
 %%=========================================
 
-\chapter{Problem elaboration}
-\red{Elaborate more around the problem. What things to consider. Potential pitfalls and risks.}
+\chapter{Problem Elaboration}
+It is important to understand what problem we are trying to solve, as well as how. This chapter expands on the problem definition given in the introduction chapter. We examine why the problem is ambiguous and what that means for our model. 
+
+\section{??}
+As explained in ??, our goal is to use a signature to classify and predict characters. With the use of signatures instead of the entire character, we have a much bigger problem space to work with, as the data we can draw from the input is less informative. This makes this problem harder to solve by nature, as we have less information we can use to solve it. This also opens the possibility that the solution sometimes can not be guaranteed, as the input is ambiguous. While typical character recognition has to deal with misshaped characters, or characters that look suspiciously like other characters, this problem has to deal with input that can be one of many classes.
+
+\section{Tuning Input Data}
+\label{sec:tuning_input_data}
+We can alter the problem space by adjust various factors used in the production of the input data. The data our signature ``captures" can be tweaked by altering text sizes, signature positions and signature height. All these adjustments results in completely new problems, where knowledge in a previous problem most likely is useless.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.7\textwidth]{fig/chapter2/signature_multiple.png}
+    \caption{The word ``CAT" with two signatures at different heights}
+    \label{fig:thesis-signature-comparison}
+\end{figure}
+
+Let us consider the word ``CAT" in upper-cased letters, written in Arial with a font height of 50 pixels, as illustrated in Figure \ref{fig:thesis-signature-comparison}. In this figure we have highlighted two signatures, both of height one. The first signature is 16 pixels from the bottom, while the other is 45 pixels from the bottom. As we can see from the illustration, the signatures we capture from the text varies significantly depending on where we chose to place it. For example, the top signature defines a ``T" as 38 black pixels, while the bottom defines it as seven black pixels.
+
+Figure \ref{fig:thesis-signature-comparison} also illustrates how our model needs to differentiate between letter spacing and characters that consists of white space. In bottom signature, the letter ``C" is defined as a sequence of eight black, 27 white, and seven more black pixels. However, the sequence of seven black, seven white and 35 more black pixels is just the final stroke of the letter ``C" as well as the letter ``A" including the space between the two letters. This sequence should not be classified as a letter. These examples illustrates how a slight alteration of the input data completely alters how the problem has to be solved. Any knowledge from a previous problem is most likely irrelevant, as the new data contains new definitions of characters.
+
+\section{Use of Fonts}
+In addition to alterations of the input data, as explained in section \ref{sec:tuning_input_data}, choice of font, plays a role in the ambiguity of the problem. In Figure \ref{fig:thesis-signature-comparison} we have used the monolinear sans-serif font Arial. Monolinear means that the strokes of the lines in the glyph all have the same width. Sans-serif means that the font does not have serifs; small projecting features at the end of the strokes. In Figure \ref{fig:typeface-comparison} we have written the word ``CAT" first in Arial, and then in Times New Roman. Times New Roman is a unmodulated font with serifs. The serifs are highlighted in red. This illustrates how the choice of font alters the input data. Characters are no longer defines by the same-width stroke in all the glyphs, but varies from character to character. This gives a higher variance in the input sequences. The serifs may also play a role if they are captured by the signature. This will also create a higher variance in the input sequence.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=1.0\textwidth]{fig/chapter2/typeface_comparison.png}
+    \caption{The word ``CAT" in Arial and Times New Roman with highlighted serifs}
+    \label{fig:typeface-comparison}
+\end{figure}
+
+In addition to all these variances are there also differences in how fonts are spaced. A monospaced font, also called fixed-width or non-proportional font, use the same width for all glyphs. This is in contrast to variable-width fonts, where each glyph can have different widths. Illustrated in Figure \ref{fig:regular-mono-comparison}, the text on the left is regular Arial which has variable-width. The text on the right is a Arial variant with monospacing. In the text on the right each letter in the two words match each other in widths, while the varying widths of the glyphs in the text to the left causes the letters to be shifted. With a monospaced font, each glyph is placed inside a maximum width constraint. The glyph does not need to take up the entire width, but guarantees that there is no strokes outside the constraint. In this problem we do not define where a character ``starts" and ``stops", so we do not know the location of these constraints. This means that there will be variance in the distance from one glyph to another depending on which characters they represent. However, the variance will be more significant in a font that has variance-width. 
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=1.0\textwidth]{fig/chapter2/regular_mono_comparison.png}
+    \caption{Text with a variable-width font on the left, and monospace on the right}
+    \label{fig:regular-mono-comparison}
+\end{figure}
+
+\section{Ambiguous Input}
+The input data may be ambiguous because of the nature of how characters look, as well as how characters are spaced between each other. A character can consist of a single sequence of black pixels, or a series of alternating black and white pixels. Because our model does not know what a character looks like, there is no way for it to know what sequences are ``rests" of characters, spacing or valid characters. It may also happen that a character consisting of a single sequence of black pixels is also a subset of another character. Consider the lower signature in Figure \ref{fig:thesis-signature-comparison}. Because Arial is monolinear, we know that the strokes on the ``C" and the ``T" have equal width. The ``T" could be represented as a series of some white pixels, three black pixels, and optionally more white pixels. If our model learns this 

@@ -4,20 +4,23 @@
 %% Translates various standard and other input encodings into a LaTeX internal language
 \usepackage[utf8]{inputenc}
 
+%% Correct English hyphenation
+\usepackage[english]{babel}
+
 %% ??
 \usepackage{fourier}
 
 %% ??
 \usepackage{marvosym}
 
-%% ??
-\usepackage[pdftex]{graphicx}
+%% Inclusion of graphics
+\usepackage{graphicx}
 
 %% Compiling lists of glossaries
 \usepackage[xindy,nonumberlist]{glossaries}
 
-%% ??
-\usepackage[margin=2.5cm]{geometry}
+%% Better geometry
+\usepackage{geometry}
 
 %% ??
 \usepackage{rotating}
@@ -31,7 +34,7 @@
 %% ??
 \usepackage{url}
 
-%% ??
+%% Biblopgraphy
 \usepackage[numbers]{natbib}
 
 %% ??
@@ -39,3 +42,6 @@
 
 %% Handles cross-referencing commands to produce hyper text links in the document
 \usepackage[colorlinks=true, pdfstartview=FitV, linkcolor=black, citecolor=black, urlcolor=black]{hyperref}
+
+%% Used to create "correct" empty pages
+\usepackage{afterpage}

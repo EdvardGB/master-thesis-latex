@@ -1,25 +1,34 @@
 %% Main
 %%=========================================
 
-\documentclass[12pt]{report}
+\documentclass[a4paper]{report}
 \input{packages}
 \input{settings}
 \input{macros}
 
 %%===================================
 \begin{document}
+\include{content/pre/titlepage}
+
 \setcounter{page}{0}
 \pagenumbering{roman}
+
 \include{content/lookup/glossaries}
 \include{content/pre/abstract}
 \include{content/pre/sammendrag}
 \include{content/pre/acknowledgment}
-\tableofcontents
+\include{content/pre/contents}
+
 \setcounter{page}{0}
 \pagenumbering{arabic}
+
 \include{content/chapters/introduction}
 \include{content/chapters/problem}
-%%\include{content/chapters/3}
+\include{content/chapters/background_motivation}
+\include{content/chapters/architecture}
+\include{content/chapters/experiments_results}
+\include{content/chapters/evaluation}
+\include{content/chapters/conclusion}
 
 %%=========================================
 \appendix
