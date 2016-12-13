@@ -7,11 +7,14 @@
 \input{macros}
 
 %%===================================
+
 \begin{document}
 \include{content/pre/titlepage}
 
 \setcounter{page}{0}
 \pagenumbering{roman}
+
+%%===================================
 
 \include{content/lookup/glossaries}
 \include{content/pre/abstract}
@@ -19,25 +22,47 @@
 \include{content/pre/acknowledgment}
 \include{content/pre/contents}
 
+%%===================================
+
 \setcounter{page}{0}
 \pagenumbering{arabic}
 
-\include{content/chapters/introduction}
-\include{content/chapters/problem}
-\include{content/chapters/background_motivation}
-\include{content/chapters/architecture}
-\include{content/chapters/experiments_results}
-\include{content/chapters/evaluation}
-\include{content/chapters/conclusion}
+%%=========================================
+
+\include{content/parts/part1}
+\include{content/chapters/part1/introduction}
+\include{content/chapters/part1/methodology}
 
 %%=========================================
+
+\include{content/parts/part2}
+\include{content/chapters/part2/problem}
+\include{content/chapters/part2/background_motivation}
+
+%%=========================================
+
+\include{content/parts/part3}
+\include{content/chapters/part3/architecture}
+\include{content/chapters/part3/experiments_results}
+
+%%=========================================
+
+\include{content/parts/part4}
+\include{content/chapters/part4/evaluation}
+\include{content/chapters/part4/conclusion}
+
+%%=========================================
+
 \appendix
 \include{content/other/glossary}
 %%\include{content/other/appendix}
 
 %%=========================================
+
 \bibliographystyle{vancouver}
 \addcontentsline{toc}{chapter}{\bibname}
 \bibliography{content/lookup/refs}  
 
 \end{document}
+
+%%===================================
