@@ -3,19 +3,117 @@
 
 \chapter{Methodology}
 \label{ch:methodology}
-\red{TODO}
+In this chapter, we will present the methodology that was used during the research presented in this thesis. We will look closer at the research questions and how we worked towards answering those, as well as the general research strategy. We will also present the process of developing our model, from start to finish.
+
+%%=========================================
+
+\section{Personal Experience and Motivation}
+The author of this master thesis studies informatics with artificial intelligence as the chosen field of study. Naturally, leading up to the writing of this thesis, he had several courses that were directly related to artificial intelligence. These were both introduction courses, as well as intermediate, and more advanced ones. The course content included implementing a wide range of classic AI algorithms, principles of logic and cognitive sciences, representation of uncertain knowledge, various methods related to decision making and learning/adaptive systems, as well as methods in general machine learning and some underlying basic mechanisms for various specific methods. 
+
+Artificial neural networks was one computational approach that several courses contained. The author was taught the principles of artificial neural networks by implementing perceptrons, and constructing simple artificial neural networks with feed forward and backpropagation. Later, more advanced networks were used to classify characters with the MNIST dataset, and to play and ``learn" the game 2048. Even more advanced networks in the class of recurrent neural networks were used in a variant of the Wumpus world problem, and in a game problem where we attempted to ``capture" or ``avoid" a set of moving objects given a set of constraints.
+
+The problem presented in this thesis resolves around the use of artificial neural networks to do an offspring of image classification, using sequence prediction as a type of language translation. The techniques necessary to dive into a problem like this had, to some degree, been introduced in some of the courses the author previously had. The combination of personal experience in the area of machine learning, and motivation to use it to experiment with new approaches, was what laid the foundation for this thesis.
+
+Some of the motivation was also to look at new applicabilities of artificial neural networks. Artificial neural networks has since the start of the 21st century gained a lot of attraction. With the increase computational powers of affordable computers, as well as new tools and libraries that are both user friendly and highly applicable, machine learning is more accessible now than ever. 
+
+\red{More here}
 
 %%=========================================
 
 \section{Research Questions and Approach}
-\red{TODO}
+To recap from Section \ref{sec:goals_and_research_questions}, we presented our research questions as:
+
+\input{content/various/research_questions}
+
+To answer these research questions, it was clear that we had to develop a model that used sequence prediction. We would use this model to classify characters and words as presented in Section \ref{sec:problem_motivation}. Naturally, before taking on a task like this, research on the field of both machine learning, neural networks, deep learning, and sequence prediction had to be done.
+
+An iterative approach was chosen as the main research methodology. This approach meant that the model was iteratively developed over several cycles. As a part of preliminary research, other types of artificial neural networks were prototyped and tested against our problem, in order to check how they behaved with our input data. Building and prototyping these models meant a lot of research on related work. We also looked into how artificial neural networks were used to solve problems that were of similar nature. On top of this, choice of programming language, framework and other tools was also evaluated.
 
 %%=========================================
 
 \section{Research Strategy}
-\red{TODO}
+We used the research strategies of design and creation combined with experiments. We did this to iteratively build a model, testing various approaches to find our optimal solution. We followed the strategy of design and creation for the most part, but paid close attention as to why we got the results we got during the development process. While the strategy of design and creation is built on the concept of iteratively building a product, experiments is a strategy that investigates cause and effect relationships. We used experiments and the investigations to help us steer the development in the correct course, by investigating the current results.
+
+Combining two, or more, research strategies is called strategy triangulation. The use of triangulation gives researchers multiple ways to ``attack" their research questions. 
+
+\subsection{Design and Creation}
+The research strategy of design and creation focuses on developing a new IT product, such as our model.
+
+\subsubsection{Artefact}
+IT products are also called artefacts, and there are four of these. As defined in \cite{article-march1995}, they include:
+
+\begin{itemize}
+    \item \textbf{Constructs:} the concepts or vocabulary used in a particular IT-related domain. For example, notions of entities, objects or data flows.
+    \item \textbf{Models:} combinations of constructs that represent a situation and are used to aid problem understanding and solution development. For example, a data flow diagram, a use case scenario or a storyboard.
+    \item \textbf{Methods:} guidance on the models to be produced and process stages to be followed to solve problems using IT. For example, formal, mathematical algorithms, or commercialized and published methodologies.
+    \item \textbf{Instantiantions:} a working system that demonstrates that constructs, models, methods, ideas, genres or theories can be implemented in a computer-based system.
+\end{itemize}
+
+In our case, the artefact we want to develop during our research would fall into the category of Instantiantions. This artefact would be a fully functional model that works on the premise of our research. As this model would be an essential part of our research process, it is important that we can consider it as research, and not just as a demonstration of technical powers. It is therefore important that we do not only develop our model, we also assert the academical qualities, such as analysis, explanation, argument, justification, and critical evaluation. This means that every part of our model, and the process of building it, is explained and reasoned.
+
+\subsubsection{Approach}
+\label{methodology-design-and-creation-approach}
+Design and creation has a problem-solving approach. The research strategy has an iterative process that involves five steps. These steps are:
+
+\begin{itemize}
+    \item \textbf{Awareness:} involves recognizing a problem. This step is necessary to find what problem we are trying to solve.
+    \item \textbf{Suggestion:} is the step where we create a tentative idea of how the problem might be addressed.
+    \item \textbf{Development:} is where we implement and idea from the previous step.
+    \item \textbf{Evaluation:} 
+\end{itemize}
+
+It is important to understand that these steps are not necessarily followed in a strict manner. Instead, the work as guidelines, and the process is more of a fluid iterative cycle where the approach may shift depending on problem or situation.
+
+\cite{reseach-boka} explains how these cycles work and what you as a researcher achieves by using this research method as follows:
+
+\begin{quote}
+    Thinking about a suggested tentative solution leads to greater awareness of the nature of the problem; development of a design idea leads to increased understating of the problem and new, alternative tentative solution; discovering that a design doesn't work according to the researcher's expectations leads to new insights and theories about the nature of the problem, and so on. 
+\end{quote}
+
+The goal is to work out a prototype that is gradually modified until a satisfactory implementation is produced. One of the biggest advantages of this approach is that it is not necessary to fully understand a problem before developing prototypes and exploring tentative solutions. This research strategy also opens up the possibilities of testing prototypes often and comparing results along the way to see if one direction or approach works better than others. As an essential part of this strategy, it must be made clear how the implemented solution emerged as a result of the repeated cycles. Without a thought-through design rationale, the final implementation may appear to be the result of a hacked together solution without any recollection of the trial and error phase.
+
+\subsubsection{Evaluation and Gained Experience}
+One important aspect of the process is the step of evaluation. It is very important to evaluate our prototype as the process is ongoing. There are many types of criteria that may be applied to a prototype such as functionally, completeness, consistency, accuracy, performance, reliability, usability, accessibility, and so on. Creating a classifier model, we want to focus mainly on accuracy, and valuate how well it can classify a set of problems. In addition to this measure, we also want to investigate the results and attempt to unveil why we got the results we got. If the system performs poorly, why is that? Is there something fundamentally wrong with our approach? Is our model designed in a way that is not fit with the data we are feeding it? Evaluation is critical in the step of ``learning from our mistakes". It is difficult to succeed right away, especially with lack of knowledge. Evaluating and understanding what we need to change is one of the most fundamental steps in the process of design and creation as a research strategy.
+
+\subsection{Experiment}
+Experiments are, as already mentioned, a research strategy that focuses on investigating cause and effect, and the reason between the two. During our process, this strategy helped us find out in what direction we should look to improve our model.
+
+Experiments are structured around hypothesis. With a given hypothesis, an experiment is designed to prove or disprove the hypothesis. One of the hypothesis we had during our development was:
+
+\begin{description}
+    \item[Hypothesis:]{\textit{convolution neural network is not suited for this problem as max pooling and down sampling will reduce the data too much.}}
+\end{description}
+
+According to x, research strategies that are based on experiments may, among others, be characterized by:
+
+\begin{itemize}
+    \item Observation and measurement. Here the researchers make precise and detailed observation of outcomes and changes that occur when a particular factor is introduced.
+    \item Proving or disproving a relationship between two or more factors.
+    \item Explanation and prediction. The researchers are able to explain the casual link between two factors.
+\end{itemize}
+
+\subsection{Combining the Two Strategies}
+Given the brief explanation of the research strategies of design and creation, and experiments, we here try to elaborate how we incorporated them together. As stated before, we did not use both of the strategies in its complete form throughout the entire process. Instead we lent on the fluid nature of design and creation, and used concepts from experiments to help us move forward. 
+
+We created meaningful hypothesis related to the current tentative solution for a problem. While implementing the solution, we also made sure to construct it in such a way that we could test our hypothesis when it was finished. We evaluated the results from the development process, and cross examine them with the results from the investigation of our hypothesis. The combined knowledge gained though this approach helped us in the next cycle of development by uncovering which ``rock" to look under next.
+
+While the combination sometimes was hard to get right, and we in no way did it 100\% according to the book, it was helpful when exploring new directions to take.
 
 %%=========================================
 
 \section{Process}
-\red{TODO}
+The process of iteratively developing our model start with minimal background information and knowledge. We go through several phrases of researching relevant background theory, testing certain approaches, evaluation our results and improve on our solution. That process from the beginning to end is 
+
+\subsection{Preliminary Research}
+Before work began on our model, we did extensive preliminary research on problems that were similar in nature. This was done to gain knowledge about published literature, existing models and establishing what type of work had already been done in relevant areas. This phase created the foundation for which we could to the next steps of our process. As OCR and image recognition are very wide areas, a lot of research is both done and published. It was impossible to read everything, but we tried to focus on highly acclaimed papers, and papers that had a general approach to the problems we were trying to solve. A more extensive look at the preliminary research can be found in Chapter x, where we look at related work that was found in both this step, and proceeding steps.
+
+\subsection{Iterative Development Process}
+Following the preliminary research, we followed roughly the cycles as described in \ref{methodology-design-and-creation-approach}. First, on the basis of the research we had conducted up to this point, we came up with a tentative plan for how we could solve our problem. We then implemented this model as a prototype, and tested it on our problem. The results were used to determine how we would proceed our research, and where we would look to find inspiration for our next tentative plan.
+
+During this process we tested a few approaches that could not handle our problem due to a series of reasons, as explained in Chapter xx, but they all helped us steer the course towards our final model and its architecture.
+
+\subsection{Evaluating Our Final Model}
+After a few round of the iterative development process, we ended up with a model that we felt was closing in on a solution. While no model is perfect, and ours surly has it flaws, we were satisfied with how it worked given our limitations and the nature of the problem. Because this model was a part of an iterative development process, every part of the architecture had been tested in various ways, and we were confident that we could argue about every choice we had made. Evaluation was done by using this model and running it on several problems, recording the results and evaluating it compared to various metrics.
+
+\subsection{Looking Into Future Work}
+As a part of the evaluation, we look at the results our model produced, and tried to find out why we got the results we got. Identifying our weaknesses and finding potential for future work lay the foundation for continued research. This is done in Chapter xx.

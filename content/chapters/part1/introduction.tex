@@ -17,6 +17,7 @@ While simply scanning the books will suffice to make the literature available on
 %%=========================================
 
 \section{Problem and Motivation}
+\label{sec:problem_motivation}
 OCR, as described in the previous section, is an incredible broad area, and an astounding amount of research, approaches and technological solutions are already written and developed in the field. As with most models and algorithms, they have a specific ``area of use". Certain models works better than other under some conditions, and worse under others. There is no ``perfect" OCR model that can solve any trivial OCR related problem. While some generic approaches exists, most are to some degree customized to find a solution given a predefined problem space.
 
 Problems arise once we try to give a model data that it is not within the predefined problem space, or something that is too damaged. If the data is too damaged, it means the input is too obfuscated for the model to recognize the underlying data. As OCR usually deals with analogue data, coping with damaged or altered data it something models usually have to do. Despite this, there is always a limit as to what is simply ``too damaged". Figure \ref{fig:damaged-text} illustrates a word that has been badly damaged. With over 67\% of its original data lost, can a typical classifier still correctly classify each character?
@@ -52,10 +53,7 @@ By doing using the signature of a letter or a word, we are essentially expanding
 
 The idea is to use deep learning architectures that are not commonly used to do image recognition. 
 
-\begin{description}
-    \item[Research Question 1]{\textit{Can sequence prediction be used to classify letters and words?}}
-    \item[Research Question 2]{\textit{Foobar}}
-\end{description}
+\input{content/various/research_questions}
 
 %%=========================================
 
@@ -76,4 +74,4 @@ Sequence prediction has been used with promising results in areas such as natura
 
 \section{Thesis Structure}
 \red{Unfinished section}
-In the next chapter, Chapter \ref{ch:problem}, we will present the problem in greater detail. These details will help understand what problem we are trying to solve. In Chapter \ref{ch:background_and_motivation} we present the related background theory as well as motivation behind this thesis. This chapter will expand on \red{something}. In Chapter \ref{ch:architecture} we define our architecture, and in Chapter \ref{ch:experiments_and_results} we present the experiments as well as recorded results. We will evaluate these results in Chapter \ref{ch:evaluation}, and in the closing Chapter \ref{ch:conclusion} we will try to draw a conclusion from the results, as well as look at potential future work.
+In the next chapter, Chapter \ref{ch:problem}, we will present the problem in greater detail. These details will help understand what problem we are trying to solve. In Chapter \ref{ch:background} we present the related background theory as well as motivation behind this thesis. This chapter will expand on \red{something}. In Chapter \ref{ch:architecture} we define our architecture, and in Chapter \ref{ch:experiments_and_results} we present the experiments as well as recorded results. We will evaluate these results in Chapter \ref{ch:evaluation}, and in the closing Chapter \ref{ch:conclusion} we will try to draw a conclusion from the results, as well as look at potential future work.
