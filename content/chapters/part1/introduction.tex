@@ -3,11 +3,14 @@
 
 \chapter{Introduction}
 \label{ch:introduction}
-This chapter is an introduction to the test of the thesis. We will first present the background that makes our problem relevant. The problem is then presented with our motivation, followed by our goals and research questions. Finally we establish our research method, as well as lay out the structure for the rest of the thesis.
+This chapter is an introduction to the rest of the thesis. We will first present the background that makes our problem relevant. The problem is then presented with our motivation, followed by our goals and research questions. Finally we establish our research method, as well as lay out the structure for the rest of the thesis.
 
 %%=========================================
 
 \section{Background}
+\red{Fix up language here}
+We find ourselves in the middle of the digital age. As the industrial revolution brought new manufacturing processes at the middle of the seventeenth century, the digital revolution brought us digital electronics, most noticeable the computer.
+
 We live in a digital age, and everything around us is getting more and more digital by the day. Data that used to be analogue finds new life in digital formats. Photos, audio, video, and books are just a few types of data that are commonly found digitally these days. The Oxford English Dictionary defines the action or process of digitizing, the task of converting analogue data into digital data, as ``digitization" \cite{misc-oed-digitization}.
 
 In many areas digitization is a process that has been going on for decades. Now that we more often than not assume data is available digitally, countless initiatives have taken it upon themselves to provide digital data that was previously only available in analogue formats. One such project is Bokhylla.no (The bookshelf). Bokhylla.no is a project initiated by the National Library of Norway. It was launched in 2009 and aims to provide online access to literature published in Norwegian. The service will contain about 250 000 books when it is completed in 2017 \cite{misc-nb-digial-library}.
@@ -18,9 +21,9 @@ While simply scanning the books will suffice to make the literature available on
 
 \section{Problem and Motivation}
 \label{sec:problem_motivation}
-OCR, as described in the previous section, is an incredible broad area, and an astounding amount of research, approaches and technological solutions are already written and developed in the field. As with most models and algorithms, they have a specific ``area of use". Certain models works better than other under some conditions, and worse under others. There is no ``perfect" OCR model that can solve any trivial OCR related problem. While some generic approaches exists, most are to some degree customized to find a solution given a predefined problem space.
+OCR, as described in the previous section, is an incredible broad area, and an astounding amount of research, approaches and technological solutions are already written and developed in the field. As with most models and algorithms, they have a specific ``area of use". Certain models works better than other under some conditions, and worse under others. There is no ``perfect" OCR model that can solve any trivial OCR related problem. While some generic approaches exists, most are to some degree customized to find a solution given a predefined set of constraints.
 
-Problems arise once we try to give a model data that it is not within the predefined problem space, or something that is too damaged. If the data is too damaged, it means the input is too obfuscated for the model to recognize the underlying data. As OCR usually deals with analogue data, coping with damaged or altered data it something models usually have to do. Despite this, there is always a limit as to what is simply ``too damaged". Figure \ref{fig:damaged-text} illustrates a word that has been badly damaged. With over 67\% of its original data lost, can a typical classifier still correctly classify each character?
+Problems arise once we try to give a model data that it is outside the predefined set of constraints. The data can either be encoded incorrectly, or simply too damaged for our model to handle. If the data is too damaged, it means the input is too obfuscated for the model to recognize the underlying data. As OCR usually deals with analogue data, coping with damaged or altered data it something models usually have to do. Despite this, there is always a limit as to what is simply ``too damaged". Figure \ref{fig:damaged-text} illustrates a word that has been badly damaged. With over 67\% of its original data lost, can a typical classifier still correctly classify each character?
 
 \begin{figure}[ht]
     \centering
@@ -36,7 +39,7 @@ The motivation behind this thesis is to see if it is possible to do character re
 \section{Goals and Research Questions}
 \red{Unfinished section}
 \label{sec:goals_and_research_questions}
-Our goal is to use the ``signature" of a character to classify it. We can imagine a ``signature" by applying one or more masks to the original image that spans the total width of the image. The mask also covers most of the image from the top to bottom, exposing only a small part from original image. In Figure \ref{fig:thesis-signature} we have a image with the word ``THESIS". The original characters have a height of 50 pixels, and our masks are applied at both the top and bottom of the image. The areas that are covered with masks are grayed out, and the only exposed part of the image is a line that has a height of one pixel. This line is a ``signature" of the original image. By applying these masks, we now omit the data and information that is covered by these.
+Our goal is to use the ``signature" of a character to classify it. We can imagine a ``signature" by applying one or more masks to the original image that spans the total width of the image. The mask also covers most of the image from the top to bottom, exposing only a small part from original image. Figure \ref{fig:thesis-signature} we have a image with the word ``THESIS". The original characters have a height of 50 pixels, and our masks are applied at both the top and bottom of the image. The areas that are covered with masks are grayed out, and the only exposed part of the image is a line that has a height of one pixel. This line is a ``signature" of the original image. By applying these masks, we now omit the data and information that is covered by these.
 
 \begin{figure}[ht]
     \centering
@@ -45,10 +48,10 @@ Our goal is to use the ``signature" of a character to classify it. We can imagin
     \label{fig:thesis-signature}
 \end{figure}
 
-By doing using the signature of a letter or a word, we are essentially expanding the problem space, introducing more uncertainty. We also introduce a problem that may or may not contain ambiguous data, as further explained in Chapter \ref{ch:problem}. The generalized goal of this thesis is:
+Classification using signatures is a harder problem than classification using the original and whole available data. We have less information, and our input has introduced more uncertainty. We also introduce a problem that may or may not contain ambiguous data, as further explained in Chapter \ref{ch:problem}. The generalized goal of this thesis is:
 
 \begin{description}
-\item[Goal] {\textit{Find out how well machine learning can predict letters and words in a ambiguous problem space}}
+\item[Goal] {\textit{Can machine learning predict letters and words in a ambiguous problem space}}
 \end{description}
 
 The idea is to use deep learning architectures that are not commonly used to do image recognition. 
@@ -59,14 +62,14 @@ The idea is to use deep learning architectures that are not commonly used to do 
 
 \section{Research Method}
 \red{Unfinished section}
-The thesis is centered around the development of a recurrent neural network model. First we will look at how we preprocess our data to work with our model, then we will look at how the network itself is structured.
+The thesis is centered around the development of model. We first establish what kind of model makes sense for our problem. Next we find out what similar models exists, and what is the current state of the art. With the relevant background information, we develop our own model. The model is then tested and evaluated. A more detailed description of our research method and approach is presented in Chapter \ref{ch:methodology}.
 
 %%=========================================
 
 \section{Contributions}
-The contributions of this thesis is mainly exploration of how to combine sequence prediction and image recognition. The results of the experiment presented in this thesis will may lay the foundation of new way to use machine learning to recognize patterns in data.
+The contributions of this thesis is mainly exploration of how to combine sequence classification and image recognition. The results of the experiment presented in this thesis will may lay the foundation of new way to use machine learning to recognize patterns in data.
 
-Sequence prediction has been used with promising results in areas such as natural language translation, speech recognition, and computer vision. Similarly, various classes and types of artificial neural networks have yielded exceptional good results in the area of image and pattern recognition. We will try to combine these two techniques, and analyze just how well our model behaves.
+Sequence classification has been used with promising results in areas such as natural language translation, speech recognition, and computer vision. Similarly, various classes and types of artificial neural networks have yielded exceptional good results in the area of image and pattern recognition. We will try to combine these two techniques, and analyze just how well our model behaves.
 
 \red{Expand on this(?)}
 
