@@ -36,7 +36,7 @@ Because the input forms a sequence, it is important that the entire sequence is 
 
 \red{Add more}
 
-\subsection{Meaning of Output}
+\subsection{Output Format}
 As with the input, our output also form a sequence. Both the values in the sequence, and the ordering of the sequence, is important. The words `HELLO` and `HLLOE` contains the same letters, but have a different meanings. Understanding that both the individual values in the output sequence, as well as the placement of each of them, is important for understanding how our problem is different from many others. The structure of the output is elaborated more in section xx.
 
 %%=========================================
@@ -60,35 +60,73 @@ In \ref{eq:key_value_map} $K$ denotes the keys, and $V$ denotes the values, our 
 \end{equation}
 
 \subsection{Example of Classification}
+\label{sec:classification-example}
 Image classification is a common example of classification. A model is given the image data, and a set of categories, and its job is to identify in which category, or categories, the image belongs.
 
 Figure \ref{fig:facebook-classification-example} illustrates classification using computer vision software. It contains an photo of Hovedbygget at Gløshaugen. The photo was uploaded to Facebook, and classified by their computer vision software. Using the Show Facebook Computer Vision Tags Chrome extension\footnote{\url{https://github.com/ageitgey/show-facebook-computer-vision-tags}}, we can see the categories in the top right corner of the photo.
 
 \begin{figure}[H]
+    \label{fig:facebook-classification-example}
     \centering
     \includegraphics[width=0.7\textwidth]{fig/chapter4/facebook_classification_example.jpg}
     \caption{Personal photo of Hovedbygget, classified by Facebook}
-    \label{fig:facebook-classification-example}
 \end{figure}
 
 When Facebook classified my image, their software took all the categories they have, and gave each of them a probability based on what the software had seen in their training set. All the categories above a given threshold were returned and assigned to my image. 
 
 \subsection{Dissimilarities}
-\red{Write something here}
+To understand our problem behaves, dissimilarities to typical classification is presented to illustrate this.
 
 \subsubsection{Meaning of Output}
-As illustrated with the image classification of Figure yy in section xx, typical classification algorithms does not return the output the way we need in our problem. As already stated, the classifier in this case returned all the classes above a given threshold given its probability based on earlier observations in its training set. While the categories can be sorted by their probability, there is no other notion of ordering among them.
+As illustrated with the image classification of Figure \ref{fig:facebook-classification-example} in section \ref{sec:classification-example}, typical classification algorithms does not return the output the way we need in our problem. As already stated, the classifier in this case returned all the classes above a given threshold given its probability based on earlier observations in its training set. While the categories can be sorted by their probability, there is no other notion of ordering among them. See algorithm \ref{alg:classification_probability_example}, that illustrates how the output is handled in a model like this. The algorithm inputs a list of probabilities, which in this case would be the probabilities given to each category by the classifier, and outputs a list of tuples consisting of the probabilities and their index values for categories above a given threshold.
 
 In our problem the ordering is, as already emphasised, crucial. Words are not the same when their letters are reordered. While we could look at the entire output vector as a single category, but that would require one category for each word, making it not only very insufficient, but would also make it impossible to classify new, unseen words.
+
+\begin{algorithm}
+    \caption{Return classified categories with probabilities and indexes above a given threshold
+        \label{alg:classification_probability_example}}
+    \begin{algorithmic}[1]
+        \Statex
+        \Function{return\_categories}{$X, t$}
+            \Let{$res$}{$[ ]$} \Comment{Initialize empty list}
+            \For{$i \gets 1 \textrm{ to } X.length$}
+                \If{$X[i] \ge t$}
+                    \Let{$res$}{$(X[i], i)$} \Comment{Add tuple (probability, index) to list}
+                \EndIf
+            \EndFor
+        \State \Return{$res$}
+        \EndFunction
+    \end{algorithmic}
+\end{algorithm}
 
 %%=========================================
 
 \section{Sequence Classification}
+Sequence classification is a type of problem that falls in the general task of classification as presented in section xx. This particular problem however, has a characteristic that makes it more specialized than many other classification tasks.
+
+The characteristics lies in how the classifier interprets the input. As we have emphasized before, out input is a sequence of values. Image classification is often called contextual, which means that the classification is based on the relationship between nearby data. For image classification, this makes sense as a single pixel itself does not make much sense, but given a group of pixels, we can try to recognize certain traits or patterns. In sequence classification, we must evaluate the entire sequence as a whole. Considering just the nearby values would not be sufficient in trying to make sense of a input sequence. \red{Images are dense, text is sparse}
+
+A typical sequence classification example is classification of reviews and an associated score, which can be either a number, or a positive/negative value. The reviews contains the text from the reviewer, which will typically contain either positive or negative worded words. Table \ref{table:sequence-classification-illustration} contains an illustrative reviews. The importance of interpret the input as a whole makes sense when you consider that ``best restaurant" and ``best to avoid this restaurant" contains some of the same words, but the meaning is opposite.
+
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{|l|l|}
+        \hline 
+        \textbf{Review}                                  & \textbf{Recommends} \\ \hline
+        The food tasted terrible and the place was dirty & No                  \\ \hline
+        Food was expensive, and the waiter was lazy      & No                  \\ \hline
+        Best restaurant I ever ate at.                   & Yes                 \\ \hline
+    \end{tabular}
+    \label{table:sequence-classification-illustration}
+    \caption{Illustrative review data}
+\end{table}
+
+As with image classification, sequence classification outputs the categories and their respective probabilities. 
 
 %%=========================================
 
 \section{Sequence Labeling}
-Sequence labeling is a different type of problem from statistical classification. Where statistical classification gave input a set of labels based on probability calculated from the overall input, sequence classification gives each input value a label.
+Sequence labeling is a different type of problem from statistical classification. Where statistical classification gave input a set of labels based on probability calculated from the overall input, sequence classification gives each input value a label. Also different from classification tasks is that sequence labeling does not have feature vectors.
 
 "Different from
 the classification task on feature vectors, sequences do not
@@ -96,10 +134,12 @@ have explicit features."
 
 https://www.cs.sfu.ca/~jpei/publications/Sequence%20Classification.pdf
 
+\subsection{Natural Language Processing}
+Natural Language Processing is a sequence labeling task. In NLP we want to analyze an input, and 
+
 %%=========================================
 
-\section{Natural Language Processing}
-\red{TODO}
+\section{Sequence Prediction}
 
 %%=========================================
 
