@@ -3,14 +3,14 @@
 
 \chapter{Background Theory}
 \label{ch:background}
-In this chapter we will look at relevant theory and the underlying structure of our problem.
+In this chapter we will look at theory relevant to the the underlying structure of our problem.
 
 %%=========================================
 
 \section{Understanding Our Problem}
 Understanding what type of problem we are trying to solve is important. While many problems may seem similar in nature, small factors can influence how a problem is best solved. Some factors even influence the problem so much that it becomes a completely different one. This chapter investigates what type of problem we are trying to solve.
 
-The next section evaluates what data we want to give to our model, and what results we hope the model outputs. Section \ref{sec:classification_explanation} presents the concept of classification, and section \ref{sec:classification_similarities_and_dissimilarities} explains how our problem is different from it.
+The next section evaluates what data we want to give to our model, and what results we hope the model outputs. Section \ref{sec:classification_explanation} first presents the concept of classification, and section \ref{sec:problem_dissimilarities} explains how our problem is different from it.
 
 %%=========================================
 
@@ -32,18 +32,27 @@ Note that in example \ref{eq:input_output_example} we encoded our input to whole
 \subsection{Input Format}
 Our input has the feature that they form a sequence. Both the values in the sequence, and the ordering of the sequence is crucial for prediction. This is fundamentally different from other problems such as traditional image recognition, where the exact location of a pattern is not important.
 
-Because the input forms a sequence, it is important that the entire sequence is read, and that we do not cut the sequence off at the end, removing important information that we need. We do also lack the concept of ``stop words" in our problem. Nowhere in our sequence is a special value used that indicates that one character ends and another begins. Using a stop word would make the problem easier to solve, as we would know in what area each character could be found. Instead of relying on stop words, we want our model to find a pattern in the sequence data that makes sense. This pattern, if correctly predicted, would have ``invisible" stop words at the correct places in the original input, without having been explicit stated.
+Because the input forms a sequence, it is important that the entire sequence is read, and that we do not cut the sequence off at the end, removing important information that we need. Truncating or ignoring a values in the input sequence would result in mislearning. Instead of our model correctly identify subsequences that result i a single output value, the model attempts to find patters in the data that is not there. This would cripple the model and the overall accuracy may suffer due to contradicting sequences.
 
-\red{Add more}
+We do also lack the concept of ``stop words" in our problem. Example \ref{eq:input_stop_words} illustrates an input with stop words, denoted as $\pi$. Using a stop word would make the problem easier to solve, as we would know within which \red{x} each character resides. In example \ref{eq:input_stop_words}, we have placed the stop word right before the beginning of a new character, instead of just the barriers of the character itself. This could potentially reduce ambiguity as we would now know for a fact that the letter I, if followed by an E, would always be the subsequence $[1, 7]$. Instead of relying on stop words, we want our model to find a pattern in the sequence data that makes sense based on the corresponding output. This pattern, if correctly predicted,
+would not need explicit stop words, as the model should be able to find them implicitly.
+
+\begin{equation}
+    \label{eq:input_stop_words}
+    \begin{aligned}
+       \vec{encodedInput}        &= \lbrack 1, 6, \pi, 1, 7, \pi, 8, \pi \rbrack \\
+       word                      &= \text{LIE}
+    \end{aligned}
+\end{equation}
 
 \subsection{Output Format}
-As with the input, our output also form a sequence. Both the values in the sequence, and the ordering of the sequence, is important. The words `HELLO` and `HLLOE` contains the same letters, but have a different meanings. Understanding that both the individual values in the output sequence, as well as the placement of each of them, is important for understanding how our problem is different from many others. The structure of the output is elaborated more in section xx.
+As with the input, our output also form a sequence. Both the values in the sequence, and the ordering of the sequence, is important. The words `HELLO` and `HLLOE` contains the same letters, but have a different meanings. Understanding that both the individual values in the output sequence, as well as the placement of each of them, is important for understanding how our problem is different from many others. The structure of the output is elaborated more in section \ref{sec:meaning_of_output}.
 
 %%=========================================
 
 \section{Classification}
 \label{sec:classification_explanation}
-Classification has two distinct meanings. Classification with supervised learning we know for a fact how many classes exists, and our goal is to find a rule that can be used to classify an observation in one or more of these classes. Classification with unsupervised learning is often called clustering. This is the task of given a set of unlabeled data, we want to find the existence of classes or clusters in the data. In our particular problem, we know the labels for our observations, so our problem falls in the task of supervised learning.
+Classification has two distinct meanings. Classification under supervised learning is the task of finding a rule that can be used classify an observation in one more classes, when we know the classes beforehand. Classification under unsupervised learning is often called clustering. This is the task of given a set of unlabeled data, we want to find the existence of classes or clusters in the data. In our particular problem, we know the labels for our observations, so our problem falls in the task of supervised learning.
 
 The goal of classification is, as previously stated, to create a function that can be take an observation and give it one or more classes. The classifier is ``trained" on a set of data where we know the correct labels for each of the observations. With this training, the classifier should be able to ``learn" how to do classifications on its own. The important factor here is that the classifier should not just ``remember" earlier observations and simply return the correct answers, it should learn how to calculate the answers instead. 
 
@@ -52,7 +61,7 @@ The goal of classification is, as previously stated, to create a function that c
     h: K \mapsto V
 \end{equation}
 
-In \ref{eq:key_value_map} $K$ denotes the keys, and $V$ denotes the values, our input and output respectfully. \ref{eq:key_value_map} is a simple look up, similar to how data structures such as hash maps. Unless the key $k$ has an exact match in $K$, it has no way of returning any value. Instead of the look up in \ref{eq:key_value_map}, we want a function as in \ref{eq:simple_function}, where the function $f(x)$ does some calculation to derive at the result $y$.
+In example \ref{eq:key_value_map} $K$ denotes the keys, and $V$ denotes the values, our input and output respectfully. The example is a simple look up, similar to data structures such as hash maps. Unless the key $k$ has an exact match in $K$, it has no way of returning any value. Instead of a look up function like this, we want a function as in \ref{eq:simple_function}, where the function $f(x)$ does some calculation to derive at the result $y$.
 
 \begin{equation}
     \label{eq:simple_function}
@@ -68,17 +77,19 @@ Figure \ref{fig:facebook-classification-example} illustrates classification usin
 \begin{figure}[H]
     \label{fig:facebook-classification-example}
     \centering
-    \includegraphics[width=0.7\textwidth]{fig/chapter4/facebook_classification_example.jpg}
+    \includegraphics[width=0.7\textwidth]{fig/chapter4/facebook_classification_example.png}
     \caption{Personal photo of Hovedbygget, classified by Facebook}
 \end{figure}
 
 When Facebook classified my image, their software took all the categories they have, and gave each of them a probability based on what the software had seen in their training set. All the categories above a given threshold were returned and assigned to my image. 
 
 \subsection{Dissimilarities}
+\label{sec:problem_dissimilarities}
 To understand our problem behaves, dissimilarities to typical classification is presented to illustrate this.
 
 \subsubsection{Meaning of Output}
-As illustrated with the image classification of Figure \ref{fig:facebook-classification-example} in section \ref{sec:classification-example}, typical classification algorithms does not return the output the way we need in our problem. As already stated, the classifier in this case returned all the classes above a given threshold given its probability based on earlier observations in its training set. While the categories can be sorted by their probability, there is no other notion of ordering among them. See algorithm \ref{alg:classification_probability_example}, that illustrates how the output is handled in a model like this. The algorithm inputs a list of probabilities, which in this case would be the probabilities given to each category by the classifier, and outputs a list of tuples consisting of the probabilities and their index values for categories above a given threshold.
+\label{sec:meaning_of_output}
+As illustrated with the image classification of Figure \ref{fig:facebook-classification-example}, typical classification algorithms does not return the output the way we need in our problem. As already stated, the classifier in this case returned all the classes above a given threshold given its probability based on earlier observations in its training set. While the categories can be sorted by their probability, there is no other concept of ordering among them. Algorithm \ref{alg:classification_probability_example} illustrates how a probability model could handle its output. The algorithm inputs a list of probabilities, which in this case would be the probabilities given to each category by the classifier, and outputs a list of tuples consisting of the probabilities and their index values for categories above a given threshold.
 
 In our problem the ordering is, as already emphasised, crucial. Words are not the same when their letters are reordered. While we could look at the entire output vector as a single category, but that would require one category for each word, making it not only very insufficient, but would also make it impossible to classify new, unseen words.
 
@@ -102,52 +113,38 @@ In our problem the ordering is, as already emphasised, crucial. Words are not th
 %%=========================================
 
 \section{Sequence Classification}
-Sequence classification is a type of problem that falls in the general task of classification as presented in section xx. This particular problem however, has a characteristic that makes it more specialized than many other classification tasks.
+Sequence classification is a type of problem that falls in the general task of classification. This particular problem however, has a characteristic that makes it more specialized than many other classification tasks.
 
-The characteristics lies in how the classifier interprets the input. As we have emphasized before, out input is a sequence of values. Image classification is often called contextual, which means that the classification is based on the relationship between nearby data. For image classification, this makes sense as a single pixel itself does not make much sense, but given a group of pixels, we can try to recognize certain traits or patterns. In sequence classification, we must evaluate the entire sequence as a whole. Considering just the nearby values would not be sufficient in trying to make sense of a input sequence. \red{Images are dense, text is sparse}
+The characteristics lies in how the classifier interprets the input. Image classification is often called contextual, which means that the classification is based on the relationship between nearby data. For image classification, this makes sense as a single pixel itself does not make much sense, but given a group of pixels, we can try to recognize certain traits or patterns. In sequence classification, we must evaluate the entire sequence as a whole. Considering just the nearby values would not be sufficient in trying to make sense of a input sequence. \red{Images are dense, text is sparse}
 
-A typical sequence classification example is classification of reviews and an associated score, which can be either a number, or a positive/negative value. The reviews contains the text from the reviewer, which will typically contain either positive or negative worded words. Table \ref{table:sequence-classification-illustration} contains an illustrative reviews. The importance of interpret the input as a whole makes sense when you consider that ``best restaurant" and ``best to avoid this restaurant" contains some of the same words, but the meaning is opposite.
+A typical sequence classification example is classification of reviews and an associated score, which can be either a number, or a positive/negative value. The reviews contains the text from the reviewer, which will typically contain either positive or negative worded words. Table \ref{table:sequence-classification-illustration} contains illustrative reviews. Finding patterns in the reviews, you can not evaluate words individually. Instead you must see the entire context in which the words are used.
 
 \begin{table}[ht]
     \centering
     \begin{tabular}{|l|l|}
         \hline 
-        \textbf{Review}                                  & \textbf{Recommends} \\ \hline
-        The food tasted terrible and the place was dirty & No                  \\ \hline
-        Food was expensive, and the waiter was lazy      & No                  \\ \hline
-        Best restaurant I ever ate at.                   & Yes                 \\ \hline
+        \textbf{Review}                                                    & \textbf{Recommends} \\ \hline
+        The food tasted \textbf{terrible} and the place was \textbf{dirty} & No                  \\ \hline
+        Food was \textbf{expensive}, and the waiter was \textbf{lazy}      & No                  \\ \hline
+        \textbf{Better} than all the other restaurants                     & Yes                 \\ \hline
+        You are \textbf{better} off eating at home                         & No                  \\ \hline
     \end{tabular}
     \label{table:sequence-classification-illustration}
     \caption{Illustrative review data}
 \end{table}
 
-As with image classification, sequence classification outputs the categories and their respective probabilities. 
-
-%%=========================================
-
-\section{Sequence Labeling}
-Sequence labeling is a different type of problem from statistical classification. Where statistical classification gave input a set of labels based on probability calculated from the overall input, sequence classification gives each input value a label. Also different from classification tasks is that sequence labeling does not have feature vectors.
-
-"Different from
-the classification task on feature vectors, sequences do not
-have explicit features."
-
-https://www.cs.sfu.ca/~jpei/publications/Sequence%20Classification.pdf
-
-\subsection{Natural Language Processing}
-Natural Language Processing is a sequence labeling task. In NLP we want to analyze an input, and 
-
-%%=========================================
-
-\section{Sequence Prediction}
+Sequence classification is closer to the type of model we will need to solve our problem. However, as it falls in the category of typical classification tasks, it has the same problem as image classification - that it returns classes without any ordering.
 
 %%=========================================
 
 \section{Sequence to Sequence Learning}
-Sequence to sequence learning is yet another type of machine learning that falls outside the typical classification tasks. In sequence to sequence learning, the input sequence is evaluated, and the output is another sequence. The task of the model is to find patterns in the input sequence that returns the corresponding output sequence. Different from the other approaches and tasks explained this far, the 
+Sequence to sequence learning is a type of machine learning that falls outside the typical classification tasks. In sequence to sequence learning, the input sequence is evaluated, and the output is another sequence. The task of the model is to find patterns in the input sequence that returns the corresponding output sequence. This is the type of model that is capable of solving a problem like ours.
 
 \begin{equation}
     \begin{aligned}
         f(\vec{input}) = \vec{output}
     \end{aligned}
 \end{equation}
+
+\subsection{Natural Language Processing}
+Using 
