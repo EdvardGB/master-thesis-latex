@@ -3,16 +3,16 @@
 
 \chapter{Introduction}
 \label{ch:introduction}
-We find ourselves in the middle of the digital age. As the industrial revolution gave us new manufacturing processes at the middle of the seventeenth century, the digital revolution gave us digital electronics, most noticeable the computer \citep{freeman2001time}. With the arrival of high-performance computers and high speed networks, use of digital technologies increased rapidly. The increase in storage capacities gave us the possibilities to store lots of information digitally for preservation. Digital technologies enable information to be created, manipulated, disseminated, located, and stored with increasing ease \citep{lee2002state}. Digital storage usually takes up less physical space compared to the analogue counterpart, and its storage medium is usually cheaper \citep{morris2003evolution}. Although hard drives also are exposed to ``wear and tear" that deteriorate it, analogue information, such as a book, usually deteriorate much faster. \red{A book would most likely be noticeable damaged after being read a thousand times, while a hard drive should be able to handle read and write operations hundreds of thousands of times before starting to fail \citep{tanenbaum2012structured}}. Due to these benefits, a lot data that used to be analogue finds new life in digital formats. Photos, audio, video, and books are just a few types of data that are commonly found digitally these days.
+We find ourselves in the middle of the digital age. As the industrial revolution gave us new manufacturing processes at the middle of the seventeenth century, the digital revolution gave us digital electronics, most noticeable the computer \citep{freeman2001time}. With the arrival of high-performance computers and high speed networks, use of digital technologies increased rapidly. The increase in storage capacities gave us the possibilities to store lots of information digitally for preservation. Digital technologies enable information to be created, manipulated, disseminated, located, and stored with increasing ease \citep{lee2002state}. Digital storage usually takes up less physical space compared to the analogue counterpart, and its storage medium is usually cheaper \citep{morris2003evolution}. Although hard drives also are exposed to ``wear and tear" that deteriorate it, analogue information, such as a book, usually deteriorate much faster. Due to these benefits, a lot data that used to be analogue finds new life in digital formats. Photos, audio, video, and books are just a few types of data that are commonly found digitally these days.
 
 %%=========================================
 
 \section{Background}
 \citep{misc-oed-digitization} defines the action or process of digitizing, the task of converting analogue data into digital data, as ``digitization". One prime example of mass digitization is Google Inc.\footnote{\url{https://www.google.com/intl/en/about/}} and their service Google Books\footnote{\url{https://books.google.com}}. Google Books is a service that provides full text of books and magazines online. Other similar projects like Google Books include JSTOR\footnote{\url{https://www.jstor.org}}, which has digitized nearly a thousand journals, dating back to the mid 19th century, and Bokhylla.no\footnote{\url{http://bokhylla.no}} (The Bookshelf). Bokhylla.no is a project initiated by the National Library of Norway. It was launched in 2009 and aims to provide online access to literature published in Norwegian. The service will contain about 250 000 books when it is completed in 2017 \citep{misc-nb-digial-library}.
 
-Google has made their goal with Google Books very clear, it is primarily a search service, which also allows some viewing of the context of the search terms. They do not attempt to provide a reading environment, and consider themselves foremost a index of books and published works \citep{coyle2006mass}. Bokhylla.no on the other hand provides enhanced reading environments, where the visitor can read entire books from cover to cover. The service also provides in-text search of the entire book. Despite their different approaches to digitalized reading, they utilize the same types of technologies.
+Google has made their goal with Google Books very clear, it is primarily a search service, which also allows some viewing of the context of the search terms. They do not attempt to provide a reading environment, and consider themselves first and foremost a index of books and published works \citep{coyle2006mass}. Bokhylla.no on, the other hand, provides enhanced reading environments, where the visitor can read entire books from cover to cover. The service also provides in-text search of the entire book. 
 
-While simply scanning the books will suffice to make the literature available online, other technologies are needed to actually index the content. Indexing is the process of capturing the scanned text and converting it into editable and searchable data. To capture this data, a technology called Optical Character Recognition, or OCR for short, is used. OCR has many applications, and is in use in many areas today. Book scanning, number plate recognition, handling of checks, passports, as well as assistive technologies for blind and visually impaired users use some kind of OCR \citep{mori1999optical, kurzweil2000reading}.
+Despite their different approaches to digitalized reading, they utilize the same types of technologies. While simply scanning the books will suffice to make the literature available online, other technologies are needed to actually index the content. Indexing is the process of capturing the scanned text and converting it into editable and searchable data. To capture this data, a technology called Optical Character Recognition, or OCR for short, is used. OCR has many applications, and is in use in many areas today. Book scanning, number plate recognition, handling of checks, passports, as well as assistive technologies for blind and visually impaired users may use some kind of OCR \citep{mori1999optical, kurzweil2000reading}.
 
 %%=========================================
 
@@ -20,11 +20,17 @@ While simply scanning the books will suffice to make the literature available on
 \label{sec:problem_motivation}
 OCR is, in a broad sense, a branch of artificial intelligence. In addition to artificial intelligence, OCR is also a research branch in pattern recognition and computer vision \citep{mori1999optical}. It was first believed that it would be easy to develop an OCR, and researchers estimated that an accurate reading machine would be introduced in the 1950's. During the 1950's and the early 1960's researchers were still struggling with an ideal OCR model. Their research has since laid the foundation for modern research in the field \citep{mori1992historical}.
 
-Early versions of OCR systems had to be trained on images of individual character, or predefined characteristics of individual letters. Newer, more modern systems are capable of producing a higher degree of recognition accuracy for a variety of fonts. Despite this, if the input deviates too far from what the model has learned and knows, it will be unable to correctly classify it. For example, an OCR used to read license plats off cars is most likely going to struggle reading text written in a Gutenberg styled font.
+We have come a long way since the 1950's, and \citep{ye2015text} states:
 
-As with most models and algorithms, they have a specific ``area of use". Certain models works better than other under some conditions, and worse under others. There is no ``perfect" OCR model that can solve any trivial OCR related problem. While some generic approaches exists, most are to some degree customized to find a solution given a predefined set of constraints.
+\begin{quote}
+    While many researchers view optical character recognition (OCR) as a solved problem, text detection and recognition in imagery possess many of the same hurdles as computer vision and pattern recognition problems driven by lower quality or degraded data.
+\end{quote}
 
-Problems arise once we try to give a model data that it is outside the predefined set of constraints. The data can either be encoded incorrectly, or simply too damaged for our model to handle. If the data is too damaged, it means the input is too obfuscated for the model to recognize the underlying data. As OCR usually deals with analogue data, coping with damaged or altered data it something models usually have to do. Despite this, there is always a limit as to what is simply ``too damaged". Figure \ref{fig:damaged-text} illustrates a word that has been badly damaged. With over 67\% of its original data lost, can a typical classifier still correctly classify each character?
+Meaning, that under optimal conditions, certain OCR systems can perform very well. OCR has yielded great results in clean and well-formatted documents, in some cases achieving up to 99\% recognition rates. In cases where the documents are not clean and well-formatted, with an OCR facing variations of text layouts and fonts, uneven illuminations, and other obstacles, the challenge is much greater, and the systems have a much lower rates of detection and recognition \citep{ye2015text}.
+
+%%\red{In 2012 it became clear that Posten Norge's\footnote{Nordic mail and logistics group} multimillion OCR software failed to read the font Times New Roman, which is one of the most common computer fonts. Letters from Lånekassen (Norwegian State Educational Loan Fund), had to be manually sorted until they got their typeface switched to one that the OCR software could recognize \citep{misc-aftenposten-posten}. This illustrates the point that despite how well some of these systems works, they may fail under certain conditions.}
+
+This has led the authors of this master thesis to believe that the problem of OCR is not solved, and there is still room for improvements and new approaches. One of the area that still have a lot of room for improvement is recognizing characters that are damaged or obfuscated. Text can be damaged for a number of reasons, such as pasting of paper, ink spreading, fading, or dirt \citep{bhardwaj2014imaging}. See Figure \ref{fig:damaged-text} for example of text that is damaged and missing a lot of its original data. In this master thesis we present a new way to recognize damaged letters by using their ``signature".
 
 \begin{figure}[ht]
     \centering
@@ -33,14 +39,11 @@ Problems arise once we try to give a model data that it is outside the predefine
     \label{fig:damaged-text}
 \end{figure}
 
-The motivation behind this thesis is to see if it is possible to do character recognition using only a very limited subset of the original character data. For example, if we have a image of a single letter that is 50 pixels wide and 50 pixels high\footnote{This image would have a total of $50 \cdot 50 = 2,500$ pixels.}, is it possible to recognize the letter if we only have 500 pixels available? What about 250? Or 100? If we are able to archive good results in this type of prediction, we might be able to recognize letters, words and texts where a lot of the data is lost or damaged. Trying to find new ways to do character recognition is the main motivation behind this thesis.
-
 %%=========================================
 
 \section{Goals and Research Questions}
-\red{Unfinished section}
 \label{sec:goals_and_research_questions}
-Our goal is to use the ``signature" of a character to classify it. We can imagine a ``signature" by applying one or more masks to the original image that spans the total width of the image. The mask also covers most of the image from the top to bottom, exposing only a small part from original image. Figure \ref{fig:thesis-signature} we have a image with the word ``THESIS". The original characters have a height of 50 pixels, and our masks are applied at both the top and bottom of the image. The areas that are covered with masks are grayed out, and the only exposed part of the image is a line that has a height of one pixel. This line is a ``signature" of the original image. By applying these masks, we now omit the data and information that is covered by these.
+Our goal is to use the ``signature" of a character to classify it. We can imagine a ``signature" by applying two masks to the original image. These masks spans the total width of the image. The masks also cover most of the image from the top to bottom, and from the bottom to the top. The only area that is not covered by the masks is a thin line. This line defines the ``signature" for our image. In Figure \ref{fig:thesis-signature} we have a image with the word ``THESIS". The original characters have a height of 50 pixels, and our masks are applied at both the top and bottom of the image. The areas that are covered with masks are grayed out, and the only exposed part of the image is a line that has a height of one pixel. This line is a ``signature" of the original image. By applying these masks, we now omit the data and information that is covered by these.
 
 \begin{figure}[ht]
     \centering
@@ -49,33 +52,71 @@ Our goal is to use the ``signature" of a character to classify it. We can imagin
     \label{fig:thesis-signature}
 \end{figure}
 
-Classification using signatures is a harder problem than classification using the original and whole available data. We have less information, and our input has introduced more uncertainty. We also introduce a problem that may or may not contain ambiguous data, as further explained in Chapter \ref{ch:problem}. The generalized goal of this thesis is:
+Naturally, this approach has its pros and cons. First of all, the data in the signature is essential. This approach can not handle any damage in the data within the signature. This means that this approach is useless if there is no one single line that is whole. In real life scenarios, this may be a very real concern, but for the sake of researching and analyzing an approach like this, we can avoid the problem in our constructed data sets. The pros of the ``signature approach" is that the data outside the signature is irrelevant, and we only use a very small subset of the original information. This means that as long as the constraints explained above holds, we can deal with very damaged and obfuscated data.
+
+The overarching goal of this master thesis is:
 
 \begin{description}
-\item[Goal] {\textit{Can machine learning predict letters and words in a ambiguous problem space}}
+    \item[Goal]{\textit{Can machine learning use signature sequences to correctly predict the original characters in a word?}}
 \end{description}
 
-The idea is to use deep learning architectures that are not commonly used to do image recognition. 
+To expand on the goal stated above, we also have the following research questions that we hope to answer during the work on this master thesis.
 
-\input{content/various/research_questions}
+\begin{description}
+    \item[Research Question 1]{\textit{Does ambiguity in character signature sequences impact recognition rates?}}
+    \item[Research Question 2]{\textit{Does different fonts, font characteristics, font styles, and other typesetting factors affect recognition rates?}}
+    \item[Research Question 3]{\textit{Can a signature sequence based model handle multiple fonts at the same time?}}
+\end{description}
+
+With an approach like the one we present, there are many questions that can be asked about the potential model. Trying to make the research done in this master thesis as valuable as possible, we have focused our research questions on areas that are relevant for further research. Instead of focusing on narrow and niche questions, we have focused on more general and overarching questions. The research questions and their meaning are expanded on in section \ref{sec:research_questions_and_approach}.
 
 %%=========================================
 
 \section{Research Method}
-\red{Unfinished section}
-The thesis is centered around the development of model. We first establish what kind of model makes sense for our problem. Next we find out what similar models exists, and what is the current state of the art. With the relevant background information, we develop our own model. The model is then tested and evaluated. A more detailed description of our research method and approach is presented in Chapter \ref{ch:methodology}.
+Given the research goal and questions presented in the previous section, the most meaningful research method would be to develop a model in an attempt to answer them. This prototype model should be used through experiments and the relevant results should be evaluated in terms of our goals and questions. The model should be premised on relevant theory and state of the art technologies relevant for our problem. The research method and approach is presented in detail in Chapter \ref{ch:methodology}.
 
 %%=========================================
 
 \section{Contributions}
-The contributions of this thesis is mainly exploration of how to combine sequence classification and image recognition. The results of the experiment presented in this thesis will may lay the foundation of new way to use machine learning to recognize patterns in data.
-
-Sequence classification has been used with promising results in areas such as natural language translation, speech recognition, and computer vision. Similarly, various classes and types of artificial neural networks have yielded exceptional good results in the area of image and pattern recognition. We will try to combine these two techniques, and analyze just how well our model behaves.
-
-\red{Expand on this(?)}
+The contribution of this master thesis is mainly exploration of how to use machine learning and signature sequences to do predictions. The results of the experiments and conclusions done in this master thesis may lay the foundation of new way to use machine learning to recognize patterns in data using sequences. Although the ideas presented in this master thesis is not new, they mind prove that certain problems may be solvable using data in new ways.
 
 %%=========================================
 
 \section{Thesis Structure}
-\red{Unfinished section}
-In the next chapter, Chapter \ref{ch:problem}, we will present the problem in greater detail. These details will help understand what problem we are trying to solve. In Chapter \ref{ch:background} we present the related background theory as well as motivation behind this thesis. This chapter will expand on \red{something}. In Chapter \ref{ch:architecture} we define our architecture, and in Chapter \ref{ch:experiments_and_results} we present the experiments as well as recorded results. We will evaluate these results in Chapter \ref{ch:evaluation}, and in the closing Chapter \ref{ch:conclusion} we will try to draw a conclusion from the results, as well as look at potential future work.
+\noindent
+\begin{minipage}{\linewidth}
+    \textbf{Part I - Introduction and Methodology}
+    \begin{itemize}
+        \item\textbf{Introduction} contains a rough description of the overarching problem, and is a general introduction for this master thesis.
+        \item\textbf{Methodology} establishes the methodology used throughout the master thesis. It explains how the research and why the chosen approach made most sense given our problem.
+    \end{itemize}
+\end{minipage}
+
+\vspace{0.5cm}\noindent
+\begin{minipage}{\linewidth}
+    \textbf{Part II - Establishing the State of the Art}
+    \begin{itemize}
+        \item\textbf{Problem Elaboration} \red{TODO}
+        \item\textbf{Background Theory} \red{TODO}
+        \item\textbf{Related Work} \red{TODO}
+    \end{itemize}
+\end{minipage}
+
+\vspace{0.5cm}\noindent
+\begin{minipage}{\linewidth}
+    \textbf{Part III - Model and Experiments}
+    \begin{itemize}
+        \item\textbf{Development Process} \red{TODO}
+        \item\textbf{Architecture} \red{TODO}
+        \item\textbf{Experiments and Results} \red{TODO}
+    \end{itemize}
+\end{minipage}
+
+\vspace{0.5cm}\noindent
+\begin{minipage}{\linewidth}
+    \textbf{Part IV - Discussion and Conclusion}
+    \begin{itemize}
+        \item\textbf{Evaluation} \red{TODO}
+        \item\textbf{Conclusion} \red{TODO}
+    \end{itemize}
+\end{minipage}
