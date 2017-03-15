@@ -30,6 +30,7 @@ Figure \ref{fig:thesis-signature-comparison} also illustrates how our model need
 %%=========================================
 
 \section{Use of Fonts}
+\label{sec:use_of_fonts}
 In addition to alterations of the input data, as explained in section \ref{sec:tuning_input_data}, choice of font, plays a role in the ambiguity of the problem. In Figure \ref{fig:thesis-signature-comparison} we have used the monolinear sans-serif font Arial. Monolinear means that the strokes of the lines in the glyph all have the same width. Sans-serif means that the font does not have serifs; small projecting features at the end of the strokes. In Figure \ref{fig:typeface-comparison} we have written the word ``CAT" first in Arial, and then in Times New Roman. Times New Roman is a unmodulated font with serifs. The serifs are highlighted in red. This illustrates how the choice of font alters the input data. Characters are no longer defines by the same-width stroke in all the glyphs, but varies from character to character. This gives a higher variance in the input sequences. The serifs may also play a role if they are captured by the signature. This will also create a higher variance in the input sequence.
 
 \begin{figure}[ht]
@@ -51,6 +52,7 @@ In addition to all these variances are there also differences in how fonts are s
 %%=========================================
 
 \section{Other Factors}
+\label{sec:other_factors}
 There exists even more factors that play a role in how the input data looks. Kerning is one such factor. Kerning is the process of adjusting the spacing between two adjacent glyphs. This is done to increase the readability and create a more visually pleasing result. The most common example of kerning is a capital ``A" followed by either a ``V" or ``W". In Figure \ref{fig:kerning-comparison}, the letters on the left side has applied kerning, bringing the two letters closer. The letters on the right side has no kerning. On the left side, the letters more naturally fit against each other, while on the right side there is a conspicuous spacing between the two letters. It is clear how kerning makes the letters visually more pleasing to look at, removing unnatural spacing. As for our problem, kerning may make it more difficult to separate the character from each other. Because kerning eliminates long sequences of spacing, by shifting characters closer to each other, it eliminates ``hints" that could otherwise be used to identify where two 
 
 \begin{figure}[ht]
@@ -72,6 +74,7 @@ There exists even more techniques that are applied to text to get the most reada
 %%=========================================
 
 \section{Ambiguous Input}
+\label{sec:ambiguous_input}
 The input data may be ambiguous because of the nature of how characters look, as well as how characters are spaced between each other. A character can consist of a single sequence of black pixels, or a series of alternating black and white pixels. Because our model does not know what a character looks like, there is no way for it to know what sequences are ``rests" of characters, spacing, or valid characters. It may also happen that a character consisting of a single sequence of black pixels is also a subset of another character. 
 
 Consider the lower signature in Figure \ref{fig:thesis-signature-comparison}. Because Arial is monolinear, we know that the strokes on the ``C" and the ``T" have equal width. The ``T" could be represented as a series of some white pixels, three black pixels, and optionally more white pixels. We can not know for sure just how many white pixels is before and after the three black pixels, because this may vary depending on that character is before and after the ``T". Now, if our model learns this definition, it will incorrectly label various other characters, such as parts of the ``C" as a potential ``T". This means that our model has to learn the recognize a huge variety of sequences and correctly map them to a output character.
