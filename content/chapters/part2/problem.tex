@@ -3,18 +3,18 @@
 
 \chapter{Problem Elaboration}
 \label{ch:problem}
-It is important to understand what problem we are trying to solve, as well as how. This chapter expands on the problem definition given in the introduction chapter. We examine why the problem is ambiguous and what that means for our model. 
+Before attempting to solve a problem, it is important that you know exactly what the problem is. In this chapter, we will expand on the problem definition given in the introduction chapter. We examine why the problem may be ambiguous and what that could mean for our system. We will also evaluate different factors and challenges and explain how this may affect our system and how well it functions. This chapter also explains the research questions in greater detail.
 
 %%=========================================
 
-\section{Problem Space}
-As explained in Section \ref{sec:goals_and_research_questions}, our goal is to use a signature to classify and predict characters. With the use of signatures instead of the entire character, we have a much bigger problem space to work with, as the data we can draw from the input is less informative. This makes this problem harder to solve by nature, as we have less information that we can use to solve it. This also opens the possibility that the solution sometimes can not be guaranteed, as the input is ambiguous. While typical character recognition has to deal with misshaped characters, or characters that look suspiciously like other characters, this problem has to deal with input that can be one of many characters, without having the ability to differentiate between them.
+\section{Use of Signatures}
+As explained in Section \ref{sec:goals_and_research_questions}, our goal is to use a signature to recognize and predict words. Using signatures instead of the entire characters in the word, we have less data to work with. Having less information to work with could mean that our problem is harder to solve. This is not necessarily true in all cases, for example in situations where the rest of the information is misleading or obfuscate in such a way that using it does more harm than good. In such situations it may be better to ignore the additional information altogether. It is difficult to know where these lines goes, as it is difficult to know how certain data will directly or indirectly affect the results ahead of time. In our problem, using exclusively signatures to reorganize words, may open the possibility that the solution sometimes can not be guaranteed, as the input may be ambiguous. While typical character recognition has to deal with misshaped characters, or characters that look suspiciously like other characters, this problem has to deal with input that can be one of many characters, without having the ability to differentiate between them. This is explained in section \ref{sec:ambiguous_input}.
 
 %%=========================================
 
 \section{Tuning Input Data}
 \label{sec:tuning_input_data}
-We can alter the problem space by adjust various factors used in the production of the input data. The data our signature ``captures" can be tweaked by altering text sizes, signature positions, and signature height. All these adjustments results in completely new problems, where knowledge in a previous problem most likely is useless.
+With the use of signatures, we can alter how we capture the data from the original image in a number of ways. The alterations can be done by configuring text sizes, signature positions, or signature heights in different ways. Altering the signature capturing configurations would result in completely new sequences for words. Changing the sequences we use to recognize words, it would be useless to remember previous configurations. This means that any changes like this would require us to ``forget" all the knowledge we have already gained, and start anew.
 
 \begin{figure}[ht]
     \centering
@@ -25,22 +25,23 @@ We can alter the problem space by adjust various factors used in the production 
 
 Let us consider the word ``CAT" in upper-cased letters, written in Arial with a font height of 50 pixels, as illustrated in Figure \ref{fig:thesis-signature-comparison}. In this figure we have highlighted two signatures, both with the height of one pixel. The first signature is 16 pixels from the bottom, while the other is 45 pixels from the bottom. As we can see from the illustration, the signatures we capture from the text varies significantly depending on where we chose to place it. For example, the top signature defines a ``T" as 38 black pixels, while the bottom defines it as seven black pixels.
 
-Figure \ref{fig:thesis-signature-comparison} also illustrates how our model needs to differentiate between letter spacing and characters that consists of white space. In bottom signature, the letter ``C" is defined as a sequence of eight black, 27 white, and seven more black pixels. However, the sequence of seven black, seven white and 35 more black pixels is just the final stroke of the letter ``C" as well as the letter ``A" including the space between the two letters. This sequence should not be classified as a letter. These examples illustrates how a slight alteration of the input data completely alters how the problem has to be solved. Any knowledge from a previous problem is most likely irrelevant, as the new data contains new definitions of characters.
+Figure \ref{fig:thesis-signature-comparison} also illustrates how our system needs to differentiate between letter spacing and characters that consists of white space. In bottom signature, the letter ``C" is defined as a sequence of eight black, 27 white, and seven more black pixels. However, the sequence of seven black, seven white and 35 more black pixels is just the final stroke of the letter ``C" as well as the letter ``A" including the space between the two letters. This sequence should not be classified as a letter. These examples illustrates how small adjustments in how we captured signatures makes the sequences vary.
+
+\newpage
 
 %%=========================================
 
 \section{Use of Fonts}
 \label{sec:use_of_fonts}
-In addition to alterations of the input data, as explained in section \ref{sec:tuning_input_data}, choice of font, plays a role in the ambiguity of the problem. In Figure \ref{fig:thesis-signature-comparison} we have used the monolinear sans-serif font Arial. Monolinear means that the strokes of the lines in the glyph all have the same width. Sans-serif means that the font does not have serifs; small projecting features at the end of the strokes. In Figure \ref{fig:typeface-comparison} we have written the word ``CAT" first in Arial, and then in Times New Roman. Times New Roman is a unmodulated font with serifs. The serifs are highlighted in red. This illustrates how the choice of font alters the input data. Characters are no longer defines by the same-width stroke in all the glyphs, but varies from character to character. This gives a higher variance in the input sequences. The serifs may also play a role if they are captured by the signature. This will also create a higher variance in the input sequence.
 
-\begin{figure}[ht]
+\begin{figure}[h]
     \centering
     \includegraphics[width=1.0\textwidth]{fig/chapter2/typeface_comparison.png}
     \caption{The word ``CAT" in Arial and Times New Roman with highlighted serifs}
     \label{fig:typeface-comparison}
 \end{figure}
 
-In addition to all these variances are there also differences in how fonts are spaced. A monospaced font, also called fixed-width or non-proportional font, use the same width for all glyphs. This is in contrast to variable-width fonts, where each glyph can have different widths. Illustrated in Figure \ref{fig:regular-mono-comparison}, the text on the left is regular Arial which has variable-width. The text on the right is a Arial variant with monospacing. In the text on the right each letter in the two words match each other in widths, while the varying widths of the glyphs in the text to the left causes the letters to be shifted. With a monospaced font, each glyph is placed inside a maximum width constraint. The glyph does not need to take up the entire width, but guarantees that there is no strokes outside the constraint. In this problem we do not define where a character ``starts" and ``stops", so we do not know the location of these constraints. This means that there will be variance in the distance from one glyph to another depending on which characters they represent. However, the variance will be more significant in a font that has variance-width. 
+In addition to alterations of the input data, as explained in section \ref{sec:tuning_input_data}, choice of font may also play a role in the ambiguity of the problem. In Figure \ref{fig:thesis-signature-comparison} we have used the monolined sans-serif font Arial. Monoline means that the strokes in the typeface have the same widths throughout. Sans-serif means that the font does not have serifs; a crossing feature at the end of the principal character strokes \citep{felici2011complete}. In Figure \ref{fig:typeface-comparison} we have written the word ``CAT" first in Arial, and then in Times New Roman. Times New Roman is a font with serifs which is not monolined. The serifs are highlighted in red. The visual difference between the two words illustrates how the choice of fonts affects the captured sequences.
 
 \begin{figure}[ht]
     \centering
@@ -49,11 +50,13 @@ In addition to all these variances are there also differences in how fonts are s
     \label{fig:regular-mono-comparison}
 \end{figure}
 
+In addition to the variances already mentioned, there are there also differences in how fonts are spaced. A monospaced font, also called fixed-width font, use the same width for all characters. This is in contrast to variable-width fonts, where each characters may have different widths \citep{felici2011complete}. Illustrated in Figure \ref{fig:regular-mono-comparison}, the text on the left is regular Arial which has variable width characters. The text on the right is a Arial variant with monospacing. In the text on the right each letter in the two words match each other in widths, while the varying widths of the glyphs in the text to the left causes the letters to be shifted. With a monospaced font, each glyph is placed inside a maximum width constraint. The glyph does not need to take up the entire width, but guarantees that there is no strokes outside the constraint. In this problem we do not define where a character ``starts" and ``stops", so we do not know the location of these constraints. This means that there will be variance in the distance from one glyph to another depending on which characters they represent. However, the variance will be more significant in a font that has variance-width. 
+
 %%=========================================
 
 \section{Other Factors}
 \label{sec:other_factors}
-There exists even more factors that play a role in how the input data looks. Kerning is one such factor. Kerning is the process of adjusting the spacing between two adjacent glyphs. This is done to increase the readability and create a more visually pleasing result. The most common example of kerning is a capital ``A" followed by either a ``V" or ``W". In Figure \ref{fig:kerning-comparison}, the letters on the left side has applied kerning, bringing the two letters closer. The letters on the right side has no kerning. On the left side, the letters more naturally fit against each other, while on the right side there is a conspicuous spacing between the two letters. It is clear how kerning makes the letters visually more pleasing to look at, removing unnatural spacing. As for our problem, kerning may make it more difficult to separate the character from each other. Because kerning eliminates long sequences of spacing, by shifting characters closer to each other, it eliminates ``hints" that could otherwise be used to identify where two 
+There exists even more factors that play a role in how the input data looks. Kerning is one such factor. Kerning is the process of adjusting the spacing between two characters to compensate for their relative shapes. This is done to increase the readability and create a more visually pleasing result \citep{felici2011complete}. An illustrative example of kerning can be seen in Figure \ref{fig:kerning-comparison}. In the figure, the letters on the left side has applied kerning, bringing the two letters closer. The letters on the right side has no kerning. On the left side, the letters more naturally fit against each other, while the letters on the right side have conspicuous spacing between them. As for our problem, kerning may make it more difficult to separate the characters from each other. Because kerning eliminates long sequences of spacing, by shifting characters closer to each other, it eliminates ``hints" that could otherwise be used to identify where one letter ends and another begins.
 
 \begin{figure}[ht]
     \centering
@@ -62,48 +65,55 @@ There exists even more factors that play a role in how the input data looks. Ker
     \label{fig:kerning-comparison}
 \end{figure}
 
-There exists even more techniques that are applied to text to get the most readable and best visually looking arrangements of characters. As these alter how the text looks, it also alter our input data. Some of these are:
+\newpage
+There exists even more techniques that are applied to text to get the most readable and best visually looking arrangements of characters. As these alter how the text looks, it also alter our input data. Some of these are \citep{felici2011complete}:
 
 \begin{itemize}
-    \item Typographic alignments such a flush left, flush right, or justified.
-    \item Font weight, which defines the boldness of the strokes.
-    \item Slates text, used to create italic glyphs.
-    \item Font metrics, such as the location of the baseline.
+    \item Typographic alignments, such as justified text or ragged right.
+    \item Font weights, which defines the degree of boldness and widths of strokes.
+    \item Slanted forms such as italic.
+    \item Location of the baseline, which defines the line that most of the characters appear to be sitting on.
+    \item Anti-aliasing or font smoothing, which is a technique to smoothing the appearance of characters on a computer screen by adding gray pixels around their edges.
 \end{itemize}
 
 %%=========================================
 
 \section{Ambiguous Input}
 \label{sec:ambiguous_input}
-The input data may be ambiguous because of the nature of how characters look, as well as how characters are spaced between each other. A character can consist of a single sequence of black pixels, or a series of alternating black and white pixels. Because our model does not know what a character looks like, there is no way for it to know what sequences are ``rests" of characters, spacing, or valid characters. It may also happen that a character consisting of a single sequence of black pixels is also a subset of another character. 
+There is a chance our input data may end up being ambiguous, or be very difficult to decode and learn properly. A character signature can consist of a single sequence of black pixels, or a series of alternating black and white pixels. Because our system will not know exactly what a character looks like, there is no way for it to know what sequences are ``rests" of characters, spacing, or valid characters. It may also happen that a character consisting of a single sequence of black pixels is also a subset of another character. 
 
-Consider the lower signature in Figure \ref{fig:thesis-signature-comparison}. Because Arial is monolinear, we know that the strokes on the ``C" and the ``T" have equal width. The ``T" could be represented as a series of some white pixels, three black pixels, and optionally more white pixels. We can not know for sure just how many white pixels is before and after the three black pixels, because this may vary depending on that character is before and after the ``T". Now, if our model learns this definition, it will incorrectly label various other characters, such as parts of the ``C" as a potential ``T". This means that our model has to learn the recognize a huge variety of sequences and correctly map them to a output character.
+Consider the lower signature in Figure \ref{fig:thesis-signature-comparison}. Because Arial is monolinear, we know that the strokes on the ``C" and the ``T" have equal width. The ``T" could be represented as a series of some white pixels, three black pixels, and optionally more white pixels. We can not know for sure just how many white pixels is before and after the three black pixels, because this may vary depending on that character is before and after the ``T". Now, if our system learns this definition, it will incorrectly label various other characters, such as parts of the ``C" as a potential ``T". This means that our system has to learn the recognize a huge variety of sequences and correctly map them to a output character.
 
-Table \ref{table:signature_sequence_example} holds the actual signatures and sequences for monospaced Arial given the settings as specified in Section \ref{sec:goals_and_research_questions}. This table illustrated how the input looks and what our model has to decode and learn. One of the reasons this problem may be difficult to classify correctly is the sequence for the letters C, I, J, L, T and Y. Three consecutive black pixels are found in many of the other sequences, which may create ambiguity. We also have to remember that the sequences in this table are just the sequences that corresponds to valid characters. Once we have multiple characters after each other, with the natural spacing between, many new sequences also have to be considered.
-
-\begin{table}[ht]
+\newpage
+\begin{table}[H]
     \centering
     \begin{tabular}{|l|l|l|}
         \hline 
-        \textbf{Character(s)} & \textbf{Signature}                                      & \textbf{Sequence}            \\ \hline
-        A                     & $[[0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0]]$             & $3B, 7W, 3B$                 \\ \hline
-        B                     & $[[0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0]]$       & $3B, 7W, 5B$                 \\ \hline
-        C, I, J, L, T and Y   & $[[0, 0, 0]]$                                           & $3B$                         \\ \hline
-        D                     & $[[0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0]]$    & $3B, 10W, 3B$                \\ \hline
-        E and F               & $[[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]$          & $14B$                        \\ \hline
-        G                     & $[[0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0]]$ & $3B, 6W, 7B$                 \\ \hline
-        H and U               & $[[0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0]]$       & $3B, 9W, 3B$                 \\ \hline
-        K                     & $[[0, 0, 0, 0, 0, 1, 0, 0, 0, 0]]$                      & $5B, 1W, 4B$                 \\ \hline
-        M                     & $[[0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0]]$       & $3B, 4W, 1B, 4W, 3B$         \\ \hline
-        N                     & $[[0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0]]$       & $3B, 4W, 3B, 2W, 3B$         \\ \hline
-        O and Q               & $[[0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0]]$ & $3B, 11W, 3B$                \\ \hline
-        P                     & $[[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]$             & $13B$                        \\ \hline
-        R                     & $[[0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]$                      & $10B$                        \\ \hline
-        S and X               & $[[0, 0, 0, 0, 0, 0, 0]]$                               & $7B$                         \\ \hline
-        V                     & $[[0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0]]$                   & $4B, 4W, 3B$                 \\ \hline
-        W                     & $[[0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0]]$ & $3B, 3W, 2B, 1W, 3B, 2W, 3B$ \\ \hline
-        Z                     & $[[0, 0, 0, 0]]$                                        & $4B$                         \\ \hline
+        \textbf{Character(s)} & \textbf{Signature}                                    & \textbf{Sequence}            \\ \hline
+        A                     & $[0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0]$             & $3B, 7W, 3B$                 \\ \hline
+        B                     & $[0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0]$       & $3B, 7W, 5B$                 \\ \hline
+        C, I, J, L, T and Y   & $[0, 0, 0]$                                           & $3B$                         \\ \hline
+        D                     & $[0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0]$    & $3B, 10W, 3B$                \\ \hline
+        E and F               & $[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]$          & $14B$                        \\ \hline
+        G                     & $[0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0]$ & $3B, 6W, 7B$                 \\ \hline
+        H and U               & $[0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0]$       & $3B, 9W, 3B$                 \\ \hline
+        K                     & $[0, 0, 0, 0, 0, 1, 0, 0, 0, 0]$                      & $5B, 1W, 4B$                 \\ \hline
+        M                     & $[0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0]$       & $3B, 4W, 1B, 4W, 3B$         \\ \hline
+        N                     & $[0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0]$       & $3B, 4W, 3B, 2W, 3B$         \\ \hline
+        O and Q               & $[0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0]$ & $3B, 11W, 3B$                \\ \hline
+        P                     & $[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]$             & $13B$                        \\ \hline
+        R                     & $[0, 0, 0, 0, 0, 0, 0, 0, 0, 0]$                      & $10B$                        \\ \hline
+        S and X               & $[0, 0, 0, 0, 0, 0, 0]$                               & $7B$                         \\ \hline
+        V                     & $[0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0]$                   & $4B, 4W, 3B$                 \\ \hline
+        W                     & $[0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0]$ & $3B, 3W, 2B, 1W, 3B, 2W, 3B$ \\ \hline
+        Z                     & $[0, 0, 0, 0]$                                        & $4B$                         \\ \hline
     \end{tabular}
     \label{table:signature_sequence_example}
     \caption{Example of signatures and sequences for the uppercase letters in the English alphabet}
 \end{table}
+
+Table \ref{table:signature_sequence_example} holds the actual signatures and sequences for monospaced Arial given the settings specified in section \ref{sec:goals_and_research_questions}. This table illustrated how the input looks and what our system has to decode and learn. As mentioned before, this problem may be very difficult, if not impossible, to learn fully. We can see examples of why it may be difficult in the sequences for the letters C, I, J, L, T and Y. These six letters all share the same sequence. With an identical sequence, the only way we can differentiate them is to consider the white pixels before and after the three black pixels.  In addition, many of the other character sequences besides the one for C, I, J, L, T and Y contains three black pixels after each other. In total, this subsequence is found in eleven of the seventeen unique character sequences. Some of them, like W and N, also contains three subsequent black pixels multiple times in their sequences. 
+
+We also have to remember that the sequences in this table are just the sequences that corresponds to valid characters. Once we have multiple characters after each other, with the natural spacing between, many new sequences also have to be considered. 
+
+This all boils down to the fact that the complete sequences for words may have many repeated subsequences, where some of them are individual letters, while other are parts of multiple letters. This substantiates that correctly recognizing letters in words using signatures is a difficult problem that requires a system that is able to learn beyond simply reorganizing parts of the sequences.
