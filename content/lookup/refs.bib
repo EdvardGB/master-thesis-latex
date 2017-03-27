@@ -1,4 +1,11 @@
-%% Introduction
+%% Bibtex file
+%%=========================================
+
+%%
+%% This file contains all the bibtex entries for the entire thesis
+%%
+
+%% 1 - Introduction
 %%=========================================
 
 %% General information about the industrial revolution and the information revolution
@@ -105,19 +112,6 @@
     publisher =    "IEEE"
 }
 
-%%
-%% NOTE: Not in use today
-%%
-
-%% News article about OCR
-@misc{misc-aftenposten-posten,
-    author =       "Ekroll, Henning Carr",
-    title =        "Postens milliardanlegg takler ikke Times New Roman",
-    year =         "2012",
-    howpublished = {\url{http://www.aftenposten.no/okonomi/Postens-milliardanlegg-takler-ikke-Times-New-Roman-162990b.html}},
-    note =         "[Accessed: 2017-03-09]"
-}
-
 %% OCR and damaged documents
 @article{bhardwaj2014imaging,
     title =        "An Imaging Technique for Retrieval of Lost Content in Damaged Documents",
@@ -129,7 +123,7 @@
     publisher =    "Foundation of Computer Science"
 }
 
-%% Methodology
+%% 2 - Methodology
 %%=========================================
 
 %% The research book used in some course at NTNU that basically the entire chapter is quoted from
@@ -161,7 +155,7 @@
     note =         "\url{https://web.archive.org/web/20050208031622/http://www.isworld.org/Researchdesign/drisisworld.htm}"
 }
 
-%% Problem
+%% 4 - Problem Elaboration
 %%=========================================
 
 %% Everything about typography
@@ -174,46 +168,57 @@
     edition =      "2nd",
 }
 
-%% Problem Elaboration
+%% 4 - Background Theory
 %%=========================================
 
-@misc{misc-arial-font,
-    title =         {Arial {\textsuperscript{\textregistered}}},
-    url =           {https://catalog.monotype.com/family/monotype/arial},
-    note =          "[Accessed: 2016-10-25]",
-    publisher =     {Monotype}
+%% Alan Turing, about The Turing Test
+@article{turing1950computing,
+    ISSN =         "00264423, 14602113",
+    author =       "Alan Mathison Turing",
+    journal =      "Mind",
+    number =       "236",
+    pages =        "433-460",
+    publisher =    "Oxford University Press, Mind Association",
+    title =        "Computing Machinery and Intelligence",
+    volume =       "59",
+    year =         "1950"
 }
 
-@misc{misc-minecraft.172-changelog,
-    title =         {1.7.2 – Official Minecraft Wiki},
-    author =        {Gamepedia},
-    url =           {http://minecraft.gamepedia.com/1.7.2},
-    year =          {2013},
-    publisher =     {Gamepedia},
-    note =          "[Accessed: 2016-11-04]"
+%% History of NLP (mostly MT)
+@article{hutchins1997first,
+    title =        "From first conception to first demonstration: the nascent years of machine translation, 1947--1954. a chronology",
+    author =       "Hutchins, John",
+    journal =      "Machine Translation",
+    volume =       "12",
+    number =       "3",
+    pages =        "195--252",
+    year =         "1997",
+    publisher =    "Springer"
 }
 
-%% Background Theory
-%%=========================================
-
-
-
-%% TODO
-@techreport{liao2012cs229,
-    title={Cs229 final report reinforcement learning to play mario},
-    author={Liao, Yizheng and Yi, Kun and Yang, Zhe},
-    year={2012},
-    institution={Technical report, Stanford University}
+%% Information on MT research and its history
+@article{hutchins2007machine,
+    title =        "Machine translation: A concise history",
+    author =       "Hutchins, John",
+    journal =      "Computer aided translation: Theory and practice",
+    year =         "2007",
+    publisher =    "Chinese University of Hong Kong"
 }
 
-%% TODO
-@inproceedings{le2013building,
-    title={Building high-level features using large scale unsupervised learning},
-    author={Le, Quoc V},
-    booktitle={Acoustics, Speech and Signal Processing (ICASSP), 2013 IEEE International Conference on},
-    pages={8595--8598},
-    year={2013},
-    organization={IEEE}
+%% ALPAC quote
+@book{national1966language,
+    title =        "Language and Machines: Computers in Translation and Linguistics; A Report",
+    author =       "National Research Council and Automatic Language Processing Advisory Committee and others",
+    year =         "1966",
+    publisher =    "National Academy of Sciences, National Research Council"
+}
+
+%% Book about SMT. Used for general information and illustration
+@book{koehn2010statistical,
+    title =        "Statistical machine translation",
+    author =       "Koehn, Philipp",
+    year =         "2010",
+    publisher =    "Cambridge University Press"
 }
 
 %% TODO
@@ -232,6 +237,7 @@
     year={2014}
 }
 
+%% TODO
 @article{hochreiter1997long,
     title={Long short-term memory},
     author={Hochreiter, Sepp and Schmidhuber, J{\"u}rgen},
@@ -252,88 +258,44 @@
     year={2016}
 }
 
-%% Related work
+%% 5 - Related work
 %%=========================================
 
-@inproceedings{sutskever2014sequence,
-    title={Sequence to sequence learning with neural networks},
-    author={Sutskever, Ilya and Vinyals, Oriol and Le, Quoc V},
-    booktitle={Advances in neural information processing systems},
-    pages={3104--3112},
-    year={2014}
+%% General information about SMT
+@article{brown1990statistical,
+    title =        "A statistical approach to machine translation",
+    author =       "Brown, Peter F and Cocke, John and Pietra, Stephen A Della and Pietra, Vincent J Della and Jelinek, Fredrick and Lafferty, John D and Mercer, Robert L and Roossin, Paul S",
+    journal =      "Computational linguistics",
+    volume =       "16",
+    number =       "2",
+    pages =        "79--85",
+    year =         "1990",
+    publisher =    "MIT Press"
 }
 
-@article{rocktaschel2015reasoning,
-    title={Reasoning about entailment with neural attention},
-    author={Rockt{\"a}schel, Tim and Grefenstette, Edward and Hermann, Karl Moritz and Ko{\v{c}}isk{\`y}, Tom{\'a}{\v{s}} and Blunsom, Phil},
-    journal={arXiv preprint arXiv:1509.06664},
-    year={2015}
+%% General about NMT
+@article{wolk2015neural,
+    title =        "Neural-based machine translation for medical text domain. Based on European Medicines Agency leaflet texts",
+    author =       "Wo{\l}k, Krzysztof and Marasek, Krzysztof",
+    journal =      "Procedia Computer Science",
+    volume =       "64",
+    pages =        "2--9",
+    year =         "2015",
+    publisher =    "Elsevier"
 }
 
-%% No longer in use
-%%=========================================
-
-@book{rausand14,
-	Address = {Hoboken, NJ},
-	Author = {Rausand, Marvin},
-	Date-Added = {2016-10-24 14:39:00 +0100},
-	Publisher = {Wiley},
-	Title = {Reiability of Safety-Critical Systems: Theory and Applications},
-	Year = {2014}}
-
-@article{lundteigen08,
-	Author = {Lundteigen, Mary Ann and Rausand, Marvin},
-	Date-Added = {2011-06-16 13:34:45 +0200},
-	Date-Modified = {2011-06-16 13:34:45 +0200},
-	Journal = {Reliability Engineering and System Safety},
-	Pages = {1208--1217},
-	Title = {Spurious activation of safety instrumented systems in the oil and gas industry: Basic concepts and formulas},
-	Volume = {93},
-	Year = {2008}
+%% Claim about SMTs being dominant in the previous decades + information about encoder/decoder
+@article{wu2016google,
+    title =        "Google's Neural Machine Translation System: Bridging the Gap between Human and Machine Translation",
+    author =       "Wu, Yonghui and Schuster, Mike and Chen, Zhifeng and Le, Quoc V and Norouzi, Mohammad and Macherey, Wolfgang and Krikun, Maxim and Cao, Yuan and Gao, Qin and Macherey, Klaus and others",
+    journal =      "arXiv preprint arXiv:1609.0814",
+    year =         "2016"
 }
 
-@book{rausand04,
-	Address = {Hoboken, NJ},
-	Author = {Rausand, Marvin and H{\o}yland, Arnljot},
-	Date-Added = {2011-06-16 11:53:55 +0200},
-	Date-Modified = {2011-06-16 11:55:09 +0200},
-	Edition = {2nd},
-	Publisher = {Wiley},
-	Title = {System Reliability Theory: Models, Statistical Methods, and Applications},
-	Year = {2004}
-}
-
-@article{article-mori1992historical,
-    title={Historical review of OCR research and development},
-    author={Mori, Shunji and Suen, Ching Y and Yamamoto, Kazuhiko},
-    journal={Proceedings of the IEEE},
-    volume={80},
-    number={7},
-    pages={1029--1058},
-    year={1992},
-    publisher={IEEE}
-}
-
-@misc{misc-patent-handel,
-    title =         {United States Patent and Trademark Office},
-    url =           {http://pdfpiw.uspto.gov/.piw?Docid=01915993},
-    publisher =     {United States Patent and Trademark Office},
-    note =          "[Accessed: 2016-10-28]"
-}
-
-@misc{misc-patent-tauschek,
-    title =         {United States Patent and Trademark Office},
-    url =           {http://pdfpiw.uspto.gov/.piw?Docid=02026329},
-    publisher =     {United States Patent and Trademark Office},
-    note =          "[Accessed: 2016-10-28]"
-}
-
-@misc{misc-tauschek1935reading,
-    title =         {Reading machine},
-    author =        {Tauschek, G.},
-    url =           {https://www.google.ch/patents/US2026330},
-    year =          {1935},
-    month =         dec # "~31",
-    publisher =     {Google Patents},
-    note =          "[Accessed: 2016-10-28]"
+%% State of the art SMT example
+@inproceedings{watanabe07onlinelargemargin,
+    author =       "Taro Watanabe and Jun Suzuki and Hajime Tsukada and Hideki Isozaki",
+    title =        "Online large-margin training for statistical machine translation",
+    booktitle =    "In Proc. of EMNLP",
+    year =         "2007"
 }

@@ -34,7 +34,7 @@ Our input has the feature that they form a sequence. Both the values in the sequ
 
 Because the input forms a sequence, it is important that the entire sequence is read, and that we do not cut the sequence off at the end, removing important information that we need. Truncating or ignoring a values in the input sequence would result in mislearning. Instead of our model correctly identify subsequences that result i a single output value, the model attempts to find patters in the data that is not there. This would cripple the model and the overall accuracy may suffer due to contradicting sequences.
 
-We do also lack the concept of ``stop words" in our problem. Example \ref{eq:input_stop_words} illustrates an input with stop words, denoted as $\pi$. Using a stop word would make the problem easier to solve, as we would know within which \red{x} each character resides. In example \ref{eq:input_stop_words}, we have placed the stop word right before the beginning of a new character, instead of just the barriers of the character itself. This could potentially reduce ambiguity as we would now know for a fact that the letter I, if followed by an E, would always be the subsequence $[1, 7]$. Instead of relying on stop words, we want our model to find a pattern in the sequence data that makes sense based on the corresponding output. This pattern, if correctly predicted,
+We do also lack the concept of ``stop words" in our problem. Example \ref{eq:input_stop_words} illustrates an input with stop words, denoted as $\pi$. Using a stop word would make the problem easier to solve, as we would know within which boundaries each character resides. In example \ref{eq:input_stop_words}, we have placed the stop word right before the beginning of a new character, instead of just the barriers of the character itself. This could potentially reduce ambiguity as we would now know for a fact that the letter I, if followed by an E, would always be the subsequence $[1, 7]$. Instead of relying on stop words, we want our model to find a pattern in the sequence data that makes sense based on the corresponding output. This pattern, if correctly predicted,
 would not need explicit stop words, as the model should be able to find them implicitly.
 
 \begin{equation}
@@ -148,3 +148,8 @@ Sequence to sequence learning is a type of machine learning that falls outside t
 
 \subsection{Natural Language Processing}
 Using 
+
+
+\iffalse
+Alan Turing published his paper ``Computer Machinery and Intelligence" in 1950. In this paper he explained a game he called ``imitation game", in which a machine tries to impersonate a person via real-time written conversation. An interrogator communicates with a machine and a human and is trying to decide which is which. Turing suggested considering if a machine would win the imitation game, rather than asking the question of ``can machines think?". The game, as carried out via written text, means the computer have to be able to convert language text into a language it understand itself \citep{turing1950computing}.
+\fi
