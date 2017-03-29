@@ -1,7 +1,10 @@
 %% Main
 %%=========================================
 
-\documentclass[a4paper, openany]{book}
+\documentclass[pdftex,10pt,b5paper,twoside]{book}
+\linespread{1.5}
+\usepackage[lmargin=25mm,rmargin=25mm,tmargin=27mm,bmargin=30mm]{geometry}
+
 \input{packages}
 \input{settings}
 \input{macros}
@@ -16,11 +19,11 @@
 
 %%===================================
 
-\include{content/lookup/glossaries}
-\include{content/pre/abstract}
-\include{content/pre/sammendrag}
-\include{content/pre/acknowledgment}
-\include{content/pre/contents}
+\input{content/lookup/glossaries}
+\input{content/pre/abstract}
+\input{content/pre/sammendrag}
+\input{content/pre/acknowledgment}
+\input{content/pre/contents}
 
 %%===================================
 
@@ -29,34 +32,34 @@
 
 %%=========================================
 
-\include{content/parts/part1}
-\include{content/chapters/part1/1-introduction}
-\include{content/chapters/part1/2-methodology}
+\input{content/parts/part1}
+\input{content/chapters/part1/1-introduction}
+\input{content/chapters/part1/2-methodology}
 
 %%=========================================
 
-\include{content/parts/part2}
-\include{content/chapters/part2/3-problem_elaboration}
-\include{content/chapters/part2/4-background_theory}
-\include{content/chapters/part2/5-related_work}
+\input{content/parts/part2}
+\input{content/chapters/part2/3-problem_elaboration}
+\input{content/chapters/part2/4-background_theory}
+\input{content/chapters/part2/5-related_work}
 
 %%=========================================
 
-\include{content/parts/part3}
-\include{content/chapters/part3/6-development_process}
-\include{content/chapters/part3/7-architecture}
-\include{content/chapters/part3/8-experiments_results}
+\input{content/parts/part3}
+\input{content/chapters/part3/6-development_process}
+\input{content/chapters/part3/7-architecture}
+\input{content/chapters/part3/8-experiments_results}
 
 %%=========================================
 
-\include{content/parts/part4}
-\include{content/chapters/part4/9-evaluation}
-\include{content/chapters/part4/10-conclusion}
+\input{content/parts/part4}
+\input{content/chapters/part4/9-evaluation}
+\input{content/chapters/part4/10-conclusion}
 
 %%=========================================
 
 \appendix
-\include{content/other/glossary}
+\input{content/other/glossary}
 %%\include{content/other/appendix}
 
 %%=========================================
