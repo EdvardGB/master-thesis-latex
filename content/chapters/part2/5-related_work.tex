@@ -16,7 +16,7 @@ It was first as the later half of the 1970s and the early 1980s that machine tra
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.7\textwidth]{fig/background_theory/google_translate_rt.png}
-    \caption{The Google Translate app and its image translation feature. From Android's video ``Android: 100 Billion Words" (\url{https://www.youtube.com/watch?v=wIK0JKTQcI8})}
+    \caption{The Google Translate app and its image translation feature}
     \label{fig:google-translate-rt}
 \end{figure}
 
@@ -28,7 +28,7 @@ In recent years, online solution such as Google Translate\footnote{https://trans
 \begin{figure}[ht]
     \centering
     \includegraphics[width=0.7\textwidth]{fig/related_work/translation_de_en.pdf}
-    \caption{Phrase-based translation of a German sentence to English. Illustration from \citep{koehn2010statistical}}
+    \caption{Phrase-based translation of a German sentence to English}
     \label{fig:translation-phrase-based}
 \end{figure}
 
@@ -46,7 +46,7 @@ In 2016, Google published their work on Google's Neural Machine Translation syst
 \begin{figure}[ht]
     \centering
     \includegraphics[width=0.8\textwidth]{fig/related_work/encoder_decoder_en_it.pdf}
-    \caption{TODO}
+    \caption{General translation approach in neural machine translation from an English sentence to Italian}
     \label{fig:machine-translation-encoder-decoder-simple}
 \end{figure}
 
@@ -54,31 +54,72 @@ The encoder-decoder approach, as further explained in section \ref{sec:encoder-d
 
 \citep{bahdanau2014neural} proposed another model, which did not use the fixed-length vector that the encoder produces. They argued that the fixed-length vector was a bottleneck in improving the performance of the encoder-decoder approach. Their argument was that the neural network needed to compress all the necessary information of a source sentence into a fixed-length vector, which may make make it difficult to cope with longer sentences. This was already shown in the analysis by \citep{cho2014properties}, where a variant of \citep{cho2014learning} as well as a novel network dubbed \textit{gated recursive convolutional neural network} were evaluated. Their evaluation showed that both architectures performed relatively well on short sentences, but suffered significantly as the length of the sentences increased. The model proposed by \citep{bahdanau2014neural} instead learns to align and translate joinly. It does this by encoding the input sequence into a sequence of vectors and chooses a subset of these vectors adaptively while decoding the translation. This model outperformed the basic encoder-decoder significantly in their experiments.
 
+\iffalse
 \begin{itemize}
     \item Talk fast about ``ORDER MATTERS: SEQUENCE TO SEQUENCE FOR SETS"
     \item Talk about ``Addressing the Rare Word Problem in Neural Machine Translation", this can be in greater detail
-    \item At some point talk about something that also uses attetion. Needs to present this too.
+    \item At some point talk about something that also uses attention. Needs to present this too.
 \end{itemize}
+\fi
 
 %%=========================================
 
 \section{Neural Network}
-At the base of the neural machine translation systems are neural networks. The idea of models using artificial neurons, can be traced back to the 1940s. Since then, more sophisticated proposals and variants have been made from decade to decade. Artificial neural networks are an attempt at modeling the information process capabilities of nervous systems, found in the brain.
+At the base of the neural machine translation systems are neural networks. The idea of models using artificial neurons, can be traced back to the 1940s. Since then, more sophisticated proposals and variants have been made from decade to decade. Artificial neural networks are an attempt at modeling the information process capabilities of nervous systems, found in the brain. This is done by implementing mathematical models of neurons \citep{russell2010aimodernapproach}.
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.7\textwidth]{fig/related_work/nn_perceptron.pdf}
-    \caption{Illustration of a perceptron}
+    \includegraphics[width=0.8\textwidth]{fig/related_work/nn_perceptron.pdf}
+    \caption{Illustration of a mathematical model of a neuron}
     \label{fig:nn-perceptron}
 \end{figure}
 
+Figure \ref{fig:nn-rnn} illustrates a simple mathematical model for a neuron, often called a unit or a node. This unit ``fires" when a linear combination of its inputs exceeds some threshold. A neural network is a collection of many such units. The properties of a network is determined by its topology, as well as the properties of the units. Networks are constructed by directly linking nodes with each other. A link from unit \(i\) to unit \(j\) serves to propagate the activation \(a_{i}\) from \(i\) to \(j\). The strength and sign of the signal is determined by the numeric weight that is associated with the unit. A feed-forward network consists of units which has connections that only goes in one direction. These node receives input from the ``upstream" nodes, and delivers output to the ``downstream" nodes, forming a directed acyclic graph \citep{russell2010aimodernapproach}.
+
 \subsection{Recurrent Neural Network}
+Another way to construct a neural network is by using loops. A recurrent neural network \citep{rumelhart1988learning} is a network much like a feed-forward network, but in addition to feeding ``downstream" nodes, nodes also feeds its output back into its own inputs. This type of architecture can support a short-term memory, a feature that is necessary in problems where input also depends on previous input \citep{russell2010aimodernapproach}. For example would such characteristics be necessary if we fed the network words in a sentence, and we asked the network to predict the next word it had not yet seen. 
+
 \begin{figure}[ht]
     \centering
     \includegraphics[width=0.7\textwidth]{fig/related_work/nn_recurrent.pdf}
-    \caption{RNN unrolled}
+    \caption{A compact and an unfolded recurrent neural network}
     \label{fig:nn-rnn}
 \end{figure}
+
+We can consider RNNs as a type of loop, and we can also unfold it into a complete sequence, as illustrated in Figure \ref{fig:nn-rnn}. In the figure, \(x_{t}\) is the input, and \(s_{t}\) is the hidden state of the recurrent network at time step \(t\). The hidden state functions as its memory as it is reused in the next time step, along with the input of the current time step. It is also important to note that the network shares the same weights \(W\) across several time steps.The recurrent neural network has input to hidden connections parametrized by a weight matrix \(U\), as well as hidden-to-hidden recurrent connections parametrized by a weight matrix \(W\). In addition, the network has hidden-to-output connection parametrized by a weight matrix \(V\) \citep{goodfellow2016deeplearning}.
+
+\begin{align}
+    \begin{split}\label{eq:rnn-eq-1}
+        h_{t}&=\sigma(b+Ws_{t-1}+Ux_{t})
+    \end{split}\\
+    \begin{split}\label{eq:rnn-eq-2}
+        \hat{y_{t}}&=\sigma(c+Vh_{t})
+    \end{split}
+\end{align}
+
+Equations \ref{eq:rnn-eq-1} and \ref{eq:rnn-eq-2} are slightly modified from \citep{goodfellow2016deeplearning}, and defines the forward propagation of the model illustrated in Figure \ref{fig:nn-rnn}. The parameters \(b\) and \(c\) are the bias vectors. Computing the gradient in a recurrent neural network is done with a back-propagation algorithm called back-propagation through time \citep{werbos1990backpropagation}. 
+
+\subsection{Long-Short Term Memory}
+The Long-Short Term Memory (LSTM) is a recurrent neural network architecture. It was first purposed by \citep{hochreiter1997long}, and was meant to address some of the shortcomings of more basic recurrent neural network architectures. \citep{bengio1994learning} showed that recurrent neural network faced an increasingly difficult problem as the duration of the dependencies to be captures increases. While the architecture could take into account short-term dependencies rather well, long-term dependencies were increasingly difficult to learn. The LSTMs were explicitly designed to avoid the long-term dependency problem. 
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=1\textwidth]{fig/related_work/rnn_flow.pdf}
+    \caption{Flow of a standard RNN}
+    \label{fig:nn-rnn-flow}
+\end{figure}
+
+Figure \ref{fig:nn-rnn-flow} illustrates the chain like structure of standard recurrent neural network. Its architecture is relatively simple, containing only one layer. In this illustration our layer uses the hyperbolic tangent function (tanh).
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=1\textwidth]{fig/related_work/lstm_flow.pdf}
+    \caption{Flow of a LSTM cell}
+    \label{fig:nn-lstm-flow}
+\end{figure}
+
+Figure \ref{fig:nn-lstm-flow} illustrates a similar chain structure, but that of a LSTM cell. The LSTM module has a different structure, and instead of having a single neural network layer, like the simpler RNN, it has four layers.
+
 
 %%=========================================
 
