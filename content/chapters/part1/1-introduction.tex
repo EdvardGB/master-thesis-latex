@@ -1,7 +1,7 @@
 %% Introduction
 %%=========================================
 
-\chapter{Introduction and Background}
+\chapter{Introduction}
 \label{ch:introduction}
 We find ourselves in the middle of the digital age. As the industrial revolution gave us new manufacturing processes at the middle of the seventeenth century, the digital revolution gave us digital electronics, most noticeable the computer \citep{freeman2001time}. With the arrival of high-performance computers and high speed networks, use of digital technologies increased rapidly. The increase in storage capacities gave us the possibilities to store lots of information digitally for preservation. Digital technologies enable information to be created, manipulated, disseminated, located, and stored with increasing ease \citep{lee2002state}. In addition, digital storage usually takes up less physical space compared to the analogue counterpart, and its storage medium is usually cheaper \citep{morris2003evolution}. Although hard drives also are exposed to ``wear and tear" that deteriorate it, analogue information, such as a book, usually deteriorate much faster. Due to these benefits, a lot data that used to be analogue finds new life in digital formats. Photos, audio, video, and books are just a few types of data that are commonly found digitally these days.
 
@@ -29,10 +29,40 @@ This has led us to believe that the problem of OCR is not solved, and there is s
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.7\textwidth]{fig/chapter1/damaged.png}
+    \includegraphics[width=0.8\textwidth]{fig/chapter1/damaged.png}
     \caption{Badly damaged text missing a lot of its original data}
     \label{fig:damaged-text}
 \end{figure}
+
+\subsection{Read World Example}
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.7\textwidth]{fig/chapter1/notch_tweet.png}
+    \caption[Print screen of Tweet from notch]{Print screen of Tweet from notch}
+    \label{ref:notch_twitter}
+\end{figure}
+
+Another example of ``damaged" text can be found in a Tweet from Markus ``Notch" Persson. Persson is a Swedish video game programmer and designer, and is most famous for crating the highly praised game Minecraft. He was a inveterate user of Twitter, and used to hint or tease upcoming features of the game. Figure \ref{ref:notch_twitter} contains a Tweet from Persson, Tweeted on June 12th 2011.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.8\textwidth]{fig/chapter1/notch_eclipse.png}
+    \caption{Blurred image of Minecraft 1.7 changelog from @notch's Tweet}
+    \label{fig:notch_imgur}
+\end{figure}
+
+The image he is linking to can be seen in Figure \ref{fig:notch_imgur}. It is a print screen of what looks like a text editor or IDE. The image is heavily blurred, and cropped, but some of the text is still partially visible, like the lower portion of the file names in the tab pane at the top of the image. 
+
+The most interesting part about this image is the text in the tab pane, where only the lower portion of the characters are visible. When this image circulated the Internet, one user was able to identify the text in the tabs. He installed the IDE Persson used, and compared the default font in the program to the image. His findings can be seen in in Figure \ref{fig:notch_eclipse_decoded}. More than four months later, when version 1.7 was released, it was confirmed that the decoding was correct, with the introduction of big mushrooms in the game\footnote{Experience Orbs were postponed, and introduced in the 1.8 update instead.} \citep{misc-minecraft.172-changelog}.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.8\textwidth]{fig/chapter1/notch_eclipse_decoded.png}
+    \caption{Decoding the blurred image from Notch}
+    \label{fig:notch_eclipse_decoded}
+\end{figure}
+
+The decoding that was done poses an interesting problem. Can characters and words be recognized given only a very small portion of the entire glyph? The decoding in Figure \ref{fig:notch_eclipse_decoded} was done manually by comparing each letter with what was visible in the image, but could such recognition be done automatically? This question was used as the basis for this master thesis.
 
 %%=========================================
 
@@ -52,15 +82,15 @@ Naturally, this approach has its pros and cons. First of all, all the data in th
 The overarching goal of this master thesis is:
 
 \begin{description}
-    \item[Goal]{\textit{Can machine learning use signature sequences to correctly predict the original characters in a word?}}
+    \item[Goal]{\textit{Is machine learning unable to use signature sequences to recognize words?}}
 \end{description}
 
 To expand on the goal stated above, we also have the following research questions that we hope to answer during the work on this master thesis.
 
 \begin{description}
     \item[Research Question 1]{\textit{Does ambiguity in character signature sequences impact recognition rates?}}
-    \item[Research Question 2]{\textit{Does different fonts, font characteristics, font styles, and other typesetting factors affect recognition rates?}}
-    \item[Research Question 3]{\textit{Can a signature sequence based model handle multiple fonts at the same time?}}
+    \item[Research Question 2]{\textit{Can a signature sequence based model handle multiple fonts at the same time?}}
+    \item[Research Question 3]{\textit{Is a signature sequence based model unable to handle noise?}}
 \end{description}
 
 With an approach like the one we present, there are many questions that can be asked about the potential model. Trying to make the research done in this master thesis as valuable as possible, we have focused our research questions on areas that are relevant for further research. Instead of focusing on narrow and niche questions, we have focused on more general and overarching ones. The research questions and their meaning are explained in greater detail in section \ref{sec:research_questions_and_approach}.

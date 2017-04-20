@@ -3,4 +3,23 @@
 
 \chapter{Architecture}
 \label{ch:architecture}
-\red{TODO}
+As presented in Chapter \ref{ch:development_process}, we implemented three different models for our experiments. This chapter explains the underlying architecture and details of these models. Some of the details have also been explained in Chapter \ref{ch:background} and \ref{ch:related_work}.
+
+%%=========================================
+
+\section{Framework Usage}
+Two of our models are implemented using {\tt Tensorflow}, while the last uses {\tt Keras}. Keras
+
+%%=========================================
+
+\section{Embedding}
+All three models used embedding for the input. Embedding, also known as a type of vector space model, is a way to map vocabulary to vectors of real numbers. The concept of distributed representation for symbols dates back several decades \citep{hinton1986learning}, although the most common approaches usually follows a more modern approach \citep{bengio2003neural}. The goal of word embedding is to find a representation that did not suffer from \emph{curse of dimensionality}, problems that arise when organizing data in high-dimension space. Such representation is important in problems with a very big vocabulary. In our problem, the vocabulary is relatively small, and we used embedding most as a convenient way to represent our data.
+
+As illustrated in section \ref{sec:evaluating_problem_input_and_output}, our input sequences were first encoded as whole integers, where negative valued ones indicated a series of black pixels, and a positive value indicated a series of white pixels. Because the embedding layer required whole integer index-values, the sequences were re-indexed so that their values started from \(0\) and increased by one to the final index which was the size of the vocabulary minus one (\(|V| - 1\)). This single value representation of each value in the sequence was then fed to the embedding. 
+
+In vocabulary where relationships are defined, you may derive to a word by doing some mathematical operation on two or more other words, for example:  \(\vec{\text{king}}+\vec{\text{woman}}=\vec{\text{queen}}\). In our models, we let the weights for the embedding be initialized with an uniform distribution over the half-open interval \(\big[-\sqrt{3}, \sqrt{3}\big)\), essentially placing each value somewhere randomly in the vector space. This is a common practice using embedding where the relationships between the individual values are not pre-calculated. During training, the embedding layer is fully trainable, which means that the training algorithm may alter the weights associated with the embedding values, moving it around in the vector space. This way, the embedding representation for the values may be grouped closer, or moved further away from each other, defining some kind of relationship that is not explicitly expressed. The use of embedding gave a increase in overall accuracy while running our model, compared using a one-hot vector representation. This may be due to the increased express-ability that embedding gives over one-hot vectors, where no relationship between one value and another is defined. In all three models, the embedding is expressed as a vector with \(1024\) values. 
+
+%%=========================================
+
+\section{Accuracy Metric}
+Calculating our accuracy was done by a method ``categorical\_accuracy"

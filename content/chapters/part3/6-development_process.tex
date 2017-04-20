@@ -2,4 +2,84 @@
 %%=========================================
 
 \chapter{Development Process}
-\red{TODO}
+\label{ch:development_process}
+This chapter presents how the development of our model was conducted. As established in Chapter \ref{ch:methodology}, we follow a research strategy where we build our model iteratively.
+
+%%=========================================
+
+\section{First Iteration -- Ground Work And Exploration}
+The first iteration in the cycle included a lot ground work and some exploration. The work done in this iteration was mostly for exploration to back up claims from the preliminary research phase.
+
+\subsection{Construction Pipeline}
+\label{sec:construction_pipeline}
+Because we had no data set available to train, validate, and test our model on, this had to be created manually. Creating these sets were done by implementing a configurable pipeline system that involved processing over several steps:
+
+\begin{enumerate}
+    \item Build a complete dictionary of words, make sure they only include allowed characters.
+    \item Select random words from the list and construct training, validation, and test sets. Make sure no words are picked that exceeds the maximum word length configuration. Remove duplicated words both across lists, and within the same list as per configured.
+    \item Using an image library, write the text from the lists on individual (empty) canvases, with the specified font type and font size.
+    \item Find the boundaries of the characters and crop the text to remove the excess space on the canvas. The boundaries needs to be the same across canvases, so characters have the same baseline location in all of them.
+    \item As configured, apply the masks and extract the signature values.
+    \item Save the signature values for later.
+\end{enumerate}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{fig/development_process/pipeline.pdf}
+    \caption{Illustration of pipeline process from canvas to signature}
+    \label{fig:development-pipeline}
+\end{figure}
+
+Figure \ref{fig:development-pipeline} illustrates the steps described above. The leftmost image is the text written on a big canvas. This canvas has a predefined size, as we are unable to predict the actual size of text before it is written out with our image library. This canvas is then cropped based on the boundaries calculated by the individual characters. As we can see in the middle image, not all the characters are ``standing" on the image outline, which is a result of how our image library handles writing text. The rightmost image is the extracted signature from the middle image. The signatures actual height is one pixel, and is extracted fourteen pixels from the bottom. It was expanded vertically for increased visibility. The signature sequence is then extracted by iterating over the pixels in the image, and the final sequence is stored for later. The sequence for the word ``AMPLITUDES", which is ten letters long, has a length of 31.
+
+\subsection{Transformation system}
+The process explained above only needed to be executed every time we wanted new data sets. Usually there was no need to create new sets and the same words and signatures could be reused. However, during development of various models, their expected input and output formats varied. Another system was created to transform the signatures from the previous pipeline into the expected input and output formats. This system, called the ``transformator", accepted a list of handlers that were executed in sequence. Each handler did a modification to either the input or the output format, and the data was propagated to the next handler. This way, the handlers could easily be reordered or swapped if a model expected another format. Typical tasks included padding the input to a given width, rescaling the input to whole integers, or turning the output into a one-hot matrix.
+
+\subsection{First Model Experimentation}
+After researching state of the art solutions in the area of machine translation, various sourced had made it very clear that LSTMs alone could not handle a sequence to sequence problem. \citep{sutskever2014sequence} stated in the description of their purposed model:
+
+\begin{quote}
+    The RNN can easily map sequences to sequences whenever the alignment between the inputs the outputs is known ahead of time. However, it is not clear how to apply an RNN to problems whose input and the output sequences have different lengths with complicated and non-monotonic relationships.
+\end{quote}
+
+In our particular problem, this alignment is not know, and this makes it difficult for our model to map input to output in a sensible way. One input of our problem does not necessarily map directly to an output. This creates a alignment difference between input and output where the input in most cases will be much wider than the output. \red{Add more here.}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{fig/development_process/lstm-alignment.pdf}
+    \caption{Alignment between input and output in a recurrent neural network}
+    \label{fig:lstm-alignment}
+\end{figure}
+
+Figure \ref{fig:lstm-alignment} illustrates the difference in the alignment between input and output, reusing the data from Table \ref{eq:input_stop_words} without stop words. The alignment difference means that the first output of the model depends on the input it has yet to see, which the model can not know. \red{Shifting or drop this?} The difficulties with the alignment made projecting output through a LSTM using its hidden state would be meaningless. 
+
+Testing a LSTM model that simply projected its hidden states to the output gave very poor results. It was clear, both from theory and from results, that such an approach would not be suitable for our problem. We already knew that the encoder-decoder architecture did not have this problem, and we noted for the next iteration how to proceed with the development of our model. 
+
+%%=========================================
+
+\section{Second Iteration -- Projecting Vector}
+The first iteration made it clear that simply projecting hidden states of LSTMs was not suitable for our problem. The second iteration used an approach that repeats a vector across time steps.
+
+The model, called {\tt VectorProjection}, consists of two LSTMs. The first LSTM encodes the entire input and outputs its final hidden state. This hidden state is the repeated in the dimension of time, and inputted into a new LSTM. The benefit of this approach is that we can define the width of the second LSTM to the width of our output. This is not possible when projecting the LSTMs hidden states, as described in the previous section, as the LSTM will have the same width for input and output.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.7\textwidth]{fig/development_process/lstm-vector-projection-encoder.pdf}
+    \caption{A LSTM outputting its final hidden state after reading a sequence}
+    \label{fig:lstm-vector-projection-encoder}
+\end{figure}
+
+Figure \ref{fig:lstm-vector-projection-encoder} illustrates a regular LSTM that reads an input sequence and output its final hidden state. The output vector has a length equal to the width of the LSTM. As illustrated in Figure \ref{fig:lstm-vector-projection-decoder}, the hidden state from the LSTM is repeated \(n\) times, where \(n\) is the length of the output sequence. In this example, out output has a length of three characters, plus a special ``end of line" character. The resulting matrix of the repeated vector is then fed to another LSTM that reads each time step and output its hidden state for each iteration.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.5\textwidth]{fig/development_process/lstm-vector-projection-decoder.pdf}
+    \caption{Repeating the output from a LSTM and feeding it to another LSTM}
+    \label{fig:lstm-vector-projection-decoder}
+\end{figure}
+
+The vector approach is different from the one described in the previous iteration, and does not suffer from the same problem with alignment. Because we read the entire input sequence before anything is outputted, we no longer output anything that is dependent on data in future time steps. The vector from the first LSTM has essentially encoded the temporal dependencies in a single representation vector. This is not that different from how encoder-decoders create their fixed width context vector. The main difference between this approach and general encoder-decoders is that the output in the last LSTM is not fed back as input. This may cause problems because the output is not only dependent on the encoded input sequence, but also what it has already outputted.
+
+%%=========================================
+
+\section{Third Iteration -- Encoder-Decoders}

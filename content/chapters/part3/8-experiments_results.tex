@@ -3,4 +3,14 @@
 
 \chapter{Experiments and Results}
 \label{ch:experiments_and_results}
-\red{TODO}
+
+\section{Data Set}
+Data sets were created using the pipeline process explained in \ref{sec:construction_pipeline}. Our word list had a total of 356,719 unique words, populated by three open sourced word lists:
+
+\begin{enumerate}
+    \item sil.org\footnote{\url{http://www-01.sil.org/linguistics/wordlists/english/}} (109,582 words)
+    \item Public GitHub repository dwyl/english-words\footnote{\url{https://github.com/dwyl/english-words}}, only the file ``words.txt" (354,985 words) 
+    \item The English dictionary (only en\_US) for Apache OpenOffice\footnote{\url{http://extensions.openoffice.org/en/project/english-dictionaries-apache-openoffice}}. Preprocessed (39,908 words)
+\end{enumerate}
+
+The lists are filtered so only word consisting of letters are added. All words longer than one character is added to the final word set list. Finally, duplicated are removed.

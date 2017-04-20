@@ -3,7 +3,7 @@
 
 \chapter{Problem Elaboration}
 \label{ch:problem}
-Before attempting to solve a problem, it is important that you know exactly what the problem is. In this chapter, we will expand on the problem definition given in the introduction chapter. We examine why the problem may be ambiguous and what that could mean for our system. We will also evaluate different factors and challenges and explain how this may affect our system and how well it functions. This chapter also explains the research questions in greater detail.
+Before attempting to solve a problem, it is important that you know exactly what the problem is. In this chapter, we will expand on the problem definition given in the introduction chapter. We examine why the problem may be ambiguous and what that could mean for our system. We will also evaluate different factors and challenges and explain how this may affect our system and how well it functions. Lastly we will look closer at how our problem behaves, and what the relationship between the input and output means. Based on this, we will try to find a conceptual approach to solving the problem.
 
 %%=========================================
 
@@ -82,7 +82,6 @@ There is a chance our input data may end up being ambiguous, or be very difficul
 
 Consider the lower signature in Figure \ref{fig:thesis-signature-comparison}. Because Arial is monolinear, we know that the strokes on the ``C" and the ``T" have equal width. The ``T" could be represented as a series of some white pixels, three black pixels, and optionally more white pixels. We can not know for sure just how many white pixels is before and after the three black pixels, because this may vary depending on that character is before and after the ``T". Now, if our system learns this definition, it will incorrectly label various other characters, such as parts of the ``C" as a potential ``T". This means that our system has to learn the recognize a huge variety of sequences and correctly map them to a output character.
 
-\newpage
 \begin{table}[H]
     \centering
     \begin{tabular}{|l|l|l|}
@@ -115,3 +114,65 @@ Table \ref{table:signature_sequence_example} holds the actual signatures and seq
 We also have to remember that the sequences in this table are just the sequences that corresponds to valid characters. Once we have multiple characters after each other, with the natural spacing between them, many new sequences also have to be considered. 
 
 This all boils down to the fact that the complete sequences for words may have many repeated subsequences, where some of them are individual letters, while other are parts of multiple letters. This substantiates that correctly recognizing letters in words using signatures is a difficult problem that requires a system that is able to learn beyond simply reorganizing parts of the sequences.
+
+%%=========================================
+
+\section{Evaluating Problem Input and Output}
+\label{sec:evaluating_problem_input_and_output}
+In our particular problem we have a input that is a matrix or a vector of binary data. The binary input denotes the color of a particular pixel at the given location in our ``signature". We want the output to be what character(s) the matrix or vector is made out of. For example, if our characters are the upper cased letters in the English language, we could want our output to be in the range 1 to 26, denoting A to Z. 
+
+\begin{figure}[h]
+    \begin{equation}
+        \label{eq:input_output_example}
+        \begin{aligned}
+           \vec{\text{inputRaw}}               &= \lbrack 4W, 3B, 7W, 3B, 8W, 3B, 18W, 3B, 23W, 3B, 13W, 14B, 6W, 3B, 10W, 3B \rbrack \\
+           \vec{\text{inputEncoded}}           &= \lbrack 4, -3, 7, -3, 8, -3, 18, -3, 23, -3, 13, -14, 6, -3, 10, -3 \rbrack \\
+           \vec{\text{outputEncoded}}          &= \lbrack 1, 12, 12, 9, 5, 4 \rbrack \\
+           \text{output}                       &= \text{ALLIED}
+        \end{aligned}
+    \end{equation}
+    \captionsetup{labelformat=empty}
+    \caption{Input and output example}
+\end{figure}
+
+\ref{eq:input_output_example} contains an example with inputs and outputs for the word ``ALLIED". Note that in this example, we have also encoded the input to whole integers. We did this by negating the lengths of sequences of black pixels. This means that four black pixels are encoded as $-4$. Similarity, sequences of white pixels were not altered, so 18 white pixels would be encoded as $18$. This encoding was done to have easier data to work with. 
+
+\subsection{Input Format}
+Our input has the feature that they form a sequence. Both the values in the sequence, and the ordering of the sequence is crucial for prediction. This is fundamentally different from other problems such as traditional image recognition, where the exact location of a pattern is not important.
+
+Because the input forms a sequence, it is important that the entire sequence is read, and that we do not cut the sequence off at the end, removing important information that we need. Truncating or ignoring a values in the input sequence would result in mislearning. Instead of our model correctly identify subsequences that result i a single output value, the model attempts to find patters in the data that is not there. This would cripple the model and the overall accuracy may suffer due to contradicting sequences.
+
+\begin{figure}[h]
+    \begin{equation}
+        \label{eq:input_stop_words}
+        \begin{aligned}
+           \vec{\text{inputEncoded}}                &= \lbrack -3, 23, \pi, -3, 13, \pi, -14, \pi \rbrack \\
+           \vec{\text{outputEncoded}}               &= \lbrack 12, 9, 5 \rbrack \\
+           \text{output}                            &= \text{LIE}
+        \end{aligned}
+    \end{equation}
+    \captionsetup{labelformat=empty}
+    \caption{Input with stop words}
+\end{figure}
+
+We do also lack the concept of ``stop words" in our problem. Example \ref{eq:input_stop_words} illustrates an input with stop words, denoted as $\pi$. Using stop words may make the problem easier to solve, as as we would know within which boundaries each character resides. In example \ref{eq:input_stop_words}, we have placed the stop word right before the beginning of a new character, instead of just the barriers of the character itself. This could potentially reduce ambiguity as we would now know for a fact that the letter I, if followed by an E, would always be the subsequence \([-3, 13]\). Instead of relying on stop words, we want our model to find a pattern in the sequence data that makes sense based on the corresponding output. This pattern, if correctly predicted, would not need explicit stop words, as the model should be able to find them implicitly.
+
+\subsection{Output Format}
+As with the input, our output also form a sequence. Both the values in the sequence, and the ordering of the sequence, is important. The words `HELLO` and `HLLOE` contains the same letters, but have a different meanings. Understanding that both the individual values in the output sequence, as well as the placement of each of them, is important for understanding how our problem is different from many others.
+
+%%=========================================
+
+\section{Translation}
+We have now considered the input and output separately. Considering them ``together" we can see the relationship between the two. Sequences and subsequences in the output results in an output sequence or single output value. We can look at this process as a type of translation. We ``translate" the input sequences of language \(\alpha\) into a output sequence of language \(\beta\). It is irrelevant that the actual input and output are not defined language with linguistic properties. As long as there is a relationship between the two ``languages", the task may be considered as a type of translation between them. Figure \ref{fig:number_translation} illustrates the translation between our two languages, reusing the data from Example \ref{eq:input_stop_words}. The values in the translated language is the same as the encoded output in \ref{eq:input_stop_words}, that is, the index value for each letter in the English language, where ``A" is one, ``B" is two and so on.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.7\textwidth]{fig/background_theory/number_translation.pdf}
+    \caption{Illustrative translation between our two languages}
+    \label{fig:number_translation}
+\end{figure}
+
+\subsection{Dissimilarities to Typical Translation Problems}
+While our problem may be very similar to that of translation, it also differs in several ways. Common for almost all of these differences is that our languages are very simple. This means that we can simplify or completely ignore tasks that are otherwise important in more complex translation problems. For example, the task of ``part-of-speech tagging" is to determine what part of speech words in sentences belongs to. This means to determine if a word is a noun, verb, adjective, and so on. This is a complex task, and a task that is important to get right. In our constructed ``languages", we have no concept of such speech groups. Our ``words" has one, and only one, meaning, regardless of context. In addition, translating a sentence from one spoken language to another spoken language does not give any guarantees in the ordering of the words. Words that may be directly translated between the languages may end up in another order in the other language. This is due to how languages structure their sentences. For our language, we know that the ordering will always be the same. Although the length of the language will vary between input and output, we know that a certain value in the input will not affect an output that it does not map to. Reusing the input and output from example \ref{eq:input_stop_words}, we know that the input sub sequence \([-3, 23]\) maps to the output \(12\), and it can not affect the values of \(9\) or \(5\).
+
+These observations makes it clear that although our problem is related to translation, the nature of the translation is different from more traditional problems. These differences will make it interesting to see how well a translation based model can handle our problem.

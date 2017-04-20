@@ -13,15 +13,15 @@ To recap from section \ref{sec:goals_and_research_questions}, we presented our r
 
 \begin{description}
     \item[Research Question 1]{\textit{Does ambiguity in character signature sequences impact recognition rates?}}
-    \item[Research Question 2]{\textit{Does different fonts, font characteristics, font styles, and other typesetting factors affect recognition rates?}}
-    \item[Research Question 3]{\textit{Can a signature sequence based model handle multiple fonts at the same time?}}
+    \item[Research Question 2]{\textit{Can a signature sequence based model handle multiple fonts at the same time?}}
+    \item[Research Question 3]{\textit{Is a signature sequence based model unable to handle noise?}}
 \end{description}
 
 Concerning \textbf{RQ1}, we knew ambiguity could be a problem for the general problem we were trying to solve. This was made clear early in testing and is expanded on further in section \ref{sec:ambiguous_input}. To answer this research question we would need to conduct tests and experiments where we compare sequences with and without ambiguities to see how the differences impact the recognition rates.
 
-Answering \textbf{RQ2} could also be done in similar fashion as the previous research question. Running multiple tests with different combinations of fonts, their characteristics, styles etc would give answer to just how much recognition rates were affected. These factors are explained more in detail in sections \ref{sec:tuning_input_data}, \ref{sec:use_of_fonts}, and \ref{sec:other_factors}.
+Answering \textbf{RQ2} could also be done in similar fashion as the previous research question. Running multiple tests with words written in multiple fonts would answer this. Sections \ref{sec:tuning_input_data}, \ref{sec:use_of_fonts}, and \ref{sec:other_factors} expands further on how the typography of fonts may affect recognition.
 
-Finally, answering \textbf{RQ3} would also require running a series of tests and experiments to see how the rates are affected.
+Finally, answering \textbf{RQ3} would also require running a series of tests and experiments to see how the rates are affected while tuning the amount of introduced noise.
 
 %%=========================================
 
@@ -124,3 +124,8 @@ We created meaningful hypothesis related to the current tentative solution for a
 Data generation methods is the means by which we produce the empirical data on which we evaluate our research. As state by \citep{oates2005researching}, many researchers who choose to use the design and creation strategy pay little attention to using properly the various data generation methods. Reason for this may be because the artefact that is developed needs to be tested in a specific way. Evaluation of a system like the one we wish to develop, is usually done by training and testing it on sets of data. Such data generation methods falls outside the regular approach as presented in Figure \ref{fig:model_research_process}.
 
 Data analysis based on the data from our tests will be done quantitatively. This means that our data and evidence is based on numbers. The data will be compared, and analysed using tables, charts and graphs. Developing a iterative system like we are doing, this type of analysis would make it easier to compare numbers, behavior and progression.
+
+\vspace{5mm}
+\begin{note}
+    In this chapter we have used terms such as artefacts and instantiantions to explain the system we are going to develop. For the rest of the thesis we will use more common industry terms such as model or system. These terms are not to be mixed with similar terms used in this chapter. 
+\end{note}
