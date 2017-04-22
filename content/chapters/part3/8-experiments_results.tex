@@ -14,3 +14,21 @@ Data sets were created using the pipeline process explained in \ref{sec:construc
 \end{enumerate}
 
 The lists are filtered so only word consisting of letters are added. All words longer than one character is added to the final word set list. Finally, duplicated are removed.
+
+%%=========================================
+
+\section{Results}
+Dolor sit amet
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l|l|l|l|}
+        \hline 
+                                           & \textbf{Small data set}         & \textbf{Medium data set}        & \textbf{Big data set}           \\ \hline
+        \textbf{VecProj}                   & xx.yy\%                         & xx.yy\%                         & xx.yy\%                         \\ \hline
+        \textbf{EncDecReg}                 & \textbf{xx.yy\%}                & xx.yy\%                         & xx.yy\%                         \\ \hline
+        \textbf{EncDecAtt}                 & xx.yy\%                         & \textbf{xx.yy\%}                & \textbf{xx.yy\%}                \\ \hline
+    \end{tabular}
+    \caption{Test accuracy for each model on each test set, with the best results for each test set highlighted}
+    \label{table:accuracy_model_data_sets}
+\end{table}

@@ -42,7 +42,7 @@ After researching state of the art solutions in the area of machine translation,
     The RNN can easily map sequences to sequences whenever the alignment between the inputs the outputs is known ahead of time. However, it is not clear how to apply an RNN to problems whose input and the output sequences have different lengths with complicated and non-monotonic relationships.
 \end{quote}
 
-In our particular problem, this alignment is not know, and this makes it difficult for our model to map input to output in a sensible way. One input of our problem does not necessarily map directly to an output. This creates a alignment difference between input and output where the input in most cases will be much wider than the output. \red{Add more here.}
+In our particular problem, this alignment is not know, and this makes it difficult for our model to map input to output in a sensible way. One input of our problem does not necessarily map directly to an output. This creates an alignment difference between input and output where the input in most cases will be much wider than the output. This is exactly the problem pointed out by \citep{sutskever2014sequence}.
 
 \begin{figure}[H]
     \centering
@@ -83,3 +83,7 @@ The vector approach is different from the one described in the previous iteratio
 %%=========================================
 
 \section{Third Iteration -- Encoder-Decoders}
+With the first model developed during the previous iteration, this iteration focused on developing fully fleshed out encoder-decoder models. We knew this would could likely be the best performing model based on the studies conducted earlier. All research pointed in the direction of an encoder-decoder model for a problem similar to ours. The main reason we had not skipped directly to testing one of these out what for the sake of the ``design and creation" and its iteratively approach to solving problems. The earlier iterations had also given us valuable insights in the nature of our problem.
+
+There were developed two separate models in this iteration. These were encoder-decoders with and without attention. The model without attention would project the 
+

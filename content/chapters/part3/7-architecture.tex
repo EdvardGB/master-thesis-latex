@@ -7,17 +7,54 @@ As presented in Chapter \ref{ch:development_process}, we implemented three diffe
 
 %%=========================================
 
-\section{Framework Usage}
-Two of our models are implemented using {\tt Tensorflow}, while the last uses {\tt Keras}. Keras
+\section{Programming Language and Frameworks}
+The entire project was implemented in Python. Python was the primary language because it has a number of great open-source software libraries for machine learning. It is also relatively fast and easy to write, which meant that implementing the supporting systems, such as the generation of data sets, were no problem.
+
+Keras\footnote{\url{https://www.keras.io}} was first used as the neural network API. It is a very simple wrapper around other back-ends such as Tensorflow\footnote{\url{https://www.tensorflow.org}} and Theano\footnote{\url{http://deeplearning.net/software/theano/}}. The simplicity of Keras made it easy to implement and experiment with various models. The earlier iterations of the development benefited immensely from the simpliciy that Keras provided.
+
+In later iterations, more advanced and customizable models were necessary, specifically models that used the encoder-decoder architecture. Keras had some add-ons that implemented this, but we struggled with it being incompatible with more recent versions of Keras and the back-ends. It also turned out that Tensorflow provided encoder-decoder solutions via their {\tt legacy\_seq2seq} contrib module. An option was to develop the encoder-decoder architecture as a Keras add-on ourselves, but as Tensorflow provided them almost out of the box, we decided to just use the Tensorflow modules. Because of this we have one model that is based on Keras (but uses the Tensorflow as its back-end), and two models that are implemented directly in Tensorflow.
 
 %%=========================================
 
-\section{Embedding}
+\section{Common Architecture}
+Despite the three models being totally separated from each other, they have a few things in common. This section highlights some of the configurations that apply to all the models.
+
+\subsection{Embedding}
 All three models used embedding for the input. Embedding, also known as a type of vector space model, is a way to map vocabulary to vectors of real numbers. The concept of distributed representation for symbols dates back several decades \citep{hinton1986learning}, although the most common approaches usually follows a more modern approach \citep{bengio2003neural}. The goal of word embedding is to find a representation that did not suffer from \emph{curse of dimensionality}, problems that arise when organizing data in high-dimension space. Such representation is important in problems with a very big vocabulary. In our problem, the vocabulary is relatively small, and we used embedding most as a convenient way to represent our data.
 
 As illustrated in section \ref{sec:evaluating_problem_input_and_output}, our input sequences were first encoded as whole integers, where negative valued ones indicated a series of black pixels, and a positive value indicated a series of white pixels. Because the embedding layer required whole integer index-values, the sequences were re-indexed so that their values started from \(0\) and increased by one to the final index which was the size of the vocabulary minus one (\(|V| - 1\)). This single value representation of each value in the sequence was then fed to the embedding. 
 
-In vocabulary where relationships are defined, you may derive to a word by doing some mathematical operation on two or more other words, for example:  \(\vec{\text{king}}+\vec{\text{woman}}=\vec{\text{queen}}\). In our models, we let the weights for the embedding be initialized with an uniform distribution over the half-open interval \(\big[-\sqrt{3}, \sqrt{3}\big)\), essentially placing each value somewhere randomly in the vector space. This is a common practice using embedding where the relationships between the individual values are not pre-calculated. During training, the embedding layer is fully trainable, which means that the training algorithm may alter the weights associated with the embedding values, moving it around in the vector space. This way, the embedding representation for the values may be grouped closer, or moved further away from each other, defining some kind of relationship that is not explicitly expressed. The use of embedding gave a increase in overall accuracy while running our model, compared using a one-hot vector representation. This may be due to the increased express-ability that embedding gives over one-hot vectors, where no relationship between one value and another is defined. In all three models, the embedding is expressed as a vector with \(1024\) values. 
+In vocabulary where relationships are defined, you may derive to a word by doing some mathematical operation on two or more other words, for example:  \(\vec{\text{king}}+\vec{\text{woman}}=\vec{\text{queen}}\). In our models, we let the weights for the embedding be initialized with an uniform distribution over the half-open interval \(\big[-\sqrt{3}, \sqrt{3}\big)\), essentially placing each value somewhere randomly in the vector space. This value was the default value in Tensorflow, and as this really did not make matter much, we decided to stick with it.
+
+Initializing the values randomly is a common practice using embedding where the relationships between the individual values are not pre-calculated. During training, the embedding layer is fully trainable, which means that the training algorithm may alter the weights associated with the embedding values, moving it around in the vector space. This way, the embedding representation for the values may be grouped closer, or moved further away from each other, defining some kind of relationship that is not explicitly expressed. The use of embedding gave a increase in overall accuracy while running our model, compared using a one-hot vector representation. This may be due to the increased express-ability that embedding gives over one-hot vectors, where no relationship between one value and another is defined. In all three models, the embedding is expressed as a vector with \(1024\) values.
+
+\subsection{Initializing of Weights}
+yyy
+
+\subsection{Configuration of the LSTMs}
+Although Keras and Tensorflow have their own implementation of the LSTM unit, their implementations are both based on \citep{hochreiter1997long}. The inner activation function was hyperbolic tangent (see \ref{eq:function_tanh}), as assumed in the explanation given in section \ref{sec:long_short_term_memory}. The activation function applied over the current time step was a regular sigmoid function, see \ref{eq:function_sigmoid}. These configurations are more or less the default ones, although Keras by default uses a function called {\tt hard\_sigmoid}, which is a linear approximation of the sigmoid function that is faster to compute. The Keras version of the LSTM was changed to use the regular sigmoid function, other than that the default were kept as we saw, or found, no reason or benefit of changing this.
+
+\begin{figure}[ht]
+    \centering
+    \begin{minipage}{.5\textwidth}
+      \begin{equation}
+        \label{eq:function_tanh}
+        \tanh{x} = \frac{\sinh{x}}{\cosh{x}} = \frac{e^{x}-e^{-x}}{e^{x}+e^{-x}}
+      \end{equation}
+      \captionsetup{labelformat=empty}
+      \caption{The hyperbolic tangent function}
+    \end{minipage}%
+    \begin{minipage}{.5\textwidth}
+      \begin{equation}
+        \label{eq:function_sigmoid}
+        \frac{1}{1-e^{-x}}
+      \end{equation}
+      \captionsetup{labelformat=empty}
+      \caption{The sigmoid function}
+    \end{minipage}
+\end{figure}
+
+The LSTM was further configured 
 
 %%=========================================
 

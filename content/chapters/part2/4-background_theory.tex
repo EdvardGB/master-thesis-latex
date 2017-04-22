@@ -3,7 +3,7 @@
 
 \chapter{Background Theory}
 \label{ch:background}
-\red{TODO}
+This chapter introduces relevant background theory to the work presented in the next chapter. \red{More here}
 
 %%=========================================
 
@@ -47,6 +47,7 @@ Equations \ref{eq:rnn-eq-1} and \ref{eq:rnn-eq-2} are slightly modified from \ci
 %%=========================================
 
 \section{Long-Short Term Memory}
+\label{sec:long_short_term_memory}
 The Long-Short Term Memory (LSTM) is a recurrent neural network architecture. It was first purposed by \citep{hochreiter1997long}, and was meant to address some of the shortcomings of more basic recurrent neural network architectures. \citep{bengio1994learning} showed that recurrent neural network faced an increasingly difficult problem as the duration of the dependencies to be captures increases. While the architecture could take into account short-term dependencies rather well, long-term dependencies were increasingly difficult to learn. The LSTMs were explicitly designed to avoid the long-term dependency problem. 
 
 \begin{figure}[ht]
@@ -66,3 +67,13 @@ Figure \ref{fig:nn-rnn-flow} illustrates the chain like structure of standard re
 \end{figure}
 
 Figure \ref{fig:nn-lstm-flow} illustrates a similar chain structure, but that of a LSTM cell. The LSTM module has a different structure, and instead of having a single neural network layer, like the simpler RNN, it has four layers. The topmost horizontal line carries the cell state of the unit. The LSTM unit is enriched by several co-called gating units. These gates regulate what information is remembered by the cell state, and what is forgotten. The leftmost sigmoid layer is called the ``forget gate layer". This gate decides what the state should forgotten from the existing information. The next sigmoid gate is called the ``input gate layer" and determines which values should be updated. The hyperbolic tangent gate layer creates a vector of candidate values, which could be added to the cell state. After the state is updated, or the candidate is thrown away, the final sigmoid gate, the ``output gate layer" decides what the parts of the cell state should be outputted \citep{hochreiter1997long, goodfellow2016deeplearning, olah2015lstm, gers2002learning}.
+
+There exists other types of recurrent neural network modules that are similar to LSTMs, but differ in various ways. Besides the LSTM, one of the most popular is the gated recurrent unit, or GRU for short \citep{chung2014empirical}. It is very similar to the LSTM, but i
+
+%%=========================================
+
+\section{Encoder-Decoder}
+\label{sec:encoder-decoder}
+The encoder-decoder framework is a concept centralized around two recurrent neural networks. The idea is to encode the input in the first neural network, and decode it in the second network. The first recurrent neural network, also called the encoder, reads the input sentence, a sequence of vectors \(X = (x_{1}, x_{2}, ..., x_{n})\). This sequence is then encoded into a vector \(c\), which may or may not be of fixed length. The decoder then reads the context vector and is fed its output from the previous time step as its input \citep{sutskever2014sequence}.
+
+The encoder-decoder framework is also commonly referred to as a sequence to sequence mapping model. This framework can solve sequence problems that, as we will see in chapter \ref{ch:development_process}, are difficult, if not impossible, for other frameworks to solve. This has made the framework immensely popular in fields such as translation, which is a sequence to sequence mapping problem.
