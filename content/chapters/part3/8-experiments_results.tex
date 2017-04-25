@@ -3,9 +3,19 @@
 
 \chapter{Experiments and Results}
 \label{ch:experiments_and_results}
+This chapter explains how the final experiments were carried out, as well as presenting the results for the experiments. These experiments and results are used for answering the research questions of this master thesis in the next chapter.
 
-\section{Data Set}
-Data sets were created using the pipeline process explained in \ref{sec:construction_pipeline}. Our word list had a total of 356,719 unique words, populated by three open sourced word lists:
+%%=========================================
+
+\section{Approach}
+Our experiments followed a traditional pattern with training, validation, and testing datasets. Carried out in iterations, our models were first fed the entire training set with the correct labels. After iterating the entire training set, we let the models predict on the validation set, recording their calculated accuracy and loss values. This alternating process goes on for many epochs until the model had reach a convergence where the loss for validation no longer makes significant changes. In addition, as this process goes on, we save the weights for the model with the best ever recorded validation loss value. As the alternating training and validation process is stopped, we load the weights for the best model, and we run that on the testing dataset, recording the final accuracy.
+
+This is a pretty common approach, and has several benefits. Instead of only relying on a training set, we use a separate validation set. Unless these sets are very similar, or complete copies of each other, we know that the accuracy and loss on the validation set is in fact a result of generation outside what the model has learned. In addition, as we do not run the final test on the validation set, we do not only reuse the model that scored best on the validation process, but the model that is the result of the best generalization.
+
+%%=========================================
+
+\section{Dataset Details}
+Datasets were created using the pipeline process explained in \ref{sec:construction_pipeline}. Our word list had a total of 356,719 unique words, populated by three open sourced word lists:
 
 \begin{enumerate}
     \item sil.org\footnote{\url{http://www-01.sil.org/linguistics/wordlists/english/}} (109,582 words)
@@ -17,17 +27,62 @@ The lists are filtered so only word consisting of letters are added. All words l
 
 %%=========================================
 
+\section{Experiments}
+This section presents the various experiments we ran.
+
+\subsection{Accuracy on Datasets}
+The first, and simplest, experiment did was to check how well our models could do prediction on datasets of various sizes. This was done to find out which model had the best prediction, as well as checking if certain models worked better under certain conditions.
+
+For this experiment, three datasets were created. These sets had individual sets for training, validation, and testing, with the following sizes, and configurations:
+
+\vspace{0.5cm}\noindent
+\begin{minipage}{\linewidth}
+    \begin{description}
+        \item[Small dataset:]{1000 training, 100 validation, 100 testing, max 10 characters long}
+        \item[Medium dataset:]{5,000 training, 5000 validation, 5000 testing, max 15 characters long}
+        \item[Big dataset:]{25,000 training, 2500 validation, 2500 testing, max 20 characters long}
+    \end{description}
+\end{minipage}
+
+\subsection{Handling of Two Fonts}
+Special functionality was implement for the pipeline process to create datasets with multiple fonts. The pipeline chose one of \(N\) fonts, with an equal probability distribution. In this experiment we used the fonts Arial, which is also used in the other experiments, as well as Times New Roman. For each word in the training, validation, or test sets had a probability of \(\frac{1}{N}\) for choosing either Arial or Times New Roman.
+
+The dataset we used for this experiment used the same configurations as the ``Big dataset" from the previous experiment, and the experiment was ran on the three models.
+
+\subsection{Noise Handling}
+In our final experiment we only used the best model architecture from the first test. We did this because this experiment required to run many tests to map how well the model handled noise. A special transformation handler was added that iterated over the constructed sets, and with a given probability could set a random bit value \(1\) or \(0\), implemented as in \ref{alg:random_noise}. The idea was to start with \(0\%\) noise, and then increase the noise threshold slowly while recording the results. This result could be plotted
+
+\begin{algorithm}
+    \caption{Apply random noise to input sequence
+        \label{alg:random_noise}}
+    \begin{algorithmic}[1]
+        \Statex
+        \Function{apply\_noise}{$input, threshold$}
+            \For{$i \gets 0 \textrm{ to } input.length$}
+                \If{$randint(0,100) \le threshold$}
+                    \Let{$input[i]$}{$randint(0,1)$}
+                \EndIf
+            \EndFor
+        \State \Return{$res$}
+        \EndFunction
+    \end{algorithmic}
+\end{algorithm}
+
+%%=========================================
+
 \section{Results}
-Dolor sit amet
+Below are the results for each test ran in our experiments. These results are analyzed in the next chapter.
+
+\subsection{Accuracy on Datasets}
 
 \begin{table}[H]
     \centering
     \begin{tabular}{|l|l|l|l|}
         \hline 
-                                           & \textbf{Small data set}         & \textbf{Medium data set}        & \textbf{Big data set}           \\ \hline
-        \textbf{VecProj}                   & xx.yy\%                         & xx.yy\%                         & xx.yy\%                         \\ \hline
-        \textbf{EncDecReg}                 & \textbf{xx.yy\%}                & xx.yy\%                         & xx.yy\%                         \\ \hline
-        \textbf{EncDecAtt}                 & xx.yy\%                         & \textbf{xx.yy\%}                & \textbf{xx.yy\%}                \\ \hline
+                                        & \textbf{Small dataset}          & \textbf{Medium dataset}         & \textbf{Big dataset}            \\ \hline
+        {\tt VecProj}                   & xx.yy\%                         & xx.yy\%                         & xx.yy\%                         \\ \hline
+        {\tt EncDecReg}                 & \textbf{xx.yy\%}                & xx.yy\%                         & xx.yy\%                         \\ \hline
+        {\tt EncDecAtt}                 & xx.yy\%                         & \textbf{xx.yy\%}                & \textbf{xx.yy\%}                \\ \hline
     \end{tabular}
     \caption{Test accuracy for each model on each test set, with the best results for each test set highlighted}
     \label{table:accuracy_model_data_sets}
