@@ -44,6 +44,29 @@ We can consider RNNs as a type of loop, and we can also unfold it into a complet
 
 Equations \ref{eq:rnn-eq-1} and \ref{eq:rnn-eq-2} are slightly modified from \citep{goodfellow2016deeplearning}, and defines the forward propagation of the model illustrated in Figure \ref{fig:nn-rnn}. The parameters \(b\) and \(c\) are the bias vectors. Computing the gradient in a recurrent neural network is done with a back-propagation algorithm called back-propagation through time \citep{werbos1990backpropagation}. 
 
+\subsection{Input and Output Shapes}
+\label{sec:input_and_output_shapes}
+Recurrent Neural Networks are usually fed data that has an input shape of {\tt (batch\_size, timesteps, features)}. The first dimension is the number of separate values we send to the network. The second dimension defines how many timesteps our data contains, and the last dimension contains the number of features for each timestep. Consider the data in Table \ref{table:temporal_weather_data}. This table contains weather data for Trondheim in Norway in the period June 2016 to September 2016\footnote{\url{https://www.yr.no/sted/Norge/Sør-Trøndelag/Trondheim/Trondheim/statistikk.html}}. This example has a total of four timesteps, one for each month in the period, and a total of three features; temperature, rain, and wind. This would produce a input shape of {\tt (4, 3)}. We can consider this data as recording a total of three features over the course of four timesteps.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l|l|l|l|l|l|}
+        \hline
+        \multicolumn{2}{|c|}{}                                           & \multicolumn{3}{c}{\textbf{Timesteps}}                                   &                        \\ \cline{3-6}
+        \multicolumn{2}{|c|}{}                                           & \textbf{1}             & \textbf{2}             & \textbf{3}             & \textbf{4}             \\ \hline
+        \multirow{3}{*}{\textbf{Features}}    & Temperature (average)  & 12.2\textdegree        & 14.8\textdegree        & 13.0\textdegree        & 12.2\textdegree        \\ \cline{2-6}
+                                              & Rain (total)           & 31.7 mm                & 77.5 mm                & 87.1 mm                & 77.6 mm                \\ \cline{2-6}
+                                              & Wind (average)         & 2.3 m/s                & 2.0 m/s                & 2.1 m/s                & 1.9 m/s                \\ \hline
+    \end{tabular}
+    \caption{Weather data over time}
+    \label{table:temporal_weather_data}
+\end{table}
+
+The output of a typical Recurrent Neural Network has a shape of {\tt (batch\_size, units)}, where {\tt units} is the number of output units in the network. Considering the compact network in Figure \ref{fig:nn-rnn}, the output of a Recurrent Neural Network is the output of the last iteration in the loop. One may also use the output of every iteration in the loop, which results in a output shape of {\tt (batch\_size, timesteps, units)}, where the dimensionality of the timesteps in the output is equal to the dimensionality of the timesteps in the input.
+
+\subsection{Structures and foobar}
+\red{Foobar}
+
 %%=========================================
 
 \section{Long-Short Term Memory}

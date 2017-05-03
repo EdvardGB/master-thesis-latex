@@ -12,28 +12,9 @@ The first iteration in the cycle included a lot ground work and some exploration
 
 \subsection{Construction Pipeline}
 \label{sec:construction_pipeline}
-Because we had no data set available to train, validate, and test our model on, this had to be created manually. Creating these sets were done by implementing a configurable pipeline system that involved processing over several steps:
 
-\begin{enumerate}
-    \item Build a complete dictionary of words, make sure they only include allowed characters.
-    \item Select random words from the list and construct training, validation, and test sets. Make sure no words are picked that exceeds the maximum word length configuration. Remove duplicated words both across lists, and within the same list as per configured.
-    \item Using an image library, write the text from the lists on individual (empty) canvases, with the specified font type and font size.
-    \item Find the boundaries of the characters and crop the text to remove the excess space on the canvas. The boundaries needs to be the same across canvases, so characters have the same baseline location in all of them.
-    \item As configured, apply the masks and extract the signature values.
-    \item Save the signature values for later.
-\end{enumerate}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=1\textwidth]{fig/development_process/pipeline.pdf}
-    \caption{Illustration of pipeline process from canvas to signature}
-    \label{fig:development-pipeline}
-\end{figure}
 
-Figure \ref{fig:development-pipeline} illustrates the steps described above. The leftmost image is the text written on a big canvas. This canvas has a predefined size, as we are unable to predict the actual size of text before it is written out with our image library. This canvas is then cropped based on the boundaries calculated by the individual characters. As we can see in the middle image, not all the characters are ``standing" on the image outline, which is a result of how our image library handles writing text. The rightmost image is the extracted signature from the middle image. The signatures actual height is one pixel, and is extracted fourteen pixels from the bottom. It was expanded vertically for increased visibility. The signature sequence is then extracted by iterating over the pixels in the image, and the final sequence is stored for later. The sequence for the word ``AMPLITUDES", which is ten letters long, has a length of 31.
-
-\subsection{Transformation system}
-The process explained above only needed to be executed every time we wanted new data sets. Usually there was no need to create new sets and the same words and signatures could be reused. However, during development of various models, their expected input and output formats varied. Another system was created to transform the signatures from the previous pipeline into the expected input and output formats. This system, called the ``transformator", accepted a list of handlers that were executed in sequence. Each handler did a modification to either the input or the output format, and the data was propagated to the next handler. This way, the handlers could easily be reordered or swapped if a model expected another format. Typical tasks included padding the input to a given width, rescaling the input to whole integers, or turning the output into a one-hot matrix.
 
 \subsection{First Model Experimentation}
 After researching state of the art solutions in the area of machine translation, various sourced had made it very clear that LSTMs alone could not handle a sequence to sequence problem. \citep{sutskever2014sequence} stated in the description of their purposed model:

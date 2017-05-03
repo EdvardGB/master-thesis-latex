@@ -1,8 +1,8 @@
-%% Experiments and Results
+%% Experiments
 %%=========================================
 
-\chapter{Experiments and Results}
-\label{ch:experiments_and_results}
+\chapter{Experiments}
+\label{ch:experiments}
 This chapter explains how the final experiments were carried out, as well as presenting the results for the experiments. These experiments and results are used for answering the research questions of this master thesis in the next chapter.
 
 %%=========================================
@@ -31,23 +31,33 @@ The lists are filtered so only word consisting of letters are added. All words l
 This section presents the various experiments we ran.
 
 \subsection{Accuracy on Datasets}
+\label{sec:accuracy_on_datasets}
 The first, and simplest, experiment did was to check how well our models could do prediction on datasets of various sizes. This was done to find out which model had the best prediction, as well as checking if certain models worked better under certain conditions.
 
 For this experiment, three datasets were created. These sets had individual sets for training, validation, and testing, with the following sizes, and configurations:
 
-\vspace{0.5cm}\noindent
-\begin{minipage}{\linewidth}
+\vspace{0.5cm}
+\begin{minipage}{0.8\linewidth}
     \begin{description}
-        \item[Small dataset:]{1000 training, 100 validation, 100 testing, max 10 characters long}
-        \item[Medium dataset:]{5,000 training, 5000 validation, 5000 testing, max 15 characters long}
-        \item[Big dataset:]{25,000 training, 2500 validation, 2500 testing, max 20 characters long}
+        \item[Small:]{1,000 training, 100 validation, 100 testing, max 10 chars}
+        \item[Medium:]{5,000 training, 5,000 validation, 5,000 testing, max 15 chars}
+        \item[Big:]{25,000 training, 2,500 validation, 2,500 testing, max 20 chars}
     \end{description}
 \end{minipage}
 
 \subsection{Handling of Two Fonts}
 Special functionality was implement for the pipeline process to create datasets with multiple fonts. The pipeline chose one of \(N\) fonts, with an equal probability distribution. In this experiment we used the fonts Arial, which is also used in the other experiments, as well as Times New Roman. For each word in the training, validation, or test sets had a probability of \(\frac{1}{N}\) for choosing either Arial or Times New Roman.
 
-The dataset we used for this experiment used the same configurations as the ``Big dataset" from the previous experiment, and the experiment was ran on the three models.
+The dataset used in this experiment had a training set of size \(10,000\) and validation and test tests of size \(1000\). The sets had a maximum length of 15 characters. The distribution between the two fonts are listed below:
+
+\vspace{0.5cm}
+\begin{minipage}{0.8\linewidth}
+    \begin{description}
+        \item[Training:]{Arial: 51.1\% (5,110), Times New Roman 49.0\% (4,900)}
+        \item[Validation:]{Arial: 51.7\% (517), Times New Roman 48.3\% (483)}
+        \item[Test:]{Arial: 51.2\% (512), Times New Roman: 48.8\% (488)}
+    \end{description}
+\end{minipage}
 
 \subsection{Noise Handling}
 In our final experiment we only used the best model architecture from the first test. We did this because this experiment required to run many tests to map how well the model handled noise. A special transformation handler was added that iterated over the constructed sets, and with a given probability could set a random bit value \(1\) or \(0\), implemented as in \ref{alg:random_noise}. The idea was to start with \(0\%\) noise, and then increase the noise threshold slowly while recording the results. This result could be plotted
@@ -70,20 +80,3 @@ In our final experiment we only used the best model architecture from the first 
 
 %%=========================================
 
-\section{Results}
-Below are the results for each test ran in our experiments. These results are analyzed in the next chapter.
-
-\subsection{Accuracy on Datasets}
-
-\begin{table}[H]
-    \centering
-    \begin{tabular}{|l|l|l|l|}
-        \hline 
-                                        & \textbf{Small dataset}          & \textbf{Medium dataset}         & \textbf{Big dataset}            \\ \hline
-        {\tt VecProj}                   & xx.yy\%                         & xx.yy\%                         & xx.yy\%                         \\ \hline
-        {\tt EncDecReg}                 & \textbf{xx.yy\%}                & xx.yy\%                         & xx.yy\%                         \\ \hline
-        {\tt EncDecAtt}                 & xx.yy\%                         & \textbf{xx.yy\%}                & \textbf{xx.yy\%}                \\ \hline
-    \end{tabular}
-    \caption{Test accuracy for each model on each test set, with the best results for each test set highlighted}
-    \label{table:accuracy_model_data_sets}
-\end{table}

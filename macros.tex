@@ -14,14 +14,43 @@
 
 %% Create a note block (tex.stackexchange.com/questions/301993/)
 \newtcolorbox{note}[1][]{%
-  enhanced jigsaw, % better frame drawing
-  borderline west={2pt}{0pt}{black}, % straigh vertical line at the left edge
-  sharp corners, % No rounded corners
-  boxrule=0pt, % no real frame,
-  fonttitle={\large\bfseries},
-  coltitle={black},  % Black colour for title
-  title={Note:\ },  % Fixed title
-  attach title to upper, % Move the title into the box
-  #1
+    enhanced jigsaw, % better frame drawing
+    borderline west={2pt}{0pt}{black}, % straigh vertical line at the left edge
+    sharp corners, % No rounded corners
+    boxrule=0pt, % no real frame,
+    fonttitle={\large\bfseries},
+    coltitle={black},  % Black colour for title
+    title={Note:\ },  % Fixed title
+    attach title to upper, % Move the title into the box
+    #1
 }
 
+%% Plots
+\newcommand{\resultplotswrong}[5]{
+    \begin{figure}[h]
+      \centering
+      \includegraphics[width=.6\textwidth]{#1#2}
+      \centering
+      \includegraphics[width=.6\linewidth]{#1#3}
+      \caption{#5}
+      \label{fig:#4}
+    \end{figure}
+}
+
+\newcommand{\resultplots}[5]{
+    \begin{figure}[h]
+    \centering
+    \begin{subfigure}{.5\textwidth}
+      \centering
+      \includegraphics[width=1.\textwidth]{#1#2}
+      \label{fig:#4_accuracy}
+    \end{subfigure}%
+    \begin{subfigure}{.5\textwidth}
+      \centering
+      \includegraphics[width=1.\linewidth]{#1#3}
+      \label{fig:#4_loss}
+    \end{subfigure}
+    \caption{#5}
+    \label{fig:#4}
+    \end{figure}
+}
