@@ -15,7 +15,7 @@
 %% Create a note block (tex.stackexchange.com/questions/301993/)
 \newtcolorbox{note}[1][]{%
     enhanced jigsaw, % better frame drawing
-    borderline west={2pt}{0pt}{black}, % straigh vertical line at the left edge
+    %borderline west={2pt}{0pt}{black}, % straigh vertical line at the left edge
     sharp corners, % No rounded corners
     boxrule=0pt, % no real frame,
     fonttitle={\large\bfseries},
@@ -38,19 +38,19 @@
 }
 
 \newcommand{\resultplots}[5]{
-    \begin{figure}[h]
+    \begin{figure}[H]
     \centering
     \begin{subfigure}{.5\textwidth}
       \centering
       \includegraphics[width=1.\textwidth]{#1#2}
-      \label{fig:#4_accuracy}
+      %\label{fig:#4_accuracy}
     \end{subfigure}%
     \begin{subfigure}{.5\textwidth}
       \centering
       \includegraphics[width=1.\linewidth]{#1#3}
-      \label{fig:#4_loss}
-    \end{subfigure}
+      %\label{fig:#4_loss}
+    \end{subfigure}%
     \caption{#5}
     \label{fig:#4}
-    \end{figure}
+    \end{figure}%
 }

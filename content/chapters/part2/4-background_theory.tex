@@ -3,12 +3,12 @@
 
 \chapter{Background Theory}
 \label{ch:background}
-This chapter introduces relevant background theory to the work presented in the next chapter. \red{More here}
+In this chapter we introduce the relevant background theory to the work presented in the next chapter. 
 
 %%=========================================
 
 \section{General Neural Network}
-\red{Must be rewritten slighylt}. At the base of the neural machine translation systems are neural networks. The idea of models using artificial neurons, can be traced back to the 1940s. Since then, more sophisticated proposals and variants have been made from decade to decade. Artificial neural networks are an attempt at modeling the information process capabilities of nervous systems, found in the brain. This is done by implementing mathematical models of neurons \citep{russell2010aimodernapproach}.
+Artificial Neural Network is a computational model used in machine learning and computer science. The idea behind neural networks lies in the use of artificial neurons, an idea that can be traced back to the 1940s. These artificial neurons are loosely analogous to axons in a biological brain, and artificial neural networks are an attempt at modeling the information process capabilities of nervous systems \citep{russell2010aimodernapproach}.
 
 \begin{figure}[ht]
     \centering
@@ -22,7 +22,7 @@ Figure \ref{fig:nn-rnn} illustrates a simple mathematical model for a neuron, of
 %%=========================================
 
 \section{Recurrent Neural Network}
-Another way to construct a neural network is by using loops. A recurrent neural network \citep{rumelhart1988learning} is a network much like a feed-forward network, but in addition to feeding ``downstream" nodes, nodes also feeds its output back into its own inputs. This type of architecture can support a short-term memory, a feature that is necessary in problems where input also depends on previous input \citep{russell2010aimodernapproach}. For example would such characteristics be necessary if we fed the network words in a sentence, and we asked the network to predict the next word it had not yet seen. 
+Another way to construct a neural network is by using loops. A recurrent neural network \citep{rumelhart1988learning} is a network much like a feed-forward network, but in addition to feeding ``downstream" nodes, nodes also feeds its output back into its own inputs. This type of architecture can support a short-term memory, a feature that is necessary in problems where input also depends on previous input \citep{russell2010aimodernapproach}. For example would such characteristics be necessary if we fed the network words in a sentence, and we asked the network to predict the next word it had not yet seen.
 
 \begin{figure}[ht]
     \centering
@@ -31,7 +31,7 @@ Another way to construct a neural network is by using loops. A recurrent neural 
     \label{fig:nn-rnn}
 \end{figure}
 
-We can consider RNNs as a type of loop, and we can also unfold it into a complete sequence, as illustrated in Figure \ref{fig:nn-rnn}. In the figure, \(x_{t}\) is the input, and \(s_{t}\) is the hidden state of the recurrent network at time step \(t\). The hidden state functions as its memory as it is reused in the next time step, along with the input of the current time step. It is also important to note that the network shares the same weights \(W\) across several time steps.The recurrent neural network has input to hidden connections parametrized by a weight matrix \(U\), as well as hidden-to-hidden recurrent connections parametrized by a weight matrix \(W\). In addition, the network has hidden-to-output connection parametrized by a weight matrix \(V\) \citep{goodfellow2016deeplearning}.
+We can consider RNNs as a type of loop, and we can unfold it into a complete sequence, as illustrated in Figure \ref{fig:nn-rnn}. In the figure, \(x_{t}\) is the input, and \(s_{t}\) is the hidden state of the recurrent network at timestep \(t\). The hidden state functions as its memory as it is reused in the next timestep, along with the input of the current timestep. It is also important to note that the network shares the same weights \(W\) across several timesteps. The recurrent neural network has input to hidden connections parametrized by a weight matrix \(U\), as well as hidden-to-hidden recurrent connections parametrized by a weight matrix \(W\). In addition, the network has hidden-to-output connection parametrized by a weight matrix \(V\) \citep{goodfellow2016deeplearning}.
 
 \begin{align}
     \begin{split}\label{eq:rnn-eq-1}
@@ -42,11 +42,11 @@ We can consider RNNs as a type of loop, and we can also unfold it into a complet
     \end{split}
 \end{align}
 
-Equations \ref{eq:rnn-eq-1} and \ref{eq:rnn-eq-2} are slightly modified from \citep{goodfellow2016deeplearning}, and defines the forward propagation of the model illustrated in Figure \ref{fig:nn-rnn}. The parameters \(b\) and \(c\) are the bias vectors. Computing the gradient in a recurrent neural network is done with a back-propagation algorithm called back-propagation through time \citep{werbos1990backpropagation}. 
+Equations \ref{eq:rnn-eq-1} and \ref{eq:rnn-eq-2} are slightly modified from \citep{goodfellow2016deeplearning}, and defines the forward propagation of the model illustrated in Figure \ref{fig:nn-rnn}. The parameters \(b\) and \(c\) are the bias vectors. Computing the gradient in a recurrent neural network can be done with an iterative gradient descent back-propagation algorithm such as back-propagation through time \citep{werbos1990backpropagation}. 
 
 \subsection{Input and Output Shapes}
 \label{sec:input_and_output_shapes}
-Recurrent Neural Networks are usually fed data that has an input shape of {\tt (batch\_size, timesteps, features)}. The first dimension is the number of separate values we send to the network. The second dimension defines how many timesteps our data contains, and the last dimension contains the number of features for each timestep. Consider the data in Table \ref{table:temporal_weather_data}. This table contains weather data for Trondheim in Norway in the period June 2016 to September 2016\footnote{\url{https://www.yr.no/sted/Norge/Sør-Trøndelag/Trondheim/Trondheim/statistikk.html}}. This example has a total of four timesteps, one for each month in the period, and a total of three features; temperature, rain, and wind. This would produce a input shape of {\tt (4, 3)}. We can consider this data as recording a total of three features over the course of four timesteps.
+Recurrent Neural Networks are usually fed data that has an input shape of {\tt (batch\_size, timesteps, features)}. The first dimension is the number of separate values we send to the network. The second dimension defines how many timesteps our data contains, and the last dimension contains the number of features for each timestep. Table \ref{table:temporal_weather_data} contains weather data for Trondheim in Norway in the period June 2016 to September 2016\footnote{\url{https://www.yr.no/sted/Norge/Sør-Trøndelag/Trondheim/Trondheim/statistikk.html}}. This example has a total of four timesteps, one for each month in the period, and a total of three separate features; temperature, rain, and wind. This would produce a input shape of {\tt (4, 3)}. We can consider this data as recording a total of three features over the course of four timesteps.
 
 \begin{table}[H]
     \centering
@@ -64,12 +64,7 @@ Recurrent Neural Networks are usually fed data that has an input shape of {\tt (
 
 The output of a typical Recurrent Neural Network has a shape of {\tt (batch\_size, units)}, where {\tt units} is the number of output units in the network. Considering the compact network in Figure \ref{fig:nn-rnn}, the output of a Recurrent Neural Network is the output of the last iteration in the loop. One may also use the output of every iteration in the loop, which results in a output shape of {\tt (batch\_size, timesteps, units)}, where the dimensionality of the timesteps in the output is equal to the dimensionality of the timesteps in the input.
 
-\subsection{Structures and foobar}
-\red{Foobar}
-
-%%=========================================
-
-\section{Long-Short Term Memory}
+\subsection{Long-Short Term Memory}
 \label{sec:long_short_term_memory}
 The Long-Short Term Memory (LSTM) is a recurrent neural network architecture. It was first purposed by \citep{hochreiter1997long}, and was meant to address some of the shortcomings of more basic recurrent neural network architectures. \citep{bengio1994learning} showed that recurrent neural network faced an increasingly difficult problem as the duration of the dependencies to be captures increases. While the architecture could take into account short-term dependencies rather well, long-term dependencies were increasingly difficult to learn. The LSTMs were explicitly designed to avoid the long-term dependency problem. 
 
@@ -89,14 +84,27 @@ Figure \ref{fig:nn-rnn-flow} illustrates the chain like structure of standard re
     \label{fig:nn-lstm-flow}
 \end{figure}
 
-Figure \ref{fig:nn-lstm-flow} illustrates a similar chain structure, but that of a LSTM cell. The LSTM module has a different structure, and instead of having a single neural network layer, like the simpler RNN, it has four layers. The topmost horizontal line carries the cell state of the unit. The LSTM unit is enriched by several co-called gating units. These gates regulate what information is remembered by the cell state, and what is forgotten. The leftmost sigmoid layer is called the ``forget gate layer". This gate decides what the state should forgotten from the existing information. The next sigmoid gate is called the ``input gate layer" and determines which values should be updated. The hyperbolic tangent gate layer creates a vector of candidate values, which could be added to the cell state. After the state is updated, or the candidate is thrown away, the final sigmoid gate, the ``output gate layer" decides what the parts of the cell state should be outputted \citep{hochreiter1997long, goodfellow2016deeplearning, olah2015lstm, gers2002learning}.
+Figure \ref{fig:nn-lstm-flow} illustrates a similar chain structure, but that of a LSTM cell. The LSTM module has a different structure, and instead of having a single neural network layer, like the simpler RNN, it has four layers. The topmost horizontal line carries the cell state of the unit. The LSTM unit is enriched by several co-called gating units. These gates regulate what information is remembered by the cell state, and what is forgotten. The leftmost sigmoid layer is called the ``forget gate layer". This gate decides what the state should forgotten from the existing information. The next sigmoid gate is called the ``input gate layer" and determines which values should be updated. The hyperbolic tangent gate layer creates a vector of candidate values, which could be added to the cell state. After the state is updated, or the candidate is thrown away, the final sigmoid gate, the ``output gate layer" decides what the parts of the cell state should be outputted \citep{hochreiter1997long, goodfellow2016deeplearning, olah2015lstm, gers2002learning}. The first purposed version of the LSTM did not have a forget gate. The forget gate was introduced by \citep{gers2000learning} and allowed the LSTM to reset its own state. The version has since become one of the most common variants of the LSTM and is by many considered the traditional LSTM.
 
-There exists other types of recurrent neural network modules that are similar to LSTMs, but differ in various ways. Besides the LSTM, one of the most popular is the gated recurrent unit, or GRU for short \citep{chung2014empirical}. It is very similar to the LSTM, but i
+\subsubsection{Variants of LSTM}
+The LSTM implementation described above is the traditional LSTM. There exists other variants of the architecture with their own characteristics. One popular LSTM variant was introduced by \citep{gers2001lstm}. Their variant added ``peephole" connections. These connections allows the gate layer to look at the cell state. The idea behind this variant was to have a LSTM that could learn to selectively reset its own memory contents, and in turn produce stable results in presence of never-ending input streams. \citep{gers2001lstm} stated that their LSTM variant with peephole connections and forget gates were clearly superior to the traditional LSTM. 
+
+Another variant is the ``Convolutional LSTM" purposed by \citep{xingjian2015convolutional}. Their variant extended the traditional LSTM and added convolutional structures to both the input-to-state and state-to-state transitions. Their conclusion was that their purposed ``ConvLSTM" layer was suitable for spatiotemporal data due to its inherent convolutional structure.
+
+A comparison of various LSTM variants was carried out by \citep{greff2016lstm}. They concluded that the traditional, vanilla LSTM performed reasonable well on various datasets. They investigated a total of eight variants of the LSTM, and in their experiments, none of the eight modifications significantly improved performance. However, certain modifications simplified the LSTMs without significantly decreasing performance. 
+
+\subsection{GRU}
+Another popular modification of the LSTM was purposed by \citep{chung2014empirical}. Their simplified variant, called the Gated Recurrent Unit, or GRU, uses neither the peephole nor output activation functions. Instead, the GRU couples the input and the forget gate into an update gate. 
+
+%%=========================================
+
+\section{Embedding}
+
 
 %%=========================================
 
 \section{Encoder-Decoder}
 \label{sec:encoder-decoder}
-The encoder-decoder framework is a concept centralized around two recurrent neural networks. The idea is to encode the input in the first neural network, and decode it in the second network. The first recurrent neural network, also called the encoder, reads the input sentence, a sequence of vectors \(X = (x_{1}, x_{2}, \ldots, x_{n})\). This sequence is then encoded into a vector \(c\), which may or may not be of fixed length. The decoder then reads the context vector and is fed its output from the previous time step as its input \citep{sutskever2014sequence}.
+The encoder-decoder framework is a concept centralized around two recurrent neural networks. The idea is to encode the input in the first neural network, and decode it in the second network. The first recurrent neural network, also called the encoder, reads the input sentence, a sequence of vectors \(X = (x_{1}, x_{2}, \ldots, x_{n})\). This sequence is then encoded into a vector \(c\), which may or may not be of fixed length. The decoder then reads the context vector and is fed its output from the previous timestep as its input \citep{sutskever2014sequence}.
 
 The encoder-decoder framework is also commonly referred to as a sequence to sequence mapping model. This framework can solve sequence problems that, as we will see in chapter \ref{ch:development_process}, are difficult, if not impossible, for other frameworks to solve. This has made the framework immensely popular in fields such as translation, which is a sequence to sequence mapping problem.

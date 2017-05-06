@@ -3,13 +3,13 @@
 
 \chapter{Methodology}
 \label{ch:methodology}
-This chapter presents the research methodology that was used in the process of writing this master thesis. The chapter looks closer at the research questions and how these were used as premise for how the research was conducted. In addition, the chapter explains our general research strategy.
+This chapter presents the research methodology that was used in the process of writing this thesis. The chapter looks closer at the research questions and how these were used as basis for how the research was conducted. In addition, this chapter explains our general research strategy.
 
 %%=========================================
 
 \section{Evaluating Research Questions}
 \label{sec:research_questions_and_approach}
-To recap from section \ref{sec:goals_and_research_questions}, we presented our research questions as:
+In Section \ref{sec:goals_and_research_questions}, we presented our research questions as:
 
 \begin{description}
     \item[Research Question 1]{\textit{Does ambiguity in character signature sequences impact recognition rates?}}
@@ -17,16 +17,19 @@ To recap from section \ref{sec:goals_and_research_questions}, we presented our r
     \item[Research Question 3]{\textit{Is a signature sequence based model unable to handle noise?}}
 \end{description}
 
-Concerning \textbf{RQ1}, we knew ambiguity could be a problem for the general problem we were trying to solve. This was made clear early in testing and is expanded on further in section \ref{sec:ambiguous_input}. To answer this research question we would need to conduct tests and experiments where we compare sequences with and without ambiguities to see how the differences impact the recognition rates.
+\newpage
+In this section we will look closer at how we may give an answer to these questions in a meaningful way:
 
-Answering \textbf{RQ2} could also be done in similar fashion as the previous research question. Running multiple tests with words written in multiple fonts would answer this. Sections \ref{sec:tuning_input_data}, \ref{sec:use_of_fonts}, and \ref{sec:other_factors} expands further on how the typography of fonts may affect recognition.
-
-Finally, answering \textbf{RQ3} would also require running a series of tests and experiments to see how the rates are affected while tuning the amount of introduced noise.
+\begin{description}
+    \item[RQ1:]{We knew ambiguity could be a problem due to how signatures of different letters may be identical. This was made clear early in testing and is explained further in Section \ref{sec:ambiguous_input}. To answer this research question we would need to conduct tests and experiments where we compare sequences with and without ambiguities to see how the differences impact the recognition rates.}
+    \item[RQ2:]{Recognizing words with a single font is one problem, but combining two or more fonts poses more complex problem, especially given the small amounts of data we have available. This research question could, similarly to \textbf{RQ1}, be answered by running tests with text written in multiple fonts and see how the recognition rates were affected. Sections \ref{sec:tuning_input_data}, \ref{sec:use_of_fonts}, and \ref{sec:other_factors} explains how the typography of fonts may affect recognition.}
+    \item[RQ3:]{While clean and well-formatted data is preferable, we may not always be so lucky that our data have no noise in it. Noise-induced data is also much more ``realistic" in a real world perspective, than 100\% perfect data. Investigating how well a model can handle certain degrees of noise is interesting, as it could say something about how robust it is. Investigating this could be done by running tests and introduce noise increasingly until the recognition rates deteriorate beyond a certain point.}
+\end{description}
 
 %%=========================================
 
 \section{Research Approaches}
-Figure \ref{fig:model_research_process} contains the model of the research process, as presented in \citep{oates2005researching}. The figure displays the steps in a research process from start to finish. It illustrates how various approaches can be used, and how it is also possible to mix and combine strategies and data generation methods.
+We chose to follow the research process presented by \citep{oates2005researching}. Figure \ref{fig:model_research_process} given an overview of the research process and its components. The overview illustrates how different research approaches can be formed by mixing and matching various types of strategies, data generation methods, and types of data analysis.
 
 \begin{figure}[ht]
     \centering
@@ -35,23 +38,19 @@ Figure \ref{fig:model_research_process} contains the model of the research proce
     \label{fig:model_research_process}
 \end{figure}
 
-We have followed this process throughout our research. Our literature review is presented in Chapter \ref{ch:related_work}. The research questions was presented in section \ref{sec:goals_and_research_questions}, and was expanded on further in section \ref{sec:research_questions_and_approach}. The conceptual framework is what is presented throughout this chapter. Our choice of research strategy is presented in section \ref{sec:research_strategy}, and our choice of data generation methods, as well as our data analysis approach is presented in section \ref{sec:data_generation_methods_and_data_analysis}.
+Our literature review is presented in Chapter \ref{ch:related_work}. The research questions was presented in Section \ref{sec:goals_and_research_questions}, and was explained further in Section \ref{sec:research_questions_and_approach}. The conceptual framework is what is presented throughout this chapter. Our choice of research strategy is presented in Section \ref{sec:research_strategy}, and our choice of data generation methods, as well as our data analysis approach is presented in Section \ref{sec:data_generation_methods_and_data_analysis}.
 
 %%=========================================
 
 \section{Research Strategy}
 \label{sec:research_strategy}
-The research strategy used in this master thesis was carefully chosen on the premise of what our research questions and what our overarching research goal were. As stated in section \ref{sec:research_questions_and_approach}, our argument is that the research questions could be answered by conducting experiments and tests. This fact was used as the foundation for the research strategy that was used throughout the work on this master thesis.
+The research strategy used in this thesis was carefully chosen on the basis of what our research questions and overarching goal was, and how they could best be answered. We argued that the research questions, as well as the research goal, could best be answered by conducting experiments and tests. 
 
-Our choice of the overarching research strategies were design and creation combined with experiments. As illustrated in Figure \ref{fig:model_research_process}, it is most common to use a single research strategy, but it is also possible to combine them in the research. Our combination of research strategies allowed us to iteratively build a model, testing various approaches to find an optimal solution. We followed the strategy of design and creation for the most part, but paid close attention as to why we got the results we got during the development process. While the strategy of design and creation is built on the concept of iteratively building a product, experiments is a strategy that investigates cause and effect relationships. We used experiments and the investigations to help us steer the development in the correct course, by investigating the current results.
+We decided to use design and creation combined with experiments as our research strategy. As illustrated in Figure \ref{fig:model_research_process}, it is most common to use a single research strategy, but it is also possible to combine one or more. Our combination of research strategies allowed us to iteratively build one or more models, and to test various approaches to find optimal solutions. We followed the strategy of design and creation for the most part, but relied on experiments to move forward in the process. While the strategy of design and creation is built on the concept of iteratively building a product, experiments is a strategy that investigates cause and effect relationships. They can be used together to help steer the process in the right direction.
 
-In \ref{sec:design_and_creation} and \ref{sec:experiment} we present the research approaches of design and creation and experiments in greater depth. In \ref{sec:combining_the_two_strategies} we elaborate on how we combined the two research strategies together in our process.
-
-%%=========================================
-
-\section{Design and Creation}
+\subsection{Design and Creation}
 \label{sec:design_and_creation}
-Development of a new IT product is the main focus of the design and creation research strategy. IT products are also called artefacts, and there are four of these. These are \citep{march1995design, oates2005researching}:
+Development of a new IT product is the main focus of the design and creation research strategy. IT products are also called artefacts, and there are four of these \citep{march1995design, oates2005researching}:
 
 \begin{itemize}
     \item\textbf{Constructs:} the concepts or vocabulary used in a particular IT-related domain. For example, notions of entities, objects or data flows.
@@ -60,16 +59,16 @@ Development of a new IT product is the main focus of the design and creation res
     \item\textbf{Instantiantions:} a working system that demonstrates that constructs, models, methods, ideas, genres or theories can be implemented in a computer-based system.
 \end{itemize}
 
-In our case, the artefact we want to develop during our research would fall into the category of instantiantions. This artefact would be a fully functional system that works on the premise of our research.  As this system would be an essential part of the research process, it is important that it can be considered as research, and not just as a demonstration of technical powers. It is therefore crucial that the system is not only developed, but the process also assert the academical qualities, such as analysis, explanation, argument, justification, and critical evaluation \citep{oates2005researching}. This means that every part of our system, and the process of building it, needs to be explained and reasoned.
+In our case, the artefact we want to develop during our research would fall into the category of instantiantions. This artefact would be a fully functional system that would answer both our research goal, as well as our research questions.  As this system would be an essential part of the research process, it would be important that it can could considered as research, and not just as a demonstration of technical powers. It was therefore crucial that the system was not only developed, but that the process also assert the academical qualities, such as analysis, explanation, argument, justification, and critical evaluation \citep{oates2005researching}. This meant that every part of our system, and the process of building it, would need to be explained and reasoned.
 
-\subsection{Approach}
+\subsubsection{Approach}
 \label{methodology-design-and-creation-approach}
 The approach in design and creation revolves around a problem-solving strategy. It utilizes an iterative process over five steps \citep{vaishnavi2004design, oates2005researching}:
 
 \begin{itemize}
     \item\textbf{Awareness:} involves recognizing a problem. This step is necessary to find what problem we are trying to solve.
     \item\textbf{Suggestion:} is the step where we create a tentative idea of how the problem might be addressed.
-    \item\textbf{Development:} is where we implement and idea from the previous step.
+    \item\textbf{Development:} is where we implement ad idea from the previous step.
     \item\textbf{Evaluation:} involves examine the artefact and evaluations are done to estimate its worth and deviations from the expectations.
     \item\textbf{Conclusion:} is the final step in the cycle where results are collected and written down. Gained knowledge is identified and any unexpected or unexplainable results could lay the ground for further research.
 \end{itemize}
@@ -82,15 +81,9 @@ It is important to understand that these steps are not necessarily followed in a
 
 The goal is to work out a prototype that is gradually modified until a satisfactory implementation is produced. One of the biggest advantages of this approach is that it is not necessary to fully understand a problem before developing prototypes and exploring tentative solutions. This research strategy also opens up the possibilities of testing prototypes often and comparing results along the way to see if one direction or approach works better than others. As an essential part of this strategy, it must be made clear how the implemented solution emerged as a result of the repeated cycles. Without a thought-through design rationale, the final implementation may appear to be the result of a hacked together solution without any recollection of the trial and error phase.
 
-\subsection{Evaluation and Gained Experience}
-\label{sec:evaluation_and_gained_experience}
-One important aspect of the process is the step of evaluation. It is very important to evaluate our prototype as the process is ongoing. There are many types of criteria that may be applied to a prototype such as functionally, completeness, consistency, accuracy, performance, reliability, usability, accessibility, and so on. Creating a classifier system, we want to consider its accuracy, and valuate how well it can classify a set of problems. In addition to this measure, we also want to investigate the results and attempt to unveil why we got the results we got. If the system performs poorly, why is that? Is there something fundamentally wrong with our approach? Is our model designed in a way that is not fit with the data we are feeding it? Evaluation is critical in the step of ``learning from our mistakes". It is difficult to succeed right away, especially with lack of knowledge. Evaluating and understanding what we need to change is one of the most fundamental steps in the process of design and creation as a research strategy.
-
-%%=========================================
-
-\section{Experiment}
+\subsection{Experiment}
 \label{sec:experiment}
-Experiments are, as already mentioned, a research strategy that focuses on investigating cause and effect, and the reason between the two. During our process, this strategy helped us find out in what direction we should look to improve our model.
+Experiments are, as already mentioned, a research strategy that focuses on investigating cause and effect, and the relationship between the two. During our research process, this strategy helped us find out in what direction we should look to improve our model.
 
 Experiments are structured around hypothesis. With a given hypothesis, an experiment is designed to prove or disprove the hypothesis. For example, a hypothesis may be:
 
@@ -107,7 +100,7 @@ According to \citep{oates2005researching}, research strategies that are based on
     \item Repetition, where experiments are carried out multiple times. This is done under varying conditions, to be certain that the observed and measured outcomes are not caused by some other factor.
 \end{itemize}
 
-One of the prime focuses for our experiments were to have good internal validity. This means that measurements are obtained are cause and effect from manipulations of the independent variable, and not to any other factors. Running tests on our system this meant that we made sure to run tests on same data sets, and avoided to do any alterations except the ones we were measuring to answer our hypothesis.
+One of the prime focuses for our experiments were to have good internal validity. This means that measurements that are obtained are cause and effect from manipulations of the independent variable, and not to any other factors. This meant that we made sure that the test results we compared all came from the same datasets, and that we avoided any alterations except the ones we were measuring to answer our hypothesis.
 
 %%=========================================
 
@@ -115,15 +108,15 @@ One of the prime focuses for our experiments were to have good internal validity
 \label{sec:combining_the_two_strategies}
 As stated earlier, we did not use both of the strategies in its complete form throughout the entire process. Instead we lent on the fluid nature of design and creation, and used concepts from experiments to help us move forward. 
 
-We created meaningful hypothesis related to the current tentative solution for a problem. While implementing the solution, we also made sure to construct it in such a way that we could test our hypothesis when it was finished. We evaluated the results from the development process, and cross examine them with the results from the investigation of our hypothesis. The combined knowledge gained though this approach helped us in the next cycle of development by uncovering which ``rock" to look under next.
+We created meaningful hypothesis related to the current tentative solution for a problem. While implementing the solution, we also made sure to construct it in such a way that we could test our hypothesis when it was finished. We evaluated the results from the development process, and cross examine them with the results from the investigation of our hypothesis. The combined knowledge gained though this approach helped us in the next cycle of development by uncovering how to proceed.
 
 %%=========================================
 
 \section{Data Generation Methods and Data Analysis}
 \label{sec:data_generation_methods_and_data_analysis}
-Data generation methods is the means by which we produce the empirical data on which we evaluate our research. As state by \citep{oates2005researching}, many researchers who choose to use the design and creation strategy pay little attention to using properly the various data generation methods. Reason for this may be because the artefact that is developed needs to be tested in a specific way. Evaluation of a system like the one we wish to develop, is usually done by training and testing it on sets of data. Such data generation methods falls outside the regular approach as presented in Figure \ref{fig:model_research_process}.
+Data generation methods is the means by which we produce the empirical data on which we evaluate our research. As state by \citep{oates2005researching}, many researchers who choose to use the design and creation strategy pay little attention to properly use the various data generation methods as presented. Reason for this is usually because the artefact that is developed needs to be tested in a specific way. Evaluation of a system like the one we wish to develop, is usually done by training and testing it on sets of data. Such data generation methods falls outside the overview as presented in Figure \ref{fig:model_research_process}. For our research we decided to create our own datasets with certain  and test the system on that dataset.
 
-Data analysis based on the data from our tests will be done quantitatively. This means that our data and evidence is based on numbers. The data will be compared, and analysed using tables, charts and graphs. Developing a iterative system like we are doing, this type of analysis would make it easier to compare numbers, behavior and progression.
+Data analysis based on the data from our tests would be done quantitatively. This means that our data and evidence is based on numbers. The data will be compared, and analysed using tables, charts and graphs. Developing a iterative system, like we are doing, this type of analysis would make it easier to compare numbers, behavior and progression.
 
 \vspace{5mm}
 \begin{note}

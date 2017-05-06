@@ -3,13 +3,13 @@
 
 \chapter{Introduction}
 \label{ch:introduction}
-We find ourselves in the middle of the digital age. As the industrial revolution gave us new manufacturing processes at the middle of the seventeenth century, the digital revolution gave us digital electronics, most noticeable the computer \citep{freeman2001time}. With the arrival of high-performance computers and high speed networks, use of digital technologies increased rapidly. The increase in storage capacities gave us the possibilities to store lots of information digitally for preservation. Digital technologies enable information to be created, manipulated, disseminated, located, and stored with increasing ease \citep{lee2002state}. In addition, digital storage usually takes up less physical space compared to the analogue counterpart, and its storage medium is usually cheaper \citep{morris2003evolution}. Although hard drives also are exposed to ``wear and tear" that deteriorate it, analogue information, such as a book, usually deteriorate much faster. Due to these benefits, a lot data that used to be analogue finds new life in digital formats. Photos, audio, video, and books are just a few types of data that are commonly found digitally these days.
+We find ourselves in the middle of the digital age. As the industrial revolution gave us new manufacturing processes at the middle of the seventeenth century, the digital revolution gave us digital electronics, most noticeable the computer \citep{freeman2001time}. With the arrival of high-performance computers and high speed networks, use of digital technologies increased rapidly. The increase in storage capacities gave us the possibilities to store lots of information digitally for preservation. Digital technologies enable information to be created, manipulated, disseminated, relocated, and stored with increasing ease \citep{lee2002state}. In addition, digital storage usually takes up less physical space compared to the analogue counterpart, and its storage medium is usually cheaper \citep{morris2003evolution}. Although hard drives also are exposed to ``wear and tear" that deteriorate it, analogue information, such as a book, usually deteriorate much faster. Due to these benefits, a lot data that used to be analogue finds new life in digital formats. Photos, audio, video, and books are just a few types of data that are commonly found digitally these days.
 
 \citep{misc-oed-digitization} defines the action or process of digitizing, the task of converting analogue data into digital data, as ``digitization". One prime example of mass digitization is Google Inc.\footnote{\url{https://www.google.com/intl/en/about/}} and their service Google Books\footnote{\url{https://books.google.com}}. Google Books is a service that provides full text of books and magazines online. Other similar projects like Google Books include JSTOR\footnote{\url{https://www.jstor.org}}, which has digitized nearly a thousand journals, dating back to the mid 19th century, and Bokhylla.no\footnote{\url{http://bokhylla.no}} (The Bookshelf). Bokhylla.no is a project initiated by the National Library of Norway. It was launched in 2009 and aims to provide online access to literature published in Norwegian. The service will contain about 250 000 books when it is completed in 2017 \citep{misc-nb-digial-library}.
 
-Google has made their goal with Google Books very clear, it is primarily a search service, which also allows some viewing of the context of the search terms. They do not attempt to provide a reading environment, and consider themselves first and foremost a index of books and published works \citep{coyle2006mass}. Bokhylla.no on, the other hand, provides enhanced reading environments, where the visitor can read entire books from cover to cover. The service also provides in-text search of the entire library. 
+Google has made their goal with Google Books very clear, it is primarily a search service, which also allows some viewing of the context of the search terms. They do not attempt to provide a reading environment, and consider themselves first and foremost an index of books and published works \citep{coyle2006mass}. Bokhylla.no on the other hand, provides enhanced reading environments, where the visitor can read entire books from cover to cover. The service also provides in-text search of the entire library. 
 
-Despite their different approaches to digitalized reading, they utilize the same types of technologies. While simply scanning the books will suffice to make the literature available online, other technologies are needed to actually index the content. Indexing is the process of capturing the scanned text and converting it into editable and searchable data. To capture this data, a technology called Optical Character Recognition, or OCR for short, is used. OCR has many applications, and is in use in many areas today. Book scanning, number plate recognition, handling of checks, passports, as well as assistive technologies for blind and visually impaired users may use some kind of OCR \citep{mori1999optical, kurzweil2000reading}.
+Despite their different use of digitization, they utilize the same types of technologies. While simply scanning the books will suffice to make the literature available online, other technologies are needed to actually index the content. Indexing is the process of capturing the scanned text and converting it into editable and searchable data. To capture this data, a technology called Optical Character Recognition, or OCR for short, is used. OCR has many applications, and is in use in many areas today. Book scanning, number plate recognition, handling of checks, passports, as well as assistive technologies for blind and visually impaired users are just some areas which uses OCR today \citep{mori1999optical, kurzweil2000reading}.
 
 %%=========================================
 
@@ -23,18 +23,11 @@ We have come a long way since the 1950s, and \citep{ye2015text} states:
     While many researchers view optical character recognition (OCR) as a solved problem, text detection and recognition in imagery possess many of the same hurdles as computer vision and pattern recognition problems driven by lower quality or degraded data.
 \end{quote}
 
-Under optimal conditions, certain OCR systems can perform very well. OCR has yielded great results in clean and well-formatted documents, in some cases achieving up to 99\% recognition rates. In cases where the documents are not clean and well-formatted, with an OCR facing variations of text layouts and fonts, uneven illuminations, and other obstacles, the challenge is much greater, and the systems have a much lower rates of detection and recognition \citep{ye2015text}.
+Under optimal conditions, certain OCR systems can perform very well. OCR has yielded great results in clean and well-formatted documents, in some cases achieving up to 99\% recognition rates. In cases where the documents are not clean and well-formatted, with an OCR facing variations of text layouts and fonts, uneven illuminations, and other obstacles, the challenge is much greater, and the systems have lower rates of detection and recognition \citep{ye2015text}.
 
-This has led us to believe that the problem of OCR is not solved, and there is still room for improvements and experimentation with new approaches. One of the area that still have a lot of room for improvement is recognizing characters that are damaged or obfuscated. Text can be damaged for a number of reasons, such as pasting of paper, ink spreading, fading, or dirt \citep{bhardwaj2014imaging}. See Figure \ref{fig:damaged-text} for example of text that is damaged and missing a lot of its original data. In this master thesis we present a new way to recognize damaged letters by using their ``signature".
+The fact that OCR systems still struggle under sub-optimal conditions indicates that the problem is in fact not solved, and that there is still room for improvements and experimentation with new approaches. One of the area that still have room for improvement is recognizing characters that are damaged or obfuscated. Text can be damaged for a number of reasons, such as pasting of paper, ink spreading, fading, or dirt \citep{bhardwaj2014imaging}. In this thesis we take on a special kind of obfuscated text, and present a new way to recognize it by utilizing their ``signature".
 
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=0.8\textwidth]{fig/chapter1/damaged.png}
-    \caption{Badly damaged text missing a lot of its original data}
-    \label{fig:damaged-text}
-\end{figure}
-
-\subsection{Read World Example}
+\subsection{Real World Example}
 \begin{figure}[ht]
     \centering
     \includegraphics[width=0.7\textwidth]{fig/chapter1/notch_tweet.png}
@@ -42,7 +35,7 @@ This has led us to believe that the problem of OCR is not solved, and there is s
     \label{ref:notch_twitter}
 \end{figure}
 
-Another example of ``damaged" text can be found in a Tweet from Markus ``Notch" Persson. Persson is a Swedish video game programmer and designer, and is most famous for crating the highly praised game Minecraft. He was a inveterate user of Twitter, and used to hint or tease upcoming features of the game. Figure \ref{ref:notch_twitter} contains a Tweet from Persson, Tweeted on June 12th 2011.
+An example of the type of obfuscated text we are going to tackle in this thesis can be found in a Tweet from Markus ``Notch" Persson. Persson is a Swedish video game programmer and designer, and is most famous for crating the highly praised game Minecraft. He was a inveterate user of Twitter, and used to hint or tease upcoming features of the game. Figure \ref{ref:notch_twitter} contains the Tweet from Persson, which was Tweeted on June 12th 2011.
 
 \begin{figure}[ht]
     \centering
@@ -51,9 +44,7 @@ Another example of ``damaged" text can be found in a Tweet from Markus ``Notch" 
     \label{fig:notch_imgur}
 \end{figure}
 
-The image he is linking to can be seen in Figure \ref{fig:notch_imgur}. It is a print screen of what looks like a text editor or IDE. The image is heavily blurred, and cropped, but some of the text is still partially visible, like the lower portion of the file names in the tab pane at the top of the image. 
-
-The most interesting part about this image is the text in the tab pane, where only the lower portion of the characters are visible. When this image circulated the Internet, one user was able to identify the text in the tabs. He installed the IDE Persson used, and compared the default font in the program to the image. His findings can be seen in in Figure \ref{fig:notch_eclipse_decoded}. More than four months later, when version 1.7 was released, it was confirmed that the decoding was correct, with the introduction of big mushrooms in the game\footnote{Experience Orbs were postponed, and introduced in the 1.8 update instead.} \citep{misc-minecraft.172-changelog}.
+The image he is linking to in his Tweet can be seen in Figure \ref{fig:notch_imgur}. It is a print screen of what looks like a text editor or IDE. The image is heavily blurred, and cropped, but some of the text is still partially visible, like the lower portion of the file names in the tab pane at the top of the image. When this image circulated the Internet, one user was able to identify the text in the tabs. He installed the IDE Persson used, and compared the default font in the program to letters that was partially visible the image. His findings can be seen in in Figure \ref{fig:notch_eclipse_decoded}. More than four months later, when version 1.7 of Minecraft was released, it was clear that the decoding was correct as big mushrooms started to appear the game\footnote{The experience orbs were postponed, and introduced in the 1.8 update instead.} \citep{misc-minecraft.172-changelog}.
 
 \begin{figure}[ht]
     \centering
@@ -62,30 +53,31 @@ The most interesting part about this image is the text in the tab pane, where on
     \label{fig:notch_eclipse_decoded}
 \end{figure}
 
-The decoding that was done poses an interesting problem. Can characters and words be recognized given only a very small portion of the entire glyph? The decoding in Figure \ref{fig:notch_eclipse_decoded} was done manually by comparing each letter with what was visible in the image, but could such recognition be done automatically? This question was used as the basis for this master thesis.
+\newpage
+The decoding that was done to match the letters poses an interesting problem. Can characters and words be recognized given only a very small portion of the entire glyph? The decoding in Figure \ref{fig:notch_eclipse_decoded} was done manually by comparing each letter with what was visible in the image, but could such recognition be done automatically? This question was used as the basis for this thesis.
 
 %%=========================================
 
 \section{Goals and Research Questions}
 \label{sec:goals_and_research_questions}
-Our goal is to use the ``signature" of a character to classify it. We can imagine a ``signature" by applying two masks to the original image. These masks spans the total width of the image. The masks also cover most of the image from the top to bottom, and from the bottom to the top. The only area that is not covered by the masks is a thin line. This line defines the ``signature" for our image. In Figure \ref{fig:thesis-signature} we have a image with the word ``THESIS". The original characters have a height of 50 pixels, and our masks are applied at both the top and bottom of the image. The areas that are covered with masks are grayed out, and the only exposed part of the image is a line that has a height of one pixel. This line is a ``signature" of the original image. By applying these masks, we now omit the data and information that is covered by these.
+Our goal is to use the ``signature" of letters in a word to recognize it. We can imagine a ``signature" by applying two masks to an image with some written text. These masks spans the total width of the image, and also cover most of the image from the top to bottom, and from the bottom to the top. The only area that is not covered by the masks is a thin line. This line defines the ``signature" for our image and the text written in it. In Figure \ref{fig:thesis-signature} we have a image with the word ``THESIS". The original characters have a height of 50 pixels, and our masks are applied at both the top and bottom of the image. The areas that are covered with masks are grayed out, and the only exposed part of the image is a line that has a height of one pixel. This line is a ``signature" of the original image. By applying these masks, we omit the data and information that is covered by them, and we do not see the pixels that are grayed out in the illustration.
 
-\begin{figure}[ht]
+\begin{figure}[hb]
     \centering
     \includegraphics[width=0.7\textwidth]{fig/chapter1/signature.png}
     \caption{Illustration of a word with a signature with a height of one pixel}
     \label{fig:thesis-signature}
 \end{figure}
 
-Naturally, this approach has its pros and cons. First of all, all the data in the signature is necessary. This approach can not handle any damage in the data within the signature. This means that this approach is useless if there is no one single line that is whole. In real life scenarios, this may be a very real concern, but for the sake of researching and analyzing an approach like this, we can avoid the problem in our constructed data sets. The pros of the ``signature approach" is that the data outside the signature is irrelevant, and we only use a very small subset of the original information. This means that as long as the constraints explained above holds, we can deal with very damaged and obfuscated data.
+With an approach like the one we present, there are many interesting question that can be asked about a potential system that can solve such problems. While our overarching research goal is to find out if such an approach works at all, there are many ways to explore further on how settings, configurations, and conditions influences the system.
 
-The overarching goal of this master thesis is:
+Trying to make the research done in this thesis as valuable as possible, we have focused our research questions on areas that are hopefully are most relevant for further research. Instead of focusing on narrow and niche questions, we have focused on more general and overarching ones. The research questions and their meaning are explained in greater detail in Section \ref{sec:research_questions_and_approach}.
 
 \begin{description}
-    \item[Goal]{\textit{Is machine learning unable to use signature sequences to recognize words?}}
+    \item[Goal]{\textit{Is machine learning able to use signature sequences to recognize words and letters?}}
 \end{description}
 
-To expand on the goal stated above, we also have the following research questions that we hope to answer during the work on this master thesis.
+To expand on the goal stated above, we also have the following research questions that we will attempt to answer during the work on this thesis:
 
 \begin{description}
     \item[Research Question 1]{\textit{Does ambiguity in character signature sequences impact recognition rates?}}
@@ -93,28 +85,26 @@ To expand on the goal stated above, we also have the following research question
     \item[Research Question 3]{\textit{Is a signature sequence based model unable to handle noise?}}
 \end{description}
 
-With an approach like the one we present, there are many questions that can be asked about the potential model. Trying to make the research done in this master thesis as valuable as possible, we have focused our research questions on areas that are relevant for further research. Instead of focusing on narrow and niche questions, we have focused on more general and overarching ones. The research questions and their meaning are explained in greater detail in section \ref{sec:research_questions_and_approach}.
-
 %%=========================================
 
 \section{Research Method}
-Given the research goal and questions presented in the previous section, the most meaningful research method would be to develop a model in an attempt to answer them. This prototype model should be used through experiments and the relevant results should be evaluated in terms of our goals and questions. The model should be premised on relevant theory and state of the art technologies relevant for our problem. The research method and approach is presented in detail in Chapter \ref{ch:methodology}.
+Given the research goal and questions presented in the previous section, the most meaningful research method would be to develop a model in an attempt to answer them. This prototype model should be used through experiments and the relevant results should be evaluated in terms of our goals and questions. The model should rely on relevant theory and state-of-the-art technologies that are relevant for our problem. The research method and approach is presented in detail in Chapter \ref{ch:methodology}.
 
 %%=========================================
 
 \section{Contributions}
-The contribution of this master thesis is mainly the exploration of how to use machine learning and signature sequences to do predictions. The results of the experiments and conclusions done in this master thesis may lay the foundation of new way to use machine learning to recognize patterns in data using sequences. Although the ideas presented in this master thesis are not new, they may prove that certain problems can be solved using data in new ways.
+The contribution of this thesis is mainly the exploration of how to use machine learning and signature sequences to do recognition. The results of the experiments and conclusions done in this thesis may lay the foundation for new way to use machine learning to recognize patterns in data using sequences. Although the ideas presented in this thesis are not new, they may prove that certain problems can be solved using data in different ways.
 
 %%=========================================
 
 \section{Thesis Structure}
 The remainder of this thesis is structured as follows:
 
-\noindent
+\vspace{0.5cm}\noindent
 \begin{minipage}{\linewidth}
     \textbf{Part I - Introduction and Methodology}
     \begin{itemize}
-        \item\textbf{Methodology} establishes the methodology used throughout the master thesis. It explains how the research should be carried out and why we chose the strategies we used.
+        \item\textbf{Methodology} establishes the methodology used throughout the thesis. It explains how the research should be carried out and why we chose the strategies we used.
     \end{itemize}
 \end{minipage}
 
