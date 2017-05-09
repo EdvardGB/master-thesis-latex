@@ -89,7 +89,7 @@ Table \ref{table:accuracy_two_fonts} contains the results for each model on the 
 
 \subsection{Accuracy and Loss For Each Model}
 \resultplots{fig/results/experiment2/vecrep/}{plot_accuracy_crop.png}{plot_loss_crop.png}{result2_vecrep}{Accuracy and loss for {\tt VecRep}}
-\resultplots{fig/results/experiment2/encdecreg/}{plot_accuracy_crop.png}{plot_loss_crop.png}{result2_vecrep}{Accuracy and loss for {\tt EncDecReg}}
+\resultplots{fig/results/experiment2/encdecreg/}{plot_accuracy_crop.png}{plot_loss_crop.png}{result2_encdecreg}{Accuracy and loss for {\tt EncDecReg}}
 \resultplots{fig/results/experiment2/encdecatt/}{plot_accuracy_crop.png}{plot_loss_crop.png}{result2_encdecatt}{Accuracy and loss for {\tt EncDecAtt}}
 
 %%=========================================
@@ -112,7 +112,7 @@ Table \ref{table:accuracy_two_fonts} contains the results for each model on the 
         60\%                           & 30.18\%                          & 45.29\%                   \\ \hline
     \end{tabular}
     \caption{Accuracy on the {\tt EncDecAtt} model}
-    \label{table:accuracy_two_fonts}
+    \label{table:noise_accuracy}
 \end{table}
 
 \begin{filecontents}{datax.dat}
@@ -138,9 +138,12 @@ Table \ref{table:accuracy_two_fonts} contains the results for each model on the 
             ylabel=accuracy,
             xlabel=noise,
         ]
-            \addplot[draw=red] table[x index=0,y index=1,col sep=comma] {datax.dat};
+            \addplot[draw=red] table[x index=0,y index=1,col sep=comma]{datax.dat};
         \end{axis}%
     \end{tikzpicture}%
-    \caption{Plotted hyperbolic tangent function}
-    \label{fig:plot_function_tanh}
+    \caption{Change of accuracy as the amount of noise is increased}
+    \label{fig:noise_accuracy}
 \end{figure}
+
+\section{Stress Test}
+Att = 0.7509647 accuracy

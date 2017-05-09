@@ -3,16 +3,12 @@
 
 \chapter{Models}
 \label{ch:models}
-In this chapter we present the three models we created during our iterative development process. The models, ca
+In this chapter we present the three models we created during our iterative development process.
 
 %%=========================================
 
-\section{VectorRepeat}
-The first model, called {\tt VecRep} for short, consists of two groups of LSTMs. The first group of LSTMs encodes the entire input and outputs its final hidden state. This hidden state is then repeated in the dimension of time, and inputted into a new group of LSTMs. 
-
-With this approach, we can defin
-
-The benefit of this approach is that we can define the width of the second LSTM to the width of our output. This is not possible when projecting the LSTMs hidden states, as described in the previous section, as the LSTM will have the same width for input and output.
+\section{Repeat Vector}
+The first model, called {\tt VecRep} for short, has a similar structure to that of the encoder-decoder framework. The model consists of two groups of LSTMs. The first group reads the entire input and outputs its final hidden state. This hidden state is then repeated in the dimension of time, and inputted into a new group of LSTMs.
 
 \begin{figure}[ht]
     \centering
@@ -21,7 +17,7 @@ The benefit of this approach is that we can define the width of the second LSTM 
     \label{fig:lstm-vector-projection-encoder}
 \end{figure}
 
-Figure \ref{fig:lstm-vector-projection-encoder} illustrates a regular LSTM that reads an input sequence and output its final hidden state. The output vector has a length equal to the width of the LSTM. As illustrated in Figure \ref{fig:lstm-vector-projection-decoder}, the hidden state from the LSTM is repeated \(n\) times, where \(n\) is the length of the output sequence. In this example, out output has a length of three characters, plus a special ``end of line" character. The resulting matrix of the repeated vector is then fed to another LSTM that reads each time step and output its hidden state for each iteration.
+Figure \ref{fig:lstm-vector-projection-encoder} illustrates a regular LSTM that reads an input sequence and output its final hidden state. The output vector has a length equal to the number of units in the LSTM. As illustrated in Figure \ref{fig:lstm-vector-projection-decoder}, the hidden state from the LSTM is repeated \(N\) times, where \(N\) is the length of the output sequence. This means we take an output shape of {\tt (batch\_size, units)} and turn it into a shape of {\tt (batch\_size, N, units)}.
 
 \begin{figure}[ht]
     \centering
@@ -30,14 +26,21 @@ Figure \ref{fig:lstm-vector-projection-encoder} illustrates a regular LSTM that 
     \label{fig:lstm-vector-projection-decoder}
 \end{figure}
 
-The vector approach is different from the one described in the previous iteration, and does not suffer from the same problem with alignment. Because we read the entire input sequence before anything is outputted, we no longer output anything that is dependent on data in future time steps. The vector from the first LSTM has essentially encoded the temporal dependencies in a single representation vector. This is not that different from how encoder-decoders create their fixed width context vector. The main difference between this approach and general encoder-decoders is that the output in the last LSTM is not fed back as input. This may cause problems because the output is not only dependent on the encoded input sequence, but also what it has already outputted.
+In this example, out output has a length of three characters, plus a special ``end of line" character. The resulting matrix of the repeated vector is then fed to another LSTM that reads each time step and output its hidden state for each iteration.
 
 %%=========================================
 
-\section{EncDecReg}
-\red{TODO}
+\section{Regular Encoder-Decoder}
+The second model implements the encoder-decoder framework. It is called {\tt EncDecReg} as it is the ``regular" encoder-decoder, unlike the last model. This model has certain similarities to the {\tt VecRep} model; also this one consists of two groups of LSTMs, where the first group encodes the input and the last group decodes.
+
+However, in this model, we use the last hidden state of the encoder, instead of the output as with the {\tt VecRep} model. In addition, during testing and validation, the decoder feed its output back in as input. During training, instead of relying on the models own output, we use the actual labels. This is similar to the approach taken by \citep{bengio2015scheduled}.
+
+This model also uses two embeddings, one for the input and one for the output. The input is embedded before the encoder reads the input, and the output embedding is applied on the fly when the decoder is reusing its own output as input.
 
 %%=========================================
 
-\section{EncDecAtt}
-\red{TODO}
+\section{Attention Encoder-Decoder}
+The last model also implements the encoder-decoder framework, similarly to the {\tt EncDecReg} model. This model also implements the attention mechanism, and is named {\tt EncDecAtt} for short.
+
+As explained in Section \ref{sec:attention_mechanism}, the attention mechanism allows the decoder to peek into the input. This is done by providing an additional list of states from the input. This is done by the decoder, by using the attention mechanism over the encoder LSTM states. The implementation of the attention mechanism used in this model is based on \citep{vinyals2015grammar}.
+
