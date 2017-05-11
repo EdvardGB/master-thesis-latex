@@ -98,10 +98,10 @@ In this section we present the setup, configurations, and choice of hyper-parame
 \end{figure}
 
 \subsection{Accuracy Metric}
-Accuracy was calculated by computing the categorical accuracy for each label. This was done by comparing the categorical output of the prediction with the one-hot vector representing the correct label in the dataset. This metric did not
+Accuracy was calculated by computing the categorical accuracy for each label. This was done by comparing the categorical output of the prediction with the one-hot vector representing the correct label in the dataset.
 
 \subsection{Loss Optimizer}
-
+\red{TODO}
 
 \section{Dataset Details}
 Datasets were created using the pipeline process explained in Section \ref{sec:preprocessor}. Our word list had a total of 356,719 unique words, populated by three open sourced word lists:
@@ -117,7 +117,7 @@ The lists are filtered so only word consisting of letters are added. All words l
 %%=========================================
 
 \section{Experiments}
-This section presents the various experiments we ran.
+This section presents the various experiments we conducted in response to our research goal and research questions.
 
 \subsection{Accuracy on Datasets}
 \label{sec:accuracy_on_datasets}
@@ -147,9 +147,21 @@ The dataset used in this experiment had a training set of size \(10,000\) and va
 \end{minipage}
 
 \subsection{Noise Handling}
-In the third experiment we iterative added increasingly more noise to the input data. This experiment was conducted to record how resilient and robust the model was to noise in the data. For this experiment we only used the best performing model. 
+In the third experiment we added increasingly more noise to the input data. This experiment was conducted to record how resilient and robust the model was to noise in the data. For this experiment we only used the best performing model. 
 
-Using the same dataset for each iteration, we would 
+\subsection{Stress Test}
+The final experiment was a ``stress test" where we increased the complexity of the task in various ways. For this experiment, we used a total of five fonts:
 
-%%=========================================
+\begin{itemize}
+    \item Arial (monospaced)
+    \item Times New Roman
+    \item Courier
+    \item Georgia
+    \item Verdana
+\end{itemize}
 
+These fonts are variants of serif fonts (Georgia and Times New Roman), sans-serif fonts (Arial, Verdana), and monospaced fonts (Arial monospaced, Courier).
+
+This experiment had words written in both upper-cased and lower-cased letters, in contrast to the other experiments which only had upper-cased words. The other experiments, having exclusively upper-cased letters, had a total of 27 classes (A-Z plus an ``empty" class), whereas this experiment would have a total of 53 classes (A-Z, a-z, and the ``empty" class). The words had a 50\% chance of being written in either upper-cased or lower-cased letters, resulting an an almost even distribution.
+
+The datasets had a size of 50,000, 5,000, and 5,000 for the training, testing, and validation sets respectively. We also added a noise factor of 10\%.

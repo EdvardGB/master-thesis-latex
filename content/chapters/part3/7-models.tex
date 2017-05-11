@@ -40,7 +40,7 @@ This model also uses two embeddings, one for the input and one for the output. T
 %%=========================================
 
 \section{Attention Encoder-Decoder}
-The last model also implements the encoder-decoder framework, similarly to the {\tt EncDecReg} model. This model also implements the attention mechanism, and is named {\tt EncDecAtt} for short.
+The last model also implements the encoder-decoder framework, similarly to the {\tt EncDecReg} model. In addition, this model also implements the attention mechanism, and is named {\tt EncDecAtt} for short.
 
 As explained in Section \ref{sec:attention_mechanism}, the attention mechanism allows the decoder to peek into the input. This is done by providing an additional list of states from the input. This is done by the decoder, by using the attention mechanism over the encoder LSTM states. The implementation of the attention mechanism used in this model is based on \citep{vinyals2015grammar}.
 

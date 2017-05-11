@@ -3,13 +3,13 @@
 
 \chapter{Methodology}
 \label{ch:methodology}
-This chapter presents the research methodology that was used in the process of writing this thesis. The chapter looks closer at the research questions and how these were used as basis for how the research was conducted. In addition, this chapter explains our general research strategy.
+This chapter presents the research methodology that was used in the process of writing this thesis. Section \ref{sec:research_questions_and_approach} looks closer at the research questions which we defined in the previous chapter. Section \ref{sec:research_approaches} presents the research approach, and Section \ref{sec:research_strategy} presents our choice of research strategies. In Section \ref{sec:data_generation_methods_and_data_analysis} we present our data generation methods and how we did our data analysis .
 
 %%=========================================
 
 \section{Evaluating Research Questions}
 \label{sec:research_questions_and_approach}
-In Section \ref{sec:goals_and_research_questions}, we presented our research questions as:
+We have already presented our research questions as:
 
 \begin{description}
     \item[Research Question 1]{\textit{Does ambiguity in character signature sequences impact recognition rates?}}
@@ -21,15 +21,16 @@ In Section \ref{sec:goals_and_research_questions}, we presented our research que
 In this section we will look closer at how we may give an answer to these questions in a meaningful way:
 
 \begin{description}
-    \item[RQ1:]{We knew ambiguity could be a problem due to how signatures of different letters may be identical. This was made clear early in testing and is explained further in Section \ref{sec:ambiguous_input}. To answer this research question we would need to conduct tests and experiments where we compare sequences with and without ambiguities to see how the differences impact the recognition rates.}
-    \item[RQ2:]{Recognizing words with a single font is one problem, but combining two or more fonts poses more complex problem, especially given the small amounts of data we have available. This research question could, similarly to \textbf{RQ1}, be answered by running tests with text written in multiple fonts and see how the recognition rates were affected. Sections \ref{sec:tuning_input_data}, \ref{sec:use_of_fonts}, and \ref{sec:other_factors} explains how the typography of fonts may affect recognition.}
-    \item[RQ3:]{While clean and well-formatted data is preferable, we may not always be so lucky that our data have no noise in it. Noise-induced data is also much more ``realistic" in a real world perspective, than 100\% perfect data. Investigating how well a model can handle certain degrees of noise is interesting, as it could say something about how robust it is. Investigating this could be done by running tests and introduce noise increasingly until the recognition rates deteriorate beyond a certain point.}
+    \item[RQ1:]{We knew ambiguity could be a problem due to how signatures of different letters may be identical. This was made clear early in testing and is explained further in Section \ref{sec:ambiguous_input}. To answer this research question we would need to conduct tests and experiments to see how ambiguity affected the recognition rates.}
+    \item[RQ2:]{Recognizing words with a single font is one problem, but combining two or more fonts poses more complex problem, especially given the nature of the problem. This research question could, similarly to \textbf{RQ1}, be answered by running tests with text written in multiple fonts and see how the recognition rates were affected. Sections \ref{sec:tuning_input_data}, \ref{sec:use_of_fonts}, and \ref{sec:other_factors} explains how the typography of fonts may affect recognition.}
+    \item[RQ3:]{While clean and well-formatted data is preferable, we may not always be so lucky that our data is completely noise free. Noise-induced data is also much more ``realistic", in a real world perspective, than 100\% perfect data. Investigating how well a model can handle certain degrees of noise is interesting, as it could say something about how robust it is. Investigating this could be done by running tests and introduce noise increasingly until the recognition rates deteriorate beyond a certain point.}
 \end{description}
 
 %%=========================================
 
 \section{Research Approaches}
-We chose to follow the research process presented by \citep{oates2005researching}. Figure \ref{fig:model_research_process} given an overview of the research process and its components. The overview illustrates how different research approaches can be formed by mixing and matching various types of strategies, data generation methods, and types of data analysis.
+\label{sec:research_approaches}
+We chose to follow the research process presented by \citep{oates2005researching}. Figure \ref{fig:model_research_process} gives an overview of their research process and its components. The overview illustrates how different research approaches can be formed by mixing and matching various types of strategies, data generation methods, and types of data analysis.
 
 \begin{figure}[ht]
     \centering
@@ -38,7 +39,7 @@ We chose to follow the research process presented by \citep{oates2005researching
     \label{fig:model_research_process}
 \end{figure}
 
-Our literature review is presented in Chapter \ref{ch:related_work}. The research questions was presented in Section \ref{sec:goals_and_research_questions}, and was explained further in Section \ref{sec:research_questions_and_approach}. The conceptual framework is what is presented throughout this chapter. Our choice of research strategy is presented in Section \ref{sec:research_strategy}, and our choice of data generation methods, as well as our data analysis approach is presented in Section \ref{sec:data_generation_methods_and_data_analysis}.
+Our literature review is presented in Chapter \ref{ch:related_work}. The research questions was presented in Section \ref{sec:goals_and_research_questions}, and was explained further in Section \ref{sec:research_questions_and_approach}. The conceptual framework is what is presented throughout this chapter. Our choice of research strategy is presented in Section \ref{sec:research_strategy}, and our choice of data generation methods, as well as our data analysis approach, is presented in Section \ref{sec:data_generation_methods_and_data_analysis}.
 
 %%=========================================
 
@@ -46,7 +47,7 @@ Our literature review is presented in Chapter \ref{ch:related_work}. The researc
 \label{sec:research_strategy}
 The research strategy used in this thesis was carefully chosen on the basis of what our research questions and overarching goal was, and how they could best be answered. We argued that the research questions, as well as the research goal, could best be answered by conducting experiments and tests. 
 
-We decided to use design and creation combined with experiments as our research strategy. As illustrated in Figure \ref{fig:model_research_process}, it is most common to use a single research strategy, but it is also possible to combine one or more. Our combination of research strategies allowed us to iteratively build one or more models, and to test various approaches to find optimal solutions. We followed the strategy of design and creation for the most part, but relied on experiments to move forward in the process. While the strategy of design and creation is built on the concept of iteratively building a product, experiments is a strategy that investigates cause and effect relationships. They can be used together to help steer the process in the right direction.
+We decided to use the research strategy of design and creation combined with the research strategy of experiments for the work conducted in this thesis. \citep{oates2005researching} states that is is most common to use a single research strategy, but that it is also possible to combine one or more. Our combination of research strategies allowed us to iteratively build one or more models, and to test various approaches to find optimal solutions. We followed the strategy of design and creation for the most part, but relied on experiments to move forward in the process. We also used experiments to answer the research questions, which would be the most important part of the research. While the strategy of design and creation is built on the concept of iteratively building a product, experiments is a strategy that investigates cause and effect relationships. They can be used together to help steer the process in the right direction during the development and exploration stages.
 
 \subsection{Design and Creation}
 \label{sec:design_and_creation}
@@ -102,9 +103,7 @@ According to \citep{oates2005researching}, research strategies that are based on
 
 One of the prime focuses for our experiments were to have good internal validity. This means that measurements that are obtained are cause and effect from manipulations of the independent variable, and not to any other factors. This meant that we made sure that the test results we compared all came from the same datasets, and that we avoided any alterations except the ones we were measuring to answer our hypothesis.
 
-%%=========================================
-
-\section{Combining the Two Strategies}
+\subsection{Combining the Two Strategies}
 \label{sec:combining_the_two_strategies}
 As stated earlier, we did not use both of the strategies in its complete form throughout the entire process. Instead we lent on the fluid nature of design and creation, and used concepts from experiments to help us move forward. 
 
@@ -114,9 +113,9 @@ We created meaningful hypothesis related to the current tentative solution for a
 
 \section{Data Generation Methods and Data Analysis}
 \label{sec:data_generation_methods_and_data_analysis}
-Data generation methods is the means by which we produce the empirical data on which we evaluate our research. As state by \citep{oates2005researching}, many researchers who choose to use the design and creation strategy pay little attention to properly use the various data generation methods as presented. Reason for this is usually because the artefact that is developed needs to be tested in a specific way. Evaluation of a system like the one we wish to develop, is usually done by training and testing it on sets of data. Such data generation methods falls outside the overview as presented in Figure \ref{fig:model_research_process}. For our research we decided to create our own datasets with certain  and test the system on that dataset.
+Data generation methods is the means by which we produced the empirical data on which we evaluated our research. As state by \citep{oates2005researching}, many researchers who chose to use the design and creation strategy pay little attention to properly use the various data generation methods as presented in the research approach model. Reason for this is usually because the artefact that is developed needs to be tested in a specific way. Evaluation of a system like ours is usually done by training and testing it on sets of data. Such data generation methods falls outside the overview as presented in Figure \ref{fig:model_research_process}. For our research we decided to create our own datasets and test the system on those datasets.
 
-Data analysis based on the data from our tests would be done quantitatively. This means that our data and evidence is based on numbers. The data will be compared, and analysed using tables, charts and graphs. Developing a iterative system, like we are doing, this type of analysis would make it easier to compare numbers, behavior and progression.
+Data analysis based on the data from our tests was done quantitatively. This means that our data and evidence was based on numbers. The data was compared, and analyzed using tables, charts and graphs. Developing a system iterative, like we did, this type of analysis made it easier to compare results, behavior and progression.
 
 \vspace{5mm}
 \begin{note}
