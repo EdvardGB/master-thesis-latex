@@ -3,31 +3,34 @@
 
 \chapter{Related Work}
 \label{ch:related_work}
-This chapter looks closer at related work carried out in the field of natural language processing, specifically recent work in the area of machine translation. Establishing the state-of-the-art in this area, we present the underlying work that make up these systems by explaining their architecture and implementation.
+This chapter looks closer at related work carried out in the field of natural language processing. We present the history and progress of natural language processing in Section \ref{sec:natural_language_processing}. In section \ref{sec:statistical_machine_translation} we present statistical machine translation, and neural machine translation is presented in Section \ref{sec:neural_machine_translation}. We both present some early work, and establish the current state-of-the-art in the area.
 
 %%=========================================
 
-\section{Natural Language Processing}
+\section{Evolution of Natural Language Processing}
 \label{sec:natural_language_processing}
-In 1954, a translation system developed at Georgetown University was demonstrated for the first time. The system did fully automatic translation of more than sixty sentences from Russian to English. One of the creators, Léon Dostert, predicted that automatic text-reading translations machines would be finished within three to five years \citep{hutchins1997first}. As research continued, the complexity of the linguistic problems became more and more apparent. Critics argued that the concept of fully automatic high quality translations that could produce translations indistinguishable from those of humans translators were impossible in principle \citep{hutchins2007machine}. National Science Foundation established the Automatic Language Processing Advisory Committee (ALPAC) in 1964, to carry out a study of the realities of machine translation. In 1966 they published their report that concluded that the use of machine translation was slower, less accurate, and twice as expensive as human translation. The report also stated that there were no immediate or predictable prospect of useful machine translation \citep{hutchins2007machine, national1966language, koehn2010statistical}. The ALPAC report led to a decrease of research in the area, but it did not stop completely.
+In 1954, a translation system developed at Georgetown University was demonstrated for the first time. The system did fully automatic translation of more than sixty sentences from Russian to English. One of the creators, Léon Dostert, predicted that automatic text-reading translations machines would be finished within three to five years \citep{hutchins1997first}. As research continued, the complexity of the linguistic problems became more and more apparent. Critics argued that the concept of fully automatic high quality translations that could produce translations indistinguishable from those of humans translators were impossible in principle \citep{hutchins2007machine}. 
+
+National Science Foundation established the Automatic Language Processing Advisory Committee (ALPAC) in 1964, to carry out a study of the realities of machine translation. In 1966 they published their report that concluded that the use of machine translation was slower, less accurate, and twice as expensive as human translation. The report also stated that there were no immediate or predictable prospect of useful machine translation \citep{hutchins2007machine, national1966language, koehn2010statistical}. The ALPAC report led to a decrease of research in the area, but it did not stop completely.
 
 It was first in the later half of the 1970s, and the early 1980s, that machine translation again saw a rise in popularity. The latter half of the 1980s also saw a general revival in interest in interlingua systems. This interest was motivated in part by artificial intelligence, which was also a research field that attracted much attention. Since the 1980s, new methods such as corpus-based approaches and statistical machine translation based systems has emerged. Speech translation has also seen growing interest since the late 1980s \citep{hutchins2007machine}.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\textwidth]{fig/background_theory/google_translate_rt.png}
+    \includegraphics[width=0.8\textwidth]{fig/background_theory/google_translate_rt.png}
     \caption{The Google Translate app and its image translation feature}
     \label{fig:google-translate-rt}
 \end{figure}
 
-In recent years, online solution such as Google Translate\footnote{https://translate.google.com} and AltaVista's Babelfish\footnote{https://www.babelfish.com} has gained much popularity. Both services offers on-demand translation for free \citep{hutchins2007machine}. Google reported on their blog in 2016 that their service now supported over 100 languages, had more than 500 million users, and translated more than 100 billion words a day \citep{turovsky2016googletranslate}. The native app for Google Translate has also become very popular. It offers the same functionality as their online counterpart, but also offer a few additional features, such as ``Word Lens" which translates images in place (see Figure \ref{fig:google-translate-rt}).
+In more recent years, online solution such as Google Translate\footnote{https://translate.google.com} and Yahoo!'s Babelfish\footnote{https://www.babelfish.com}\footnote{The service now relies on the translations from the Bing Translator, but the service is otherwise unaltered} has gained much popularity. Both services offers on-demand translation for free \citep{schuster2016googletranslate, hutchins2007machine}. Google reported on their blog in 2016 that their service supported over 100 languages, had more than 500 million users, and translated more than 100 billion words a day \citep{turovsky2016googletranslate}. The native app for Google Translate has also become very popular. It offers the same functionality as their online counterpart, but also offer a few additional features, such as ``Word Lens" which translates images in place (see Figure \ref{fig:google-translate-rt}).
 
 %%=========================================
 
 \section{Statistical Machine Translation}
+\label{sec:statistical_machine_translation}
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.7\textwidth]{fig/related_work/translation_de_en.pdf}
+    \includegraphics[width=0.8\textwidth]{fig/related_work/translation.png}
     \caption{Phrase-based translation of a German sentence to English}
     \label{fig:translation-phrase-based}
 \end{figure}
@@ -39,18 +42,20 @@ Statistical machine translation has been the dominant translation paradigm for d
 %%=========================================
 
 \section{Neural Machine Translation}
+\label{sec:neural_machine_translation}
 Neural machine translation is another approach to machine translation that has emerged recently. This approach aims at building a jointly-tuned single neural network which is trained to maximize translation performance. This is a different approach from traditional statistical machine translation systems, where a translation system consists of sub components that are optimized separately \citep{wolk2015neural}. The great benefit of neural machine translation systems is its ability to learn directly, in an end-to-end fashion. 
 
-In 2016, Google published their work on Google's Neural Machine Translation system, or GNMT for short. This system replaced their older statistical machine translation system that ran Google Translate \citep{turovsky2016googletranslatenmt}. GNMT uses the common sequence-to-sequence learning framework as proposed by \citep{sutskever2014sequence, wu2016google}. Their implementation is closely related to the work of \citep{kalchbrenner2013recurrent} who were the first to map the input sentence into a vector, and then back into a sentence. It also build heavily on the neural network architecture presented by \citep{cho2014learning}. \citep{cho2014learning} did their translation using LSTM-like RNN architecture, although their primary focus was to integrate their neural network into an SMT system \citep{cho2014learning, sutskever2014sequence}. The purposed model of \citep{sutskever2014sequence} did the entire translation end-to-end and was not integrated with any other frameworks or systems. Their implementation achieved close-to-best results in an English to French translation task, and outperformed various SMT-based systems.
+In 2016, Google published their work on Google's Neural Machine Translation system, or GNMT for short. This system replaced their older statistical machine translation system that ran Google Translate \citep{turovsky2016googletranslatenmt}. GNMT uses the common sequence-to-sequence learning framework as proposed by \citep{sutskever2014sequence, wu2016google}. Their implementation is closely related to the work of \citep{kalchbrenner2013recurrent} who were the first to map the input sentence into a vector, and then back into a sentence using the encoder-decoder framework. It also build heavily on the neural network architecture presented by \citep{cho2014learning}. \citep{cho2014learning} did their translation using LSTM-like RNN architecture, although their primary focus was to integrate their neural network into an SMT system \citep{cho2014learning, sutskever2014sequence}. The purposed model of \citep{sutskever2014sequence} did the entire translation end-to-end and was not integrated with any other frameworks or systems. Their implementation achieved close-to-best results in an English to French translation task, and outperformed various SMT-based systems.
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.8\textwidth]{fig/related_work/encoder_decoder_en_it.pdf}
+    \includegraphics[width=0.8\textwidth]{fig/related_work/encoder_decoder_en_it.png}
+    \captionsetup{justification=centering}
     \caption{General translation approach in neural machine translation from an English sentence to Italian}
     \label{fig:machine-translation-encoder-decoder-simple}
 \end{figure}
 
-The encoder-decoder approach has also been used as the foundation for various other NMT architectures. \citep{chung2016character} used the encoder-decoder general approach in their experiment, although they used bi-scale recurrent network with GRUs, instead of LSTMs. Their model did translation on character-level instead of the more common approach of translating on word-level. Their proved that their decoder, which was directly sequences of characters without any explicit word segmentation, was able to translate at the level of characters, and that the model actually benefited from the approach. 
+The encoder-decoder approach, as shown in Figure \ref{fig:machine-translation-encoder-decoder-simple}, has also been used as the foundation for various other NMT architectures. \citep{chung2016character} used the encoder-decoder general approach in their experiment, although they used bi-scale recurrent network with GRUs, instead of LSTMs. Their model did translation on character-level instead of the more common approach of translating on word-level. Their proved that their decoder, which was fed sequences of characters without any explicit word segmentation, was able to translate at the level of characters, and that the model actually benefited from the approach. 
 
 \citep{bahdanau2014neural} proposed another model, as already introduced in Section \ref{sec:attention_mechanism}, which tried to solve the performance bottleneck related to the encoded vector. \citep{cho2014properties} had already shown that the encoder-decoder model had problems with longer dependencies. Their analysis also introduced a novel network dubbed \textit{gated recursive convolutional neural network}, which was evaluated alongside the more traditional encoder-decoder approach. Their evaluation showed that both architectures performed relatively well on short sentences, but suffered significantly as the length of the sentences increased. The model proposed by \citep{bahdanau2014neural} instead learns to align and translate jointly. It does this by encoding the input sequence into a sequence of vectors and chooses a subset of these vectors adaptively while decoding the translation. This model outperformed the basic encoder-decoder significantly in their experiments.
 

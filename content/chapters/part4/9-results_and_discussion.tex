@@ -3,12 +3,13 @@
 
 \chapter{Results and Discussion}
 \label{ch:results}
-Below are the results for each test ran in our experiments. The results are discussed briefly and summarized in the next chapter.
+This chapter presents the results for the experiments we conducted. Section \ref{sec:accuracy_on_datasets_results} presents the results for the general accuracy each model had on three datasets of increasing size. The results for the experiment with two fonts is presented in Section \ref{sec:handling_of_two_fonts}. In Section \ref{sec:noise_handling} we test the robustness of {\tt EncDecAtt} by inducing noise in the datasets. The final ``stress test" results are presented in Section \ref{sec:stress_test}, and all the results are discussed in Section \ref{sec:result_discussion}. Finally, in Section \ref{sec:reasoning} we attempt to reason as to how the models got the results they got.
 
 %%=========================================
 
 \section{Accuracy on Datasets}
-Table \ref{table:accuracy_model_data_sets} contains the accuracy for each model on each of the three datasets of various sizes, as described in section \ref{sec:accuracy_on_datasets}. The accuracy and loss plots for each test are presented below, showing the progression over the epochs.
+\label{sec:accuracy_on_datasets_results}
+Table \ref{table:accuracy_model_data_sets} contains the accuracy for each model on each of the three datasets of various sizes, as described in Section \ref{sec:accuracy_on_datasets}. The accuracy and loss plots for each test are presented below, showing the progression over the epochs.
 
 \begin{table}[H]
     \centering
@@ -23,7 +24,7 @@ Table \ref{table:accuracy_model_data_sets} contains the accuracy for each model 
     \label{table:accuracy_model_data_sets}
 \end{table}
 
-The {\tt EncDecAtt} model had the best results on all three datasets, with the lowest accuracy of \(92\%\). For all three datasets, the model had an accuracy of more than \(90\%\), and the difference between the best and worst results were less than \(7\%\). This is in contrast to the {\tt EncDecReg} model, which had low accuracy results for both the small and medium datasets, but high accuracy on the big dataset. The {\tt EncDecReg} model had an accuracy of almost \(95.5\%\), which is less than \(4\%\) worse than the results for the {\tt EncDecAtt} model. The difference in the accuracy between the {\tt EncDecReg} and {\tt EncDecAtt} model on the medium dataset was more than \(40\%\), and almost \(50\%\) on the small dataset. The {\tt VecRep} model had consistently lower accuracy than the two other, but almost doubled its accuracy from the medium to the big dataset.
+The {\tt EncDecAtt} model had the best results on all three datasets, with the lowest accuracy of 92\%. Across all three datasets, the model had an accuracy of more than 90\%, and the difference between the best and worst results were less than 7\%. This is in contrast to the {\tt EncDecReg} model, which had low accuracy results for both the small and medium datasets, but high accuracy on the big dataset. The {\tt EncDecReg} model had an accuracy of almost 95.5\%, which is less than 4\% worse than the results for the {\tt EncDecAtt} model. The difference in the accuracy between the {\tt EncDecReg} and {\tt EncDecAtt} model on the medium dataset was more than 40\%, and almost 50\% on the small dataset. The {\tt VecRep} model had consistently lower accuracy than the two other, but almost doubled its accuracy from the medium to the big dataset.
 
 \subsection{VecRep}
 \subsubsection{Accuracy and Loss}
@@ -40,7 +41,7 @@ The {\tt EncDecAtt} model had the best results on all three datasets, with the l
     \label{fig:result1_big_vecrep_confusion_matrix}
 \end{figure}
 
-The confusion matrix illustrated in Figure \ref{fig:result1_big_vecrep_confusion_matrix} explains how the model was able to produce an accuracy of over \(50\%\) on the big dataset. The big dataset had a maximum word length of \(20\) letters, while most words in the English language, as well as our datasets, being shorter than this. To compensate for this, the labels were zero-padded to fill the empty output labels. The {\tt VecRep} seem to base its predictions on the most common labels, which would be the padding symbol. It also looks to prefer other common labels such as ``O", ``R", and ``S". Every other cell in the confusion matrix is zero, meaning the model did not predict on more than four of the total 27 classes.
+The confusion matrix illustrated in Figure \ref{fig:result1_big_vecrep_confusion_matrix} explains how the model was able to produce an accuracy of over 50\% on the big dataset. The big dataset had a maximum word length of 20 letters, while most words in the English language, as well as our datasets, being shorter than this. To compensate for this, the labels were zero-padded to fill the empty output labels. The {\tt VecRep} seem to base its predictions on the most common labels, which would be the padding symbol. It also looks to prefer other common labels such as O, R, and S. Every other cell in the confusion matrix is zero, meaning the model did not predict on more than four of the total 27 classes. The confusion matrix clearly indicates that the {\tt VecRep} model was not able to translate between our two constructed languages. The minimal increase in accuracy for all three models across the epochs also indicates that as soon as the model started to predict the most common classes, it was unable to improve any further.
 
 \subsection{EncDecReg}
 \subsubsection{Accuracy and Loss}
@@ -57,7 +58,7 @@ The confusion matrix illustrated in Figure \ref{fig:result1_big_vecrep_confusion
     \label{fig:result1_big_encdecreg_confusion_matrix}
 \end{figure}
 
-The {\tt EncDecReg} had an accuracy of almost \(95.5\%\) on the big dataset, which is reflected in the confusion matrix in Figure \ref{fig:result1_big_encdecreg_confusion_matrix}. The confusion matrix has a clearly defined diagonal line with a very high individual accuracy. Most of the labels have an accuracy of over \(0.9\) with a few exceptions. ``Y" is wrongly labeled as an ``I" in \(14.5\%\) of the instances, and as a ``T" in \(8.5\%\) of the instances. The most wrongly labeled classes are ``F" as an ``E" (\(18\%\)) and ``Q" as ``O"  (\(17.8\%\)).
+The {\tt EncDecReg} had an accuracy of almost 95.5\% on the big dataset, which is reflected in the confusion matrix in Figure \ref{fig:result1_big_encdecreg_confusion_matrix}. The confusion matrix has a clearly defined diagonal line with a very high individual accuracy. Most of the labels have an accuracy of over 0.9 with a few exceptions. Y is wrongly labeled as an I in 14.5\% of the instances, and as a T in 8.5\% of the instances. The most wrongly labeled classes are F as an E (18\%) and Q as O (17.8\%). The plots for accuracy for all three tests indicates that the model learned and improved across epochs, but for the two smallest datasets was unable to improve past the area of 40\%-50\%. 
 
 \subsection{EncDecAtt}
 \subsubsection{Accuracy and Loss}
@@ -74,11 +75,12 @@ The {\tt EncDecReg} had an accuracy of almost \(95.5\%\) on the big dataset, whi
     \label{fig:result1_big_encdecatt_confusion_matrix}
 \end{figure}
 
-The confusion matrix for the {\tt EncDecAtt} model (Figure \ref{fig:result1_big_encdecatt_confusion_matrix}) has high individual accuracy, similar to the results of the {\tt EncDegReg} model, although this model has improved even further. The {\tt EncDegReg} model successfully classifies four classes without a single error, and only three classes have a lower accuracy than \(0.9\). The {\tt EncDegAtt} model struggles with some of the same misclassifications as the {\tt EncDegReg} model, namely ``F" as ``E", ``Q" as ``O", and ``Y" as ``I" or ``T".
+The confusion matrix for the {\tt EncDecAtt} model (Figure \ref{fig:result1_big_encdecatt_confusion_matrix}) has high individual accuracy, similar to the results of the {\tt EncDegReg} model, although this model has improved even further. The {\tt EncDegReg} model successfully classifies four classes without a single error, and only three classes have a lower accuracy than 0.9. The {\tt EncDegAtt} model struggles with some of the same misclassifications as the {\tt EncDegReg} model, namely F as E, Q as O, and Y as I or T.
 
 %%=========================================
 
 \section{Handling of Two Fonts}
+\label{sec:handling_of_two_fonts}
 Table \ref{table:accuracy_two_fonts} contains the results for each model on the dataset with two fonts. As seen in this table, the accuracy of the {\tt EncDecAtt} is more or less unaffected by the introduction of a second font, whereas the {\tt EncDecReg} and {\tt VecRep} models have seen a drop in their accuracy compared to previous experiments. 
 
 \begin{table}[H]
@@ -95,14 +97,15 @@ Table \ref{table:accuracy_two_fonts} contains the results for each model on the 
 \end{table}
 
 \subsection{Accuracy and Loss For Each Model}
-\resultplots{fig/results/experiment2/vecrep/}{plot_accuracy_crop.png}{plot_loss_crop.png}{result2_vecrep}{Accuracy and loss for {\tt VecRep}}
-\resultplots{fig/results/experiment2/encdecreg/}{plot_accuracy_crop.png}{plot_loss_crop.png}{result2_encdecreg}{Accuracy and loss for {\tt EncDecReg}}
-\resultplots{fig/results/experiment2/encdecatt/}{plot_accuracy_crop.png}{plot_loss_crop.png}{result2_encdecatt}{Accuracy and loss for {\tt EncDecAtt}}
+\resultplots{fig/results/experiment2/vecrep/}{plot_accuracy_crop.png}{plot_loss_crop.png}{result2_vecrep}{Accuracy and loss for {\tt VecRep} handling two fonts}
+\resultplots{fig/results/experiment2/encdecreg/}{plot_accuracy_crop.png}{plot_loss_crop.png}{result2_encdecreg}{Accuracy and loss for {\tt EncDecReg} handling two fonts}
+\resultplots{fig/results/experiment2/encdecatt/}{plot_accuracy_crop.png}{plot_loss_crop.png}{result2_encdecatt}{Accuracy and loss for {\tt EncDecAtt} handling two fonts}
 
 %%=========================================
 
 \section{Noise Handling}
-Table \ref{table:noise_accuracy} contains the accuracy of the {\tt EncDegAtt} model as the amount of noise was increased. The ``Noise alterations", e.i. the actual amount of bits altered from a correct 1 to an incorrect 0, or vice versa is also listed. 
+\label{sec:noise_handling}
+Table \ref{table:noise_accuracy} contains the accuracy of the {\tt EncDegAtt} model as the amount of noise was increased. The ``Noise alterations", e.i. the actual amount of bits altered from a correct 1 to an incorrect 0, or vice versa, is also listed. 
 
 \begin{table}[H]
     \centering
@@ -122,17 +125,6 @@ Table \ref{table:noise_accuracy} contains the accuracy of the {\tt EncDegAtt} mo
     \label{table:noise_accuracy}
 \end{table}
 
-\begin{filecontents}{datax.dat}
-0,0.9806
-5,0.9335
-10,0.6936
-15,0.6677
-20,0.5951
-40,0.4767
-50,0.4620
-60,0.4529
-\end{filecontents}
-
 \begin{figure}[H]
     \centering
     \captionsetup{justification=centering}
@@ -145,20 +137,21 @@ Table \ref{table:noise_accuracy} contains the accuracy of the {\tt EncDegAtt} mo
             ylabel=accuracy,
             xlabel=noise,
         ]
-            \addplot[draw=red] table[x index=0,y index=1,col sep=comma]{datax.dat};
+            \addplot[draw=red] table[x index=0,y index=1,col sep=comma]{data/noise.csv};
         \end{axis}%
     \end{tikzpicture}%
     \caption{Change of accuracy as the amount of noise is increased}
     \label{fig:noise_accuracy}
 \end{figure}
 
-The accuracy is also plotted in Figure \ref{fig:noise_accuracy}, which illustrates how the accuracy deteriorated as the amount of noise was increased. This graph graphically illustrates how the deterioration of the accuracy first falls fast, then flattens out once the amount of noise gets more and more dominant. As shown in both the table and the graph, the accuracy decreased by less than 1.5\% when the noise was increased from 40\% to 50\%. Similarly, the accuracy decreased with less than a percent when noise was further increased to 60\%. This is in contrast to how the accuracy decreased by almost 5\% when noise was introduces to a perfect dataset. Further, the accuracy decreased by 24\% when noise was increased from 5\% to 10\%.
+The accuracy is also plotted in Figure \ref{fig:noise_accuracy}, which illustrates how the accuracy deteriorated as the amount of noise was increased. This graph graphically illustrates how the deterioration of the accuracy first falls fast, then flattens out once the amount of noise gets more and more dominant. As shown in both the table and the graph, the accuracy decreased by less than 1.5\% when the noise was increased from 40\% to 50\%. Similarly, the accuracy decreased with less than a percent when noise was further increased to 60\%. This is in contrast to how the accuracy decreased by almost 5\% when noise was introduces to a perfect dataset with an amount of 5\%. Further, the accuracy decreased by 24\% when noise was increased from 5\% to 10\%.
 
-This illustrates the difference in accuracy when learning and predicting on datasets that are perfect, near-perfect, and datasets with some noise. It also illustrates that increasing noise on datasets that have much noise in them have a smaller effect on the accuracy.
+This illustrates the difference in accuracy when learning and predicting on datasets that are perfect, near-perfect, and datasets with some noise. It also illustrates that increasing noise on datasets that already have much noise in them have a smaller effect on the accuracy.
 
 %%=========================================
 
 \section{Stress Test}
+\label{sec:stress_test}
 This experiment was done on the models {\tt EncDecReg} and {\tt EncDecAtt}, as the {\tt VecRep} model already had poor results on the experiment that was significantly simpler.
 
 \begin{table}[H]
@@ -191,17 +184,16 @@ Shown in Figure \ref{fig:result4_encdecreg_confusion_matrix} is the confusion ma
     \label{fig:result4_encdecatt_confusion_matrix}
 \end{figure}
 
-Figure \ref{fig:result4_encdecatt_confusion_matrix} shows the classification matrix of the best {\tt EncDecAtt} model on the stress test. This matrix depicts a clear diagonal line from corner-to-corner, indicating that the model has been able to, for the most part, classifying labels correctly. Although there are certain labels that are mis-classified, the vart majority of labels are correctly classified, which corresponds to the accuracy of over 88\% for this model. The confusion matrix also show almost no overlap between the labels in the upper-cased and lower-cased classes, indicating that also this model was able to seperate these groups from each other. 
+Figure \ref{fig:result4_encdecatt_confusion_matrix} shows the classification matrix of the best {\tt EncDecAtt} model on the stress test. This matrix depicts a clear diagonal line from corner-to-corner, indicating that the model has been able to, for the most part, classifying labels correctly. Although there are certain labels that are misclassified, the vast majority of labels are correctly classified, which corresponds to the accuracy of over 88\% for this model. The confusion matrix also show almost no overlap between the labels in the upper-cased and lower-cased classes, indicating that also this model was able to separate these groups from each other. 
 
 %%=========================================
 
 \section{Result Discussion}
+\label{sec:result_discussion}
 In this section, we discuss and compare the various results and models against each other. We also answer the research goals we defined earlier. The final conclusion is given in Chapter \ref{ch:conclusion}.
 
 \subsection{General Analysis}
-
-
-Results across all tests indicates several things. The {\tt VecRep} model failed to give satisfactory results, 
+The first experiment clearly indicated was the {\tt VecRep} unable to learn the problem to a satisfactory degree. The confusion matrix indicates that the model is unable to actually translate anything, and relies on classifying the padded values. {\tt EncDecReg} and {\tt EncDecAtt} both shows clear indications that they learned to translate between our two languages, reaching good results in various experiments. At the same time, the {\tt EncDecAtt} model clearly outperformed the {\tt EncDecReg} model in every single experiment. The latter model also reached impressive results for the most complicated experiments we carried out. While the only difference between these two encoder-decoder based models is the attention mechanism, there is a big difference in their performance. This is made clear when complexity is increased or we have less data to work with, in which case the {\tt EncDecAtt} model is still consistently reaching good results, while the {\tt EncDecReg} model has much lower results.
 
 \subsection{Analysis In Terms of Research Questions}
 
@@ -217,3 +209,40 @@ Experiments have indicated that both the encoder-decoder models are able to hand
 
 \subsubsection{Handling of Noise}
 Lastly, \textbf{RQ3} asked if the model(s) were able to adapt to noise and imperfect input data. Experiments have shown that the {\tt EncDecAtt} model was able to handle increasing amounts of noise, although the accuracy decreased as the noise factor increased. For a noise factor of 5\%, the accuracy decreased by a little less than 5\%, while a noise factor of 10\% decreased the accuracy by more than 28\%. This indicates that although the accuracy decay, it is really a question of how much noise is reasonable. With a noise factor of 10\%, every 10th bit may end up corrupted. If this is reasonable to expect in a real-world scenario is hard to say. We have decided to conclude this question by stating that the {\tt EncDecAtt} was able to handle noise in a satisfactory manner, although there is still a lot of room for improvements.
+
+%%=========================================
+
+\section{Reasoning}
+\label{sec:reasoning}
+In section we look closer at how the models work and why we got the results we did. 
+
+\subsection{Encoding}
+The encoder-decoder framework is made up off two important components; the encoder and the decoder. Here we have plotted the values of the context vector produced by the encoder component. We feed the same sentence to the network, but add more and more noise. The similarities in the plots indicates how the encoder component is able to ``cluster" the input together, despite differences in the input. This illustrates the power of encoding the input, as the decoder component can work with more manageable information.
+
+\red{Til Helge: Her er målet, som du foreslo, å plotte context-vektoren og se hvordan denne endrer seg med noise. Jeg har ikke fått gjort det enda, ettersom det krever at jeg skriver om litt av systemet mitt. Jeg skal prøve å få gjort det ASAP. Viser det seg at det ikke fungerer som vi tror dropper vi bare denne seksjonen. Sånn den fremstår i dag er teksten over her bare mildertidig, ettersom jeg bare gjetter på resultatene}
+
+\subsection{Decoding}
+The decoder and its ability to feed previous output back as input is one of the corner-stones i the encoder-decoder framework. Allowing the decoder to read the previous output lets the decoder at that time know something about the current state of the ``translation" process from the vector passed on from the encoder. If the decoder did not feed the output back as input, it would have to rely solely on the hidden and cell states for the decoding process.
+
+During decoding, the decoder outputs a vector for each timestep, ran through a softmax function. The framework uses {\tt argmax} to find the element in the vector with the highest value, e.i. the predicted value, and feeds this value back to the decoder for the next timestep. Here we have altered this functionality, instead of feeding back the predicted value, we send something else back and see how the decoder reacts. Without any modification to the feedback-behavior, the model we used is perfectly able to classify each label in the word and produces the correct output ``KITTENS". Now, if we instead change the logic to use the {\tt argmin} function, which returns the element we predicted the ``least", the word becomes ``KIIIEES". Similarly, if we only feed back the first label, which in this case would be letter A, the word becomes ``KITTT". Note that the first letter in the word is predicted based on the context vector from the encoder, so it is likely this is correct. Except the first letter, we see some of the other letters in the word have changed. However, despite our trickery, the decoder is still able to predict labels that are actually in the word, indicating the some of the ``knowledge" in the decoding process is also stored and shared within the LSTM cell. We also observe that the output is not that far off, with both the misled decoders outputting the second letter correctly. Lastly, if we only ``fool" the decoder for the first and/or second letter, telling it we outputted an A, the decoder is able to predict each letter correctly, outputting ``KITTENS" like it should. This also indicates that the knowledge in the cell states may correctly override the input, instead of creating a ``domino" effect like we first expected, where the output would progressively get more and more wrong.
+
+Perhaps not that surprising that altering this functionality changes the behavior, but it is interesting to see how some of the power of the encoder-decoder framework lies in the way the decoder sends itself information from previous iterations. Removing the ability to know what has been outputted also explains the lower accuracy seen by the {\tt VecRep} model. As this model does not feed back its previous output, it has to deal with the challenges of not knowing where in the decoding process it currently is.
+
+\subsection{Use of Attention}
+The experiments carried out in this thesis showed that both the models based on the encoder-decoder were powerful, but the model that utilized the attention mechanism was significantly better on the most complex experiment. Figure \ref{fig:attention_heatmap} shows the attention heatmap, in other words, the areas in which the attention mechanism focused while classifying each individual label. In this example the model correctly classifies the word ``IMAGINED" without any errors. 
+
+The heatmap shows how the attention mechanism scanned both the related input, as well as input ahead of time, making use of the additional data to do the classifications. Comparing the heatmap in Figure \ref{fig:attention_heatmap} with the actual text and signature in Figure  \ref{fig:imagine_highlighted}\footnote{In this illustration the white pixels are highlighted in green, and black pixels are highlighted in red}, we can see that the heatmap focus almost matches the related input areas for each label. This additional information gives the {\tt EncDecAtt} a significant advantage over the {\tt EncDecReg} model, which can only rely on the information in the context vector. We see that this benefit pays off in the consistently better results the {\tt EncDegAtt} model has compared to the {\tt EncDecReg}.The heatmap also show how the attention mechanism is able to keep attention fixed on longer subsequences, accounting for the different width ratio between input and output.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=1\textwidth]{fig/conclusion/attention_crop.png}
+    \caption{Attention heatmap}
+    \label{fig:attention_heatmap}
+\end{figure}
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=1\textwidth]{fig/conclusion/imagined_grid_exported.png}
+    \caption{The word ``IMAGINED" with the signature highlighted in red and green}
+    \label{fig:imagine_highlighted}
+\end{figure}

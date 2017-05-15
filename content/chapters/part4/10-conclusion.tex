@@ -1,51 +1,33 @@
-%% Conclusion
+%% Conclusion and future work
 %%=========================================
 
-\chapter{Conclusion}
+\chapter{Conclusion and Future Work}
 \label{ch:conclusion}
-In this chapter we will summarize, and investigate, the results gathered throughout this thesis. We will state our final conclusion and look at potential future work.
-
-%%=========================================
-
-\section{Foobar}
-In this section we reflect on our results in context of our research questions. Answering our research goal is done in the final conclusion.
-
-
-
-\section{Discussion}
-The results gathered from all the experiments ran as a part of this thesis indicates that both the encoder-decoder model were able to learn and generalize beyond the training sets.
-
-\subsection{Encoding}
-\red{Foobar}
-
-\subsection{Decoding}
-\red{Foobar}
-
-\subsection{Use of Attention}
-The experiments carried out in this thesis showed that both the models based on the encoder-decoder were powerful, but the model that utilized the attention mechanism was significantly better on the most complex experiment. Figure \ref{fig:attention_heatmap} shows the attention heatmap, in other words, the areas in which the attention mechanism focused while classifying each individual label. In this example the model correctly classifies the word ``IMAGINED" without any errors. 
-
-The heatmap shows how the attention mechanism scanned both the related input, as well as input ahead of time, making use of the additional data to do the classifications. Comparing the heatmap in Figure \ref{fig:attention_heatmap} with the actual text and signature in Figure  \ref{fig:imagine_highlighted}\footnote{In this illustration the white pixels are highlighted in green, and black pixels are highlighted in red}, we can see that the heatmap focus almost matches the related input areas for each label. This additional information gives the {\tt EncDecAtt} a significant advantage over the {\tt EncDecReg} model, which can only rely on the information in the context vector. We see that this benefit pays off in the consistently better results the {\tt EncDegAtt} model has compared to the {\tt EncDecReg}.
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=1\textwidth]{fig/conclusion/attention_crop.png}
-    \caption{Attention heatmap}
-    \label{fig:attention_heatmap}
-\end{figure}
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=1\textwidth]{fig/conclusion/imagined_grid_exported.png}
-    \caption{The word ``IMAGINED" with the signature highlighted in red and green}
-    \label{fig:imagine_highlighted}
-\end{figure}
-
-%%=========================================
+Section \ref{sec:conclusion} presents the final conclusions drawn from the results presented and discussed in Chapter \ref{ch:results}. We evaluate our research's contributions in Section \ref{sec:contributions_final}, and in Section \ref{sec:future_work} we present ideas on potential future work and improvements.
 
 \section{Conclusion}
-As a result of research, we have developed two models based on the encoder-decoder framework that gave satisfying results on the experiments we carried out. Specifically, the {\tt EncoDecAtt} model had great results, even on the most complex experiments we carried out.
+\label{sec:conclusion}
+As a result of research, we have developed two models based on the encoder-decoder framework that gave satisfying results on the experiments we carried out. Specifically, the {\tt EncoDecAtt} model reached great results, even on the most complex experiments we carried out. This model was able to correctly classify and differentiate between 27 classes with an accuracy of 92\%, 97\%, and almost 99\% for experiments carried out on increasingly larger datasets. The model was also able to classify a problem with 53 classes with an accuracy of 88\% under harder conditions.
+
+The two models built and presented in this thesis are built on state-of-the-art technologies, and uses state-of-the-arts approaches in the area of (neural) machine translation. These models illustrates the power of the encoder-decoder framework and proves how this framework is able to handle input and output with unknown alignments with high precision.
+
+%%=========================================
+
+\section{Contributions}
+\label{sec:contributions_final}
+
+The encoder-decoder framework has attracted much attention, and despite the approach only dating back to 2014 has become almost ``de facto standard" in various sequence-to-sequence mapping related problems. The model has, since its recent inception, been used in countless models, and the framework has played an important role in reaching various state-of-the-art results in areas such as machine translation, computer vision, and speech recognition. These achievement may undermine some of the results we have achieved in the work in this thesis to some degree, as the framework has already been proven countless times to handle much more complex problems. The research contribution this thesis does not revolve around proving just how powerful the encoder-decoder framework is. Instead, we have tried to demonstrate how the encoder-decoder is able to handle a problem with the characteristics like ours. We have already state how our problem is both similar and dissimilar to traditional translation problems in Section \ref{sec:translation}.
+
+The main contribution in therefore the exploration in using the encoder-decoder framework and the attention mechanism. We have shown how the framework handles input and output that have different widths. Some of the datasets used in our experiments had a ration between input and output of nearly \(7 : 1\), which is more than most traditional translation tasks. We have also shown how the attention mechanism is able to align input with such big ratio between the input and output. 
+
+As our data had a strict ordering from start to end, and there was no alterations in the ordering of neither the input values, nor the output values. We have shown that the encoder-decoder models have successfully learned not to swap or reorder output values, as often happens in translation between two human languages.
 
 %%=========================================
 
 \section{Future Work}
-This thesis has looked closer at the possibilities the encoder-decoder opens up. We concluded that the framework worked 
+\label{sec:future_work}
+The results archived by the {\tt EncDecAtt} model is, under certain conditions, nearing perfect. It could be interesting to see if the model is able to improve even further by using more than one signature sequence. This could be done by capturing two sequences at different heights, for example like we illustrated in Figure \ref{fig:thesis-signature-comparison}. Doing this could also have the potential to eliminate ambiguity. Without ambiguity, the model could be able to recognize the input perfectly. This opens up possibilities to use the approach as a loss-less compression algorithm.
+
+We have focused our experiments in this thesis on recognizing single words. It would be interesting to see if a similar approach to ours could be applied to multiple words, or even full sentences. This would require the model to handle much longer input data, as well as sequences that are broken up into separate words.
+
+There are also many possibilities left untouched related to both the encoder-decoder framework, and the attention mechanism. Numerous variants and improvements have been proposed for both of them, and the two encoder-decoder models implemented in this thesis barely scratches the surface for what is possible. 

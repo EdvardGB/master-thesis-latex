@@ -3,16 +3,17 @@
 
 \chapter{Background Theory}
 \label{ch:background}
-In this chapter we introduce the relevant background theory to the related work presented in the Chapter \ref{ch:related_work}.
+In this chapter we introduce the relevant background theory to the related work presented in the Chapter \ref{ch:related_work}. Feedforward neural networks are introduced in Section \ref{sec:feedforward_neural_network}, and recurrent neural networks, as well as some common recurrent neural network architectures, are introduced in Section \ref{sec:reccurent_neural_network}. The encoder-decoder framework is introduced in Section \ref{sec:encoder-decoder}, while two types of vocabulary encoding methods are presented in Section \ref{sec:vocabulary_encoding}.
 
 %%=========================================
 
-\section{General Neural Network}
+\section{Feedforward Neural Network}
+\label{sec:feedforward_neural_network}
 Artificial Neural Network is a computational model used in machine learning and computer science. The idea behind neural networks lies in the use of artificial neurons, an idea that can be traced back to the 1940s. These artificial neurons are loosely analogous to axons in a biological brain, and artificial neural networks are an attempt at modeling the information process capabilities of nervous systems \citep{russell2010aimodernapproach}.
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.8\textwidth]{fig/related_work/nn_perceptron.pdf}
+    \includegraphics[width=1\textwidth]{fig/related_work/perceptron.png}
     \caption{Illustration of a mathematical model of a neuron}
     \label{fig:nn-perceptron}
 \end{figure}
@@ -24,20 +25,21 @@ A feed-forward network consists of units which has connections that only goes in
 %%=========================================
 
 \section{Recurrent Neural Network}
-Another way to construct a neural network is by using loops. A recurrent neural network \citep{rumelhart1988learning} is a network much like a feed-forward network, but in addition to feeding ``downstream" nodes, nodes also feeds its output back into its own inputs. This type of architecture can support a short-term memory, a feature that is necessary in problems where input depends on previous input \citep{russell2010aimodernapproach}. For example would such characteristics be necessary if we fed the network words in a sentence, and we asked the network to predict the next word it had not yet seen.
+\label{sec:reccurent_neural_network}
+Recurrent neural network is a type of artificial neural network. This type of neural networks creates an internal state of the network which allows it to express dynamic temporal behavior. The structure of a recurrent neural network  \citep{rumelhart1988learning} is much like a feedforward network, but in addition to feeding ``downstream" nodes, nodes also feeds its output back into its own inputs. This type of architecture can support a short-term memory, a feature that is necessary in problems where input depends on previous input \citep{russell2010aimodernapproach}. For example would such characteristics be necessary if we fed the network words in a sentence, and we asked the network to predict the next word it had not yet seen.
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.7\textwidth]{fig/related_work/nn_recurrent.pdf}
+    \includegraphics[width=0.8\textwidth]{fig/related_work/nn_recurrent.png}
     \caption{A compact and an unfolded recurrent neural network}
     \label{fig:nn-rnn}
 \end{figure}
 
-We can consider RNNs as a loop, and we can unfold it into a complete sequence, as illustrated in Figure \ref{fig:nn-rnn}. In the figure, \(x_{t}\) is the input, and \(s_{t}\) is the hidden state of the recurrent network at timestep \(t\). The hidden state functions as the units memory, and the hidden state from a timestep is reused in the next timestep, along with the input of the current timestep. It is also important to note that the network shares the same weights \(W\) across several timesteps. The recurrent neural network has input to hidden connections parametrized by a weight matrix \(U\), as well as hidden-to-hidden recurrent connections parametrized by a weight matrix \(W\). In addition, the network has hidden-to-output connection parametrized by a weight matrix \(V\) \citep{goodfellow2016deeplearning}.
+We can consider RNNs as a loop, and we can unfold it into a complete sequence, as illustrated in Figure \ref{fig:nn-rnn}. In the figure, \(x_{t}\) is the input, and \(h_{t}\) is the hidden state of the recurrent network at timestep \(t\). The hidden state functions as the units memory, and the hidden state from a timestep is reused in the next timestep, along with the input of the current timestep. It is also important to note that the network shares the same weights \(W\) across several timesteps. The recurrent neural network has input to hidden connections parametrized by a weight matrix \(U\), as well as hidden-to-hidden recurrent connections parametrized by a weight matrix \(W\). In addition, the network has hidden-to-output connection parametrized by a weight matrix \(V\) \citep{goodfellow2016deeplearning}.
 
 \begin{align}
     \begin{split}\label{eq:rnn-eq-1}
-        h_{t}&=\sigma(b+Ws_{t-1}+Ux_{t})
+        h_{t}&=\sigma(b+Wh_{t-1}+Ux_{t})
     \end{split}\\
     \begin{split}\label{eq:rnn-eq-2}
         \hat{y_{t}}&=\sigma(c+Vh_{t})
@@ -52,13 +54,13 @@ Recurrent Neural Networks are usually fed data that has an input shape of {\tt (
 
 \begin{table}[H]
     \centering
-    \begin{tabular}{|l|l|l|l|l|l|}
+    \begin{tabular}{|l|l|l|l|l|}
         \hline
-        \multicolumn{2}{|c|}{}                                           & \multicolumn{3}{c}{\textbf{Timesteps}}                                   &                        \\ \cline{3-6}
-        \multicolumn{2}{|c|}{}                                           & \textbf{1}             & \textbf{2}             & \textbf{3}             & \textbf{4}             \\ \hline
-        \multirow{3}{*}{\textbf{Features}}    & Temperature (average)  & 12.2\textdegree        & 14.8\textdegree        & 13.0\textdegree        & 12.2\textdegree        \\ \cline{2-6}
-                                              & Rain (total)           & 31.7 mm                & 77.5 mm                & 87.1 mm                & 77.6 mm                \\ \cline{2-6}
-                                              & Wind (average)         & 2.3 m/s                & 2.0 m/s                & 2.1 m/s                & 1.9 m/s                \\ \hline
+        \multirow{2}{*}{\textbf{Features}}   & \multicolumn{3}{c}{\textbf{Timesteps}}                                   &                        \\ \cline{2-5}
+                                             & \textbf{1}             & \textbf{2}             & \textbf{3}             & \textbf{4}             \\ \hline
+        Temperature (average)                & 12.2\textdegree        & 14.8\textdegree        & 13.0\textdegree        & 12.2\textdegree        \\ \hline
+        Rain (total)                         & 31.7 mm                & 77.5 mm                & 87.1 mm                & 77.6 mm                \\ \hline
+        Wind (average)                       & 2.3 m/s                & 2.0 m/s                & 2.1 m/s                & 1.9 m/s                \\ \hline
     \end{tabular}
     \caption{Weather data over time}
     \label{table:temporal_weather_data}
@@ -72,7 +74,7 @@ Long-Short Term Memory (LSTM) is a recurrent neural network architecture. It was
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=1\textwidth]{fig/related_work/rnn_flow.pdf}
+    \includegraphics[width=1\textwidth]{fig/related_work/rnn_flow.png}
     \caption{Flow of a standard RNN}
     \label{fig:nn-rnn-flow}
 \end{figure}
@@ -81,12 +83,12 @@ Figure \ref{fig:nn-rnn-flow} illustrates the chain like structure of standard re
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=1\textwidth]{fig/related_work/lstm_flow.pdf}
+    \includegraphics[width=1\textwidth]{fig/related_work/lstm_flow.png}
     \caption{Flow of a LSTM cell}
     \label{fig:nn-lstm-flow}
 \end{figure}
 
-Figure \ref{fig:nn-lstm-flow} illustrates a similar chain structure, but that of a LSTM cell. The LSTM module has a different structure, and instead of having a single neural network layer, like the simpler RNN, it has four. The topmost horizontal line carries the cell state of the unit. The LSTM unit is enriched by several co-called gating units. These gates regulate what information is remembered by the cell state, and what should be forgotten. The leftmost sigmoid layer is called the ``forget gate layer". This gate decides what the state should forget from the existing information. The next sigmoid gate is called the ``input gate layer" and determines which values should be updated. The hyperbolic tangent gate layer creates a vector of candidate values, which could be added to the cell state. After the state is updated, or the candidate is thrown away, the final sigmoid gate, the ``output gate layer", decides which parts of the cell state should be outputted \citep{hochreiter1997long, goodfellow2016deeplearning, olah2015lstm, gers2002learning}. The first purposed version of the LSTM did not have a forget gate. It was introduced by \citep{gers2000learning} and allowed the LSTM to reset its own state. The version has since become one of the most common variants of the LSTM and is by many considered the traditional LSTM.
+Figure \ref{fig:nn-lstm-flow} illustrates a similar chain structure, but that of a LSTM cell. The LSTM module has a different structure, and instead of having a single neural network layer, like the simpler RNN, it has four. The topmost horizontal line carries the cell state of the unit. The LSTM unit is enriched by several co-called gating units. These gates regulate what information is remembered by the cell state, and what should be forgotten. The leftmost sigmoid layer is called the ``forget gate layer". This gate decides what the state should forget from the existing information. The next sigmoid gate is called the ``input gate layer" and determines which values should be updated. The hyperbolic tangent gate layer creates a vector of candidate values, which could be added to the cell state. After the state is updated, or the candidate is thrown away, the final sigmoid gate, the ``output gate layer", decides which parts of the cell state should be outputted \citep{hochreiter1997long, goodfellow2016deeplearning, olah2015lstm, gers2002learning}. The first purposed version of the LSTM did not have a forget gate. It was introduced by \citep{gers2000learning} and allowed the LSTM to reset its own state. The version has since become one of the most common variants of the LSTM.
 
 \subsubsection{Variants of LSTM}
 The LSTM implementation described above is the traditional LSTM. There exists other variants of the architecture with their own characteristics. One popular LSTM variant was introduced by \citep{gers2001lstm}. Their variant added ``peephole" connections. These connections allows the gate layer to look at the cell state. The idea behind this variant was to have a LSTM that could learn to selectively reset its own memory contents, and in turn produce stable results in presence of never-ending input streams. \citep{gers2001lstm} stated that their LSTM variant with peephole connections and forget gates were clearly superior to the traditional LSTM. 
@@ -96,7 +98,7 @@ Another variant is the ``Convolutional LSTM" purposed by \citep{xingjian2015conv
 A comparison of various LSTM variants was carried out by \citep{greff2016lstm}. They concluded that the traditional, vanilla LSTM performed reasonable well on various datasets. They investigated a total of eight variants of the LSTM, and in their experiments, none of the eight modifications significantly improved performance. However, certain modifications simplified the LSTMs without significantly decreasing performance. 
 
 \subsection{GRU}
-Another popular modification of the LSTM was purposed by \citep{chung2014empirical}. Their simplified variant, called the Gated Recurrent Unit, or GRU for short, uses neither the peephole nor output activation functions. Instead, the GRU couples the input and the forget gate into an update gate. The GRU also merges the hidden and cell states  \citep{greff2016lstm, chung2014empirical}. Comparisons between the LSTM and the GRU units have shown mixed results, and experiments have concluded that there is no clear winner between the two \citep{greff2016lstm, chung2014empirical}. \citep{jozefowicz2015empirical} also compared various LSTM and GRU units and reported that GRUs outperformed the LSTM on all tasks except language modelling.
+Another popular modification of the LSTM was purposed by \citep{chung2014empirical}. Their simplified variant, called the Gated Recurrent Unit, or GRU for short, uses neither peepholes nor output activation functions. Instead, the GRU couples the input and the forget gate into an update gate. The GRU also merges the hidden and cell states  \citep{greff2016lstm, chung2014empirical}. Comparisons between the LSTM and the GRU units have shown mixed results, and experiments have concluded that there is no clear winner between the two \citep{greff2016lstm, chung2014empirical}. \citep{jozefowicz2015empirical} also compared various LSTM and GRU units and reported that GRUs outperformed the LSTM on all tasks except language modelling.
 
 %%=========================================
 
@@ -104,7 +106,7 @@ Another popular modification of the LSTM was purposed by \citep{chung2014empiric
 \label{sec:encoder-decoder}
 The encoder-decoder framework is a concept centralized around two recurrent neural networks. The idea is to encode the input in the first neural network, and decode it in the second network. The first recurrent neural network, also called the encoder, reads the input sentence, a sequence of vectors \(X = (x_{1}, x_{2}, \ldots, x_{n})\). This sequence is then encoded into a vector \(C\), which may or may not be of fixed length \citep{sutskever2014sequence, cho2014learning}. 
 
-For the decoding process, the decoder is often trained to predict the next word \(y_{t'}\) given the context vector \(C\) and all the previously predicted words \({y_1, \ldots, y_{t'-1}}\). \citep{bahdanau2014neural} summarizes the architecture with:
+The decoder is often trained to predict the next word \(y_{t'}\) given the context vector \(C\) and all the previously predicted words \({y_1, \ldots, y_{t'-1}}\). \citep{bahdanau2014neural} summarizes the architecture with:
 
 \begin{quote}
     The decoder defines a probability over the translation \(y\) by decomposing the joint probability into the ordered conditionals:
@@ -140,17 +142,20 @@ The benefit of the encoder-decoder model is that the entire input is encoded int
 
 \subsection{Attention Mechanism}
 \label{sec:attention_mechanism}
-\citep{bahdanau2014neural} conjectured that the use of a fixed-vector was a bottleneck in improving the performance of the basic encoder-decoder model. Their argument was that a potential issue with the encoder-decoder approach was that a neural network had to be able to compress all the necessary information of a source input into a fixed-length vector, a task that could be difficult under certain conditions. Their purposed model extended the vector encoding by allowing the model to automatically soft-search for parts of the input that is more important. This approach allows the decoder to peek into the input during decoding. Hence, the attention mechanism allows the decoder to refer back to the input data, and not force it to only rely on the encoded context vector. 
+\citep{bahdanau2014neural} conjectured that the use of a fixed-vector was a bottleneck in improving the performance of the basic encoder-decoder model. Their argued that a potential issue with the encoder-decoder approach was that the neural network had to be able to compress all the necessary information of a source input into a fixed-length vector, a task that could be difficult under certain conditions. Their purposed model extended the vector encoding by allowing the model to automatically soft-search for parts of the input that is more important. This approach allows the decoder to peek into the input during decoding. Hence, the attention mechanism allows the decoder to refer back to the input data, and not force it to only rely on the encoded context vector. 
 
 Tests of the purposed model on the task of English-to-French translation revealed that the model outperformed conventional encoder-decoder models significantly regardless of sentence length \citep{bahdanau2014neural}. \citep{bahdanau2014neural} also concluded that the attention mechanism was much more robust to the length of a source sentence. Similar attention mechanisms has since then been applied to several other model with good results \citep{hsu2016recurrent, sankaran2016temporal}. 
 
 %%=========================================
 
 \section{Vocabulary Encoding}
-One-hot vectors and word embeddings are two different ways of representing a vocabulary mathematically. 
+\label{sec:vocabulary_encoding}
+One-hot vectors and word embeddings are two different ways of representing a vocabulary mathematically. Vocabulary representation is necessary when working with textual data, for example in translation tasks. In this section we look closer at pros and cons of these two encoding methods.
 
 \subsection{One-hot vector encoding}
-One way to represent a vocabulary is with one-hot vectors. For each unique word in the vocabulary we create a binary column. To represent a word we set all the binary values to \(0\) except the column that corresponds to the unique word. Table  \ref{table:one_hot_encoding} illustrates a simple one-hot encoding of a short sentence with a minimal vocabulary. This encoding method becomes troublesome when the vocabulary is very big. If the vocabulary has a total of 90,000 unique words, the one-hot vector would need to have a size of 90,000, and this vector would consist almost entirely of zeroes. In addition, one-hot encoded vectors does not define relationship between nearby or related words, nor any notion of semantic.
+One-hot vector encoding is a common way to represent a vocabulary. In this encoding, we create a binary column for each unique word in the vocabulary. To represent a word we set all the binary values to \(0\) except the column that corresponds to the unique word. Table  \ref{table:one_hot_encoding} illustrates a simple one-hot encoding of a short sentence with a minimal vocabulary. 
+
+Although this encoding method is simple and easy to implement, this approach becomes troublesome when the vocabulary is very big. If the vocabulary has a total of 90,000 unique words, the one-hot vector would correspondingly need to have a size of 90,000, and this vector would consist almost entirely of zeroes. In addition, one-hot encoded vectors does not define relationship between nearby or related words, nor any notion of semantic.
 
 \begin{table}[H]
     \centering
@@ -171,12 +176,12 @@ An alternative to one-hot encoding is word embedding. Word embedding, also known
 
 The embedding is done with some parameterized function which maps the word to high-dimensional vectors. For example:
 
-\begin{equation}
+\begin{equation*}
     W(\text{"home"}) = (0.1, 0.3, 0.0, \ldots)
-\end{equation}
-\begin{equation}
+\end{equation*}
+\begin{equation*}
     W(\text{"sun"}) = (-0.7, 0.6, 0.1, \ldots)
-\end{equation}
+\end{equation*}
 
 Usually the \(W\) is initialized randomly, which places the words at random in the vector space. During training of the model, the embeddings are trainable, and the model learns to have meaningful placement of the vectors.
 
