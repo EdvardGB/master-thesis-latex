@@ -29,6 +29,15 @@ Figure \ref{fig:lstm-vector-projection-encoder} illustrates a regular LSTM that 
 
 In this example, out output has a length of three characters, plus a special ``end of line" character. The resulting matrix of the repeated vector is then fed to another LSTM that reads each time step and output its hidden state for each iteration.
 
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=1\textwidth]{fig/models/vecrep_model.png}
+    \caption{Simplified illustration of the {\tt VecRep} model}
+    \label{fig:vecrep_model}
+\end{figure}
+
+The model is illustrated in Figure \ref{fig:vecrep_model}. The ``encoder'' and ``decoder'' both consists of three recurrent units. These units are stacked sequentially, which means that the first unit, \(\text{RNN}_1\), receives its input, runs does its iterations and outputs its final output from the last iteration. This output is then fed to the next RNN unit which does the same. Between the two stacks of recurrent units is the layer which repeats the final output of \(\text{RNN}_3\) in the dimension of time for the first unit in the decoder.
+
 %%=========================================
 
 \section{Regular Encoder-Decoder}
@@ -39,6 +48,15 @@ However, in this model, we use the last hidden state of the encoder, instead of 
 
 This model also uses two embeddings, one for the input and one for the output. The input is embedded before the encoder reads the input, and the output embedding is applied on the fly when the decoder is reusing its own output as input. This is in contrast to the {\tt VecRep} model which only used embedding for the input data. Both the embeddings in this model is fully trainable.
 
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=1\textwidth]{fig/models/encdecreg_model.png}
+    \caption{Simplified illustration of the {\tt EncDecReg} model}
+    \label{fig:encdecreg_model}
+\end{figure}
+
+The model is illustrated in Figure \ref{fig:encdecreg_model}. The stacked recurrent units are handled differently in this model compared to the {\tt VecRep} model. In the {\tt VecRep} model, each RNN unit iterates all the timesteps in the input and passes its final output to the next RNN unit which does the same, whereas in this model the RNNs are called sequentially for each timestep. This means that for every timestep \(T\) the input is first fed to \(\text{RNN}_1\), then \(\text{RNN}_2\), and so on. This results in a cell that consists of multiple layers, whereas {\tt VecRep} has multiple cells in sequence. Also note that in the decoder, we both output the output from \(\text{RNN}_6\), while also passing it to an embedding cell and feeding it back into the first RNN layer in the cell again.
+
 %%=========================================
 
 \section{Attention Encoder-Decoder}
@@ -47,3 +65,11 @@ The last model also implements the encoder-decoder framework, similarly to the {
 
 As explained in Section \ref{sec:attention_mechanism}, the attention mechanism allows the decoder to peek into the input. This is done by providing an additional list of states from the input. This is done by the decoder, by using the attention mechanism over the encoder LSTM states. The implementation of the attention mechanism used in this model is based on \citep{vinyals2015grammar}.
 
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=1\textwidth]{fig/models/encdecatt_model.png}
+    \caption{Simplified illustration of the {\tt EncDecAtt} model}
+    \label{fig:encdecattg_model}
+\end{figure}
+
+The {\tt EncDecAtt} model is illustrated in Figure \ref{fig:encdecattg_model}. This model is very similar to the {\tt EncDecReg} except for the additional input each RNN unit in the decoder cell. This input is fetched directly from the input and allows the attention mechanism to attend to this data, in addition to the hidden state from the encoder cell.

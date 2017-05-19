@@ -20,8 +20,9 @@ This is a pretty common approach, and has several benefits. Instead of only rely
 In this section we present the setup, configurations, and choice of hyper-parameters in our three models. 
 
 \begin{itemize}
-    \item All three of our models used embedding. This embedding was represented in a vector space with dimension 128. Using a higher dimension representation, like 1024 gave tiny improvements in results, but increased the computational time tremendously. A dimension size of 128 was a good trade-off, and made sense for our relatively small vocabulary.
+    \item All three of our models used embedding. This embedding was represented in a vector space with dimension 128. Using a higher dimension representation, like 1024 gave tiny improvements in results, but increased the computational time tremendously. A dimension size of 128 was a good trade-off, and made sense for our relatively small vocabulary. \cite{britz2017massive} concluded that using high embedding dimensions, such as 2048 achieved the best results, but only by a small margin, and that embeddings with smaller margins, such as 128 seem to have sufficient capacity to capture most of the necessary semantic information in their vocabulary that was significantly larger than ours.
     \item The embeddings were randomly initialized with an uniform distribution over the half-open interval \(\big[-\sqrt{3}, \sqrt{3}\big)\). As the embeddings are trainable, their placement in the vector space will change, which means that the original placement is less important.
+    \item Both LSTMs and GRUs have been used in NMT architectures. We decided to use the LSTM cell in all our networks. 
     \item The LSTM units used were implemented based on \citep{hochreiter1997long}. The inner activation function was hyperbolic tangent (see Equation \ref{eq:function_tanh} and plot in Figure \ref{fig:plot_function_tanh}), and the activation applied over the current timestep was a regular sigmoid function (see Equation \ref{eq:function_sigmoid} and plot in Figure \ref{fig:plot_function_sigmoid}). These configurations are pseudo-standard for the LSTM, although some variations exists.
     \item The weights in the LSTMs were initialized with ``Glorot uniform initializer", also called ``Xavier uniform initializer" \citep{glorot2010understanding}.
     \item All three models used groups of LSTMs. These were stacked sequentially and had a depth of three. Smaller and bigger stacks affected results slightly, but a depth of three was a good trade-off between computational time and results.
@@ -147,6 +148,20 @@ The dataset used in this experiment had a training set of size 10,000 and valida
         \item[Test:]{Arial: 51.2\% (512), Times New Roman: 48.8\% (488)}
     \end{description}
 \end{minipage}
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=.8\textwidth]{fig/experiments/SHORTCUTS_dpi.png}
+    \captionsetup{justification=centering}
+    \caption{The word ``SHORTCUTS'' written in Arial Mono. Size 186x31}
+\end{figure}
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=.8\textwidth]{fig/experiments/UPLIFTER_dpi.png}
+    \captionsetup{justification=centering}
+    \caption{The word ``UPLIFTER'' written in Times New Roman. Size 180x31}
+\end{figure}
 
 \subsection{Noise Handling}
 In the third experiment we added increasingly more noise to the input data. This experiment was conducted to record how resilient and robust the model was to noise in the data. For this experiment we only used the best performing model. The amount of noise added for each test was based on results underway, as we did not know how the model would respond to the noise beforehand.

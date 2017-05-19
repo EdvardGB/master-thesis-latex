@@ -50,7 +50,7 @@ Equations \ref{eq:rnn-eq-1} and \ref{eq:rnn-eq-2} are slightly simplified from \
 
 \subsection{Input and Output Shapes}
 \label{sec:input_and_output_shapes}
-Recurrent Neural Networks are usually fed data that has an input shape of {\tt (batch\_size, timesteps, features)}. The first dimension is the number of separate values we send to the network. The second dimension defines how many timesteps our data contains, and the last dimension contains the number of features for each timestep. Table \ref{table:temporal_weather_data} contains weather data for Trondheim in Norway in the period June 2016 to September 2016\footnote{\url{https://www.yr.no/sted/Norge/Sør-Trøndelag/Trondheim/Trondheim/statistikk.html}}. This example has a total of four timesteps, one for each month in the period, and a total of three separate features; temperature, rain, and wind. Feeding this data to a recurrent neural network, our data would have an input shape of {\tt (4, 3)}. We can consider this data as recording a total of three features over the course of four timesteps.
+Recurrent Neural Networks are usually fed data that has an input shape of {\tt (timesteps, features)}. The first dimension defines how many timesteps our data contains, and the last dimension contains the number of features for each timestep. Table \ref{table:temporal_weather_data} contains weather data for Trondheim in Norway in the period June 2016 to September 2016\footnote{\url{https://www.yr.no/sted/Norge/Sør-Trøndelag/Trondheim/Trondheim/statistikk.html}}. This example has a total of four timesteps, one for each month in the period, and a total of three separate features; temperature, rain, and wind. Feeding this data to a recurrent neural network, our data would have an input shape of {\tt (4, 3)}. We can consider this data as recording a total of three features over the course of four timesteps.
 
 \begin{table}[H]
     \centering
@@ -66,7 +66,7 @@ Recurrent Neural Networks are usually fed data that has an input shape of {\tt (
     \label{table:temporal_weather_data}
 \end{table}
 
-The output of a typical Recurrent Neural Network has a shape of {\tt (batch\_size, units)}, where {\tt units} is the number of output units in the network. Considering the compact network in Figure \ref{fig:nn-rnn}, the output of a Recurrent Neural Network is the output of the last iteration in the loop. One may also use the output of every iteration in the loop, which results in a output shape of {\tt (batch\_size, timesteps, units)}, where the dimensionality of the timesteps in the output is equal to the dimensionality of the timesteps in the input.
+The output of a typical Recurrent Neural Network has a shape of {\tt (units)}, where {\tt units} is the number of output units in the network. Considering the compact network in Figure \ref{fig:nn-rnn}, the output of a Recurrent Neural Network is the output of the last iteration in the loop. One may also use the output of every iteration in the loop, which results in a output shape of {\tt (timesteps, units)}, where the dimensionality of the timesteps in the output is equal to the dimensionality of the timesteps in the input.
 
 \subsection{Long-Short Term Memory}
 \label{sec:long_short_term_memory}
@@ -98,7 +98,7 @@ Another variant is the ``Convolutional LSTM" purposed by \citep{xingjian2015conv
 A comparison of various LSTM variants was carried out by \citep{greff2016lstm}. They concluded that the traditional, vanilla LSTM performed reasonable well on various datasets. They investigated a total of eight variants of the LSTM, and in their experiments, none of the eight modifications significantly improved performance. However, certain modifications simplified the LSTMs without significantly decreasing performance. 
 
 \subsection{GRU}
-Another popular modification of the LSTM was purposed by \citep{chung2014empirical}. Their simplified variant, called the Gated Recurrent Unit, or GRU for short, uses neither peepholes nor output activation functions. Instead, the GRU couples the input and the forget gate into an update gate. The GRU also merges the hidden and cell states  \citep{greff2016lstm, chung2014empirical}. Comparisons between the LSTM and the GRU units have shown mixed results, and experiments have concluded that there is no clear winner between the two \citep{greff2016lstm, chung2014empirical}. \citep{jozefowicz2015empirical} also compared various LSTM and GRU units and reported that GRUs outperformed the LSTM on all tasks except language modelling.
+Another popular modification of the LSTM was purposed by \citep{chung2014empirical}. Their simplified variant, called the Gated Recurrent Unit, or GRU for short, uses neither peepholes nor output activation functions. Instead, the GRU couples the input and the forget gate into an update gate. The GRU also merges the hidden and cell states  \citep{greff2016lstm, chung2014empirical}. Comparisons between the LSTM and the GRU units have shown mixed results, and experiments have concluded that there is no clear winner between the two \citep{greff2016lstm, chung2014empirical}. \cite{jozefowicz2015empirical} also compared various LSTM and GRU units and reported that GRUs outperformed the LSTM on all tasks except language modelling.
 
 %%=========================================
 
@@ -106,7 +106,7 @@ Another popular modification of the LSTM was purposed by \citep{chung2014empiric
 \label{sec:encoder-decoder}
 The encoder-decoder framework is a concept centralized around two recurrent neural networks. The idea is to encode the input in the first neural network, and decode it in the second network. The first recurrent neural network, also called the encoder, reads the input sentence, a sequence of vectors \(X = (x_{1}, x_{2}, \ldots, x_{n})\). This sequence is then encoded into a vector \(C\), which may or may not be of fixed length \citep{sutskever2014sequence, cho2014learning}. 
 
-The decoder is often trained to predict the next word \(y_{t'}\) given the context vector \(C\) and all the previously predicted words \({y_1, \ldots, y_{t'-1}}\). \citep{bahdanau2014neural} summarizes the architecture with:
+The decoder is often trained to predict the next word \(y_{t'}\) given the context vector \(C\) and all the previously predicted words \({y_1, \ldots, y_{t'-1}}\). \cite{bahdanau2014neural} summarizes the architecture with:
 
 \begin{quote}
     The decoder defines a probability over the translation \(y\) by decomposing the joint probability into the ordered conditionals:
@@ -144,7 +144,16 @@ The benefit of the encoder-decoder model is that the entire input is encoded int
 \label{sec:attention_mechanism}
 \citep{bahdanau2014neural} conjectured that the use of a fixed-vector was a bottleneck in improving the performance of the basic encoder-decoder model. Their argued that a potential issue with the encoder-decoder approach was that the neural network had to be able to compress all the necessary information of a source input into a fixed-length vector, a task that could be difficult under certain conditions. Their purposed model extended the vector encoding by allowing the model to automatically soft-search for parts of the input that is more important. This approach allows the decoder to peek into the input during decoding. Hence, the attention mechanism allows the decoder to refer back to the input data, and not force it to only rely on the encoded context vector. 
 
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.8\textwidth]{fig/background_theory/attention_chinese.png}
+    \caption{Encoder-decoder with an attention mechanism}
+    \label{fig:encoder-decoder-attention-google}
+\end{figure}
+
 Tests of the purposed model on the task of English-to-French translation revealed that the model outperformed conventional encoder-decoder models significantly regardless of sentence length \citep{bahdanau2014neural}. \citep{bahdanau2014neural} also concluded that the attention mechanism was much more robust to the length of a source sentence. Similar attention mechanisms has since then been applied to several other model with good results \citep{hsu2016recurrent, sankaran2016temporal}. 
+
+Figure \ref{fig:encoder-decoder-attention-google} illustrates a translation task between Chinese and English with an attention mechanism. The lines between the encoder and decoder indicates the degree of ``focus'' the attention mechanism pays to each value in the input. As the decoding process progresses, the area of focus shifts. For translation tasks like the one illustrated, this focus would typically follow the input words related to translating the next word in our output language.
 
 %%=========================================
 

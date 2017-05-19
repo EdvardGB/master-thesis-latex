@@ -113,7 +113,9 @@ Table \ref{table:noise_accuracy} contains the accuracy of the {\tt EncDegAtt} mo
         \hline 
         \textbf{Noise factor}          & \textbf{Noise alterations}       & \textbf{Accuracy}         \\ \hline
         0\%                            & 0\%                              & 98.06\%                   \\ \hline
+        2\%                            & x.xx\%                           & 95.83\%                   \\ \hline
         5\%                            & 2.98\%                           & 93.35\%                   \\ \hline
+        6\%                            & 3.46\%                           & xx.xx\%                   \\ \hline
         10\%                           & 5.46\%                           & 69.36\%                   \\ \hline
         15\%                           & 7.94\%                           & 66.77\%                   \\ \hline
         20\%                           & 10.41\%                          & 59.51\%                   \\ \hline
@@ -198,7 +200,7 @@ The first experiment clearly indicated was the {\tt VecRep} unable to learn the 
 \subsection{Analysis In Terms of Research Questions}
 
 \subsubsection{Ambiguity in Character Signature Sequences}
-Our first research question, \textbf{RQ1}, we asked if the models were able to deal with ambiguity in the input data. In our first experiment, we used the same system configurations as shown in Table \ref{table:signature_sequence_example}, which we used to illustrate how some of the letter signatures were either identical or subsequences of another. In this table we showed that the letters C, I, J, L, T, and Y all shared the same unique signature of three black pixels. The other letters that also shared an identical signature were E and F, H and U, O and Q, and S and X. 
+In our first research question, \textbf{RQ1}, we asked if the models were able to deal with ambiguity in the input data. In our first experiment, we used the same system configurations as shown in Table \ref{table:signature_sequence_example}, which we used to illustrate how some of the letter signatures were either identical or subsequences of another. In this table we showed that the letters C, I, J, L, T, and Y all shared the same unique signature of three black pixels. The other letters that also shared an identical signature were E and F, H and U, O and Q, and S and X. 
 
 Comparing these sets to the confusion matrices, we can see that some of these characters were indeed those the models struggled to classify correctly. Specifically, U, I and T, F and E, as well as Q and O were problematic for both the encoder-decoder models, although their accuracy were no lower than 0.692 for the {\tt EncDegReg} model, and 0.776 for the {\tt EncDegAtt} model on any label. The most commonly wrongly classified label was an E as F, with both the models having an equal confusion of 0.18. 
 
@@ -212,19 +214,36 @@ Lastly, \textbf{RQ3} asked if the model(s) were able to adapt to noise and imper
 
 %%=========================================
 
-\section{Reasoning}
+\section{Analysis}
 \label{sec:reasoning}
 In section we look closer at how the models work and why we got the results we did. 
 
 \subsection{Encoding}
-The encoder-decoder framework is made up off two important components; the encoder and the decoder. Here we have plotted the values of the context vector produced by the encoder component. We feed the same sentence to the network, but add more and more noise. The similarities in the plots indicates how the encoder component is able to ``cluster" the input together, despite differences in the input. This illustrates the power of encoding the input, as the decoder component can work with more manageable information.
+The encoder-decoder framework is made up off two important components; the encoder and the decoder. To illustrate the power of the encoder, we have trained a model on a 1\% noise induced dataset. Then we have fed the network the same word multiple times with noise applied differently every time and plotted the encoded context vector to a low dimensional space. \cite{sutskever2014sequence} showed in their paper how semantically similar sentences are clustered together using the same technique. Here we illustrate how words with the same amount of noise (1\%), but different random values, also follow a similar clustering.
 
-\red{Til Helge: Her er målet, som du foreslo, å plotte context-vektoren og se hvordan denne endrer seg med noise. Jeg har ikke fått gjort det enda, ettersom det krever at jeg skriver om litt av systemet mitt. Jeg skal prøve å få gjort det ASAP. Viser det seg at det ikke fungerer som vi tror dropper vi bare denne seksjonen. Sånn den fremstår i dag er teksten over her bare mildertidig, ettersom jeg bare gjetter på resultatene}
+We feed the same sentence to the network, but add more and more noise. The similarities in the plots indicates how the encoder component is able to ``cluster" the input together, despite differences in the input. This illustrates the power of encoding the input, as the decoder component can work with more manageable information.
 
 \subsection{Decoding}
-The decoder and its ability to feed previous output back as input is one of the corner-stones i the encoder-decoder framework. Allowing the decoder to read the previous output lets the decoder at that time know something about the current state of the ``translation" process from the vector passed on from the encoder. If the decoder did not feed the output back as input, it would have to rely solely on the hidden and cell states for the decoding process.
+The decoder and its ability to feed previous output back as input is one of the corner-stones i the encoder-decoder framework. Allowing the decoder to read the previous output lets the decoder at that time know something about the current state of the ``translation'' process from the vector passed on from the encoder. If the decoder did not feed the output back as input, it would have to rely solely on the hidden and cell states for the decoding process.
 
-During decoding, the decoder outputs a vector for each timestep, ran through a softmax function. The framework uses {\tt argmax} to find the element in the vector with the highest value, e.i. the predicted value, and feeds this value back to the decoder for the next timestep. Here we have altered this functionality, instead of feeding back the predicted value, we send something else back and see how the decoder reacts. Without any modification to the feedback-behavior, the model we used is perfectly able to classify each label in the word and produces the correct output ``KITTENS". Now, if we instead change the logic to use the {\tt argmin} function, which returns the element we predicted the ``least", the word becomes ``KIIIEES". Similarly, if we only feed back the first label, which in this case would be letter A, the word becomes ``KITTT". Note that the first letter in the word is predicted based on the context vector from the encoder, so it is likely this is correct. Except the first letter, we see some of the other letters in the word have changed. However, despite our trickery, the decoder is still able to predict labels that are actually in the word, indicating the some of the ``knowledge" in the decoding process is also stored and shared within the LSTM cell. We also observe that the output is not that far off, with both the misled decoders outputting the second letter correctly. Lastly, if we only ``fool" the decoder for the first and/or second letter, telling it we outputted an A, the decoder is able to predict each letter correctly, outputting ``KITTENS" like it should. This also indicates that the knowledge in the cell states may correctly override the input, instead of creating a ``domino" effect like we first expected, where the output would progressively get more and more wrong.
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=1\textwidth]{fig/results/kittens_correct.png}
+    \caption{Decoding the word ``KITTENS''}
+    \label{fig:kittens_correct}
+\end{figure}
+
+During decoding, the decoder outputs a vector for each timestep, ran through a softmax function. The framework uses {\tt argmax} to find the element in the vector with the highest value, e.i. the predicted value, and feeds this value back to the decoder for the next timestep. Here we have altered this functionality, instead of feeding back the predicted value, we send something else back and see how the decoder reacts. Without any modification to the feedback-behavior, the model we used is perfectly able to classify each label in the word and produces the correct output ``KITTENS'', as illustrated in Figure \ref{fig:kittens_correct}. 
+
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=1\textwidth]{fig/results/kittens_wrong.png}
+    \caption{Decoding the word ``KITTENS'' by feeding back wrong label}
+    \label{fig:kittens_wrong}
+\end{figure}
+
+Now, if we instead change the logic to use the {\tt argmin} function, which returns the element we predicted the ``least", the word becomes ``KIIIEES''. Similarly, if we only feed back the first label, which in this case would be letter A, the word becomes ``KITTT'', as illustrated in Figure \ref{fig:kittens_wrong}. Note that the first letter in the word is predicted based on the context vector from the encoder, so it is likely this is correct. Except the first letter, we see some of the other letters in the word have changed. However, despite our trickery, the decoder is still able to predict labels that are actually in the word, indicating the some of the ``knowledge" in the decoding process is also stored and shared within the LSTM cell. We also observe that the output is not that far off, with both the misled decoders outputting the second letter correctly. Lastly, if we only ``fool" the decoder for the first and/or second letter, telling it we outputted an A, the decoder is able to predict each letter correctly, outputting ``KITTENS" like it should. This also indicates that the knowledge in the cell states may correctly override the input, instead of creating a ``domino" effect like we first expected, where the output would progressively get more and more wrong.
 
 Perhaps not that surprising that altering this functionality changes the behavior, but it is interesting to see how some of the power of the encoder-decoder framework lies in the way the decoder sends itself information from previous iterations. Removing the ability to know what has been outputted also explains the lower accuracy seen by the {\tt VecRep} model. As this model does not feed back its previous output, it has to deal with the challenges of not knowing where in the decoding process it currently is.
 
