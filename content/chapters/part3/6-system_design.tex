@@ -59,7 +59,7 @@ The {\tt Transformator} module was created to transform the sequences of binary 
 
 The {\tt Transformator} was given a sequence of ``handlers'', depending on which model was to be loaded in the {\tt Predictor}. These handlers were executed in sequence, and each handler did a modification to either the input or the output format, and the data was propagated to the next handler. This way, the handlers could easily be reordered or swapped if a model expected another format. Typical tasks included padding the input to a given width, rescaling the input to unsigned integers, or turning the output into a one-hot matrix.
 
-\begin{figure}[h]
+\begin{figure}[ht]
     \centering
     \includegraphics[width=1\textwidth]{fig/development_process/transformator.png}
     \caption{Illustration of handlers transforming data}

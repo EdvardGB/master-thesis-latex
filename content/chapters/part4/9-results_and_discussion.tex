@@ -69,7 +69,7 @@ The {\tt EncDecReg} had an accuracy of almost 95.5\% on the big dataset, which i
 \subsubsection{Accuracy and Loss}
 \resultplots{fig/results/experiment1/small/encdecatt/}{plot_accuracy.png}{plot_loss.png}{result1_small_encdecatt}{Accuracy and loss for {\tt EncDecAtt} on small dataset}
 \resultplots{fig/results/experiment1/medium/encdecatt/}{plot_accuracy.png}{plot_loss.png}{result1_medium_encdecatt}{Accuracy and loss for {\tt EncDecAtt} on medium dataset}
-\resultplots{fig/results/experiment1/big/encdecatt/}{plot_accuracy.png}{plot_lossp.png}{result1_big_encdecatt}{Accuracy and loss for {\tt EncDecAtt} on big dataset}
+\resultplots{fig/results/experiment1/big/encdecatt/}{plot_accuracy.png}{plot_loss.png}{result1_big_encdecatt}{Accuracy and loss for {\tt EncDecAtt} on big dataset}
 
 These plots show much the same as the plots for the {\tt EncDecReg} model. The overfitting is less apparent, although this model also seem to overfit on both the small and medium datasets. The big dataset also have multiple spikes, similar to the {\tt EncDecReg} model. This model also seem to improve for many epochs on the biggest dataset.
 
@@ -122,10 +122,11 @@ Table \ref{table:noise_accuracy} contains the accuracy of the {\tt EncDegAtt} mo
         \hline 
         \textbf{Noise factor}          & \textbf{Noise alterations}       & \textbf{Accuracy}         \\ \hline
         0\%                            & 0\%                              & 98.06\%                   \\ \hline
-        2\%                            & x.xx\%                           & 95.83\%                   \\ \hline
+        2\%                            & 1.49\%                           & 95.83\%                   \\ \hline
         5\%                            & 2.98\%                           & 93.35\%                   \\ \hline
         6\%                            & 3.46\%                           & 90.93\%                   \\ \hline
-        8\%                            & 4.45\%                           & xx.xx\%                   \\ \hline
+        8\%                            & 4.45\%                           & 91.40\%                   \\ \hline
+        9\%                            & 4.96\%                           & xx.xx\%                   \\ \hline
         10\%                           & 5.46\%                           & 69.36\%                   \\ \hline
         15\%                           & 7.94\%                           & 66.77\%                   \\ \hline
         20\%                           & 10.41\%                          & 59.51\%                   \\ \hline
@@ -223,13 +224,13 @@ Experiments have indicated that both the encoder-decoder models are able to hand
 Lastly, \textbf{RQ3} asked if the model(s) were able to adapt to noise and imperfect input data. Experiments have shown that the {\tt EncDecAtt} model was able to handle increasing amounts of noise, although the accuracy decreased as the noise factor increased. For a noise factor of 5\%, the accuracy decreased by a little less than 5\%, while a noise factor of 10\% decreased the accuracy by more than 28\%. With a noise factor of 10\%, every 10th bit may end up corrupted. If this is reasonable to expect in a real-world scenario is hard to say. We have decided to conclude this question by stating that the {\tt EncDecAtt} was able to handle noise in a satisfactory manner.
 
 \subsection{Discussing the Research Goal}
-Our goal in this thesis was to create a model that was able to use signature sequences to recognize letters and words in machine written text. The results from our experiments, which has been presented in this chapter, indicates that we were successful in reaching this goal. The two encoder-decoder models, especially the {\tt EncDecAtt}, has been successful in recognizing words with a high accuracy, and we have found these results satisfactory for our evaluation.
+Our goal in this thesis was to create a model that was able to use signature sequences to recognize letters and words in machine-written text. The results from our experiments, which has been presented in this chapter, indicates that we were successful in reaching this goal. The two encoder-decoder models, especially the {\tt EncDecAtt}, has been successful in recognizing words with a high accuracy, and we have found these results satisfactory for our evaluation.
 
 %%=========================================
 
 \section{Analysis}
 \label{sec:reasoning}
-In section we look closer at how the models work and we analyze why we got the results we did. 
+In section we look closer at how the models work and we analyze the models in context of our results.
 
 \subsection{Encoding}
 We have evaluated the encoding mechanism of the encoder-decoder framework. This was done by training a model on a noise induced dataset, and then feeding the same words multiple times with the same amount of noise, but different random seeds. We fed the model three words ten times and plotted the encoded context vector to a low dimensional space using principal component analysis (PCA). 
@@ -292,7 +293,7 @@ The heatmap shows how the attention mechanism scanned both the related input, as
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=1\textwidth]{fig/conclusion/imagined_grid_exported.png}
+    \includegraphics[width=1\textwidth]{fig/conclusion/imagined_grid_exported.jpg}
     \caption{The word ``IMAGINED'' with the signature highlighted in red and green}
     \label{fig:imagine_highlighted}
 \end{figure}
