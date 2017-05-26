@@ -28,6 +28,7 @@ In this section, we present the setup, configurations, and choice of hyper-param
     \item After each LSTM cell, we had a dropout layer, which randomly dropped units, along with their weights, by setting their values to 0 \citep{srivastava2014dropout}. The dropout rate after \emph{each} LSTM was 0.2, which meant that around 20\% of all output was ignored after each LSTM unit. The rate was a result of trial-and-error, but the rate did not significantly affect results in the range of \(\pm 0.1\).
 \end{itemize}
 
+\newpage
 \begin{figure}[ht]
     \centering
     \begin{minipage}{.5\textwidth}
@@ -103,6 +104,7 @@ We tested various loss optimizers for our three models. Adaptive Moment Estimati
 
 The Adam optimizer is a method that computes adaptive learning rates for each parameter. We kept the proposed default values of \(\beta_{1} = 0.9\), \(\beta_{2} = 0.999\), and \(\epsilon = 10^{-8}\). We used a learning rate of \(10^{-2}\), instead of the more common rate of \(10^{-3}\). We increased the learning rate as all models had a tendency to use many epochs to reach satisfactory progression.
 
+\newpage
 \section{Dataset Details}
 \label{sec:dataset_details}
 Datasets were created using the pipeline process explained in Section \ref{sec:preprocessor}. Our word list had a total of 356,719 unique words, populated by three open sourced word lists:
@@ -147,15 +149,15 @@ The dataset used in this experiment had a training set of size 10,000 and valida
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=.8\textwidth]{fig/experiments/SHORTCUTS_dpi.png}
     \captionsetup{justification=centering}
+    \includegraphics[width=1\textwidth]{fig/experiments/SHORTCUTS_dpi.png}
     \caption{The word ``SHORTCUTS'' written in Arial Mono. Size 186x31}
 \end{figure}
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=.8\textwidth]{fig/experiments/UPLIFTER_dpi.png}
     \captionsetup{justification=centering}
+    \includegraphics[width=1\textwidth]{fig/experiments/UPLIFTER_dpi.png}
     \caption{The word ``UPLIFTER'' written in Times New Roman. Size 180x31}
 \end{figure}
 

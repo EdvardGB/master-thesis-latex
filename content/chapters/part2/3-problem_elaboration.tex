@@ -29,23 +29,24 @@ Figure \ref{fig:thesis-signature-comparison} also illustrates how our system nee
 In this section, we look closer at how typefaces (also known as font family), and techniques in typography may affect our problem.
 
 \subsection{Typefaces}
+In addition to tuning the capturing of the input data, choice of fonts may also play a role in the ambiguity of the problem. In Figure \ref{fig:thesis-signature-comparison} we have used the monoline sans-serif font Arial. Monoline means that all the strokes in the typeface have the same widths. Sans-serif means that the font does not have serifs; a crossing feature at the end of the principal character strokes \citep{felici2011complete}. In Figure \ref{fig:typeface-comparison} we have written the word ``CAT'' first in Arial, and then in Times New Roman. Times New Roman is a font with serifs which is not monoline. The serifs are highlighted in red in the figure. The visual difference between the two words illustrates how the choice of font affects the captured sequences.
+
 \begin{figure}[h]
     \centering
+    \captionsetup{justification=centering}
     \includegraphics[width=1.0\textwidth]{fig/chapter2/typeface_comparison.png}
     \caption{The word ``CAT'' written in Arial and Times New Roman with highlighted serifs}
     \label{fig:typeface-comparison}
 \end{figure}
 
-In addition to tuning the capturing of the input data, choice of fonts may also play a role in the ambiguity of the problem. In Figure \ref{fig:thesis-signature-comparison} we have used the monoline sans-serif font Arial. Monoline means that all the strokes in the typeface have the same widths. Sans-serif means that the font does not have serifs; a crossing feature at the end of the principal character strokes \citep{felici2011complete}. In Figure \ref{fig:typeface-comparison} we have written the word ``CAT'' first in Arial, and then in Times New Roman. Times New Roman is a font with serifs which is not monoline. The serifs are highlighted in red in the figure. The visual difference between the two words illustrates how the choice of font affects the captured sequences.
+Fonts are also spaced differently. A monospaced font, also called fixed-width font, uses the same width for all characters. This is in contrast to variable-width fonts, where each character may have different widths \citep{felici2011complete}. Illustrated in Figure \ref{fig:regular-mono-comparison}, the text on the left is written in regular Arial which has variable width characters, while the text on the right is written in an Arial variant with monospacing. The two words written in monospaced font have equal width, whereas the two words that are written in a variable-width font have different widths. With a monospaced font, each glyph is placed inside a maximum width constraint. The glyph does not need to take up the entire width, but monospacing guarantees that there are no strokes outside the constraint. In our problem, we do not define where a character ``starts'' or ``stops'', so we do not know the location of these constraints. However, the use of a variable-width font may give increased variance in the distances between two glyphs.
 
-\begin{figure}[ht]
+\begin{figure}[h]
     \centering
     \includegraphics[width=1.0\textwidth]{fig/chapter2/regular_mono_comparison.png}
     \caption{Text with a variable-width font on the left, and monospace on the right}
     \label{fig:regular-mono-comparison}
 \end{figure}
-
-Fonts are also spaced differently. A monospaced font, also called fixed-width font, uses the same width for all characters. This is in contrast to variable-width fonts, where each character may have different widths \citep{felici2011complete}. Illustrated in Figure \ref{fig:regular-mono-comparison}, the text on the left is written in regular Arial which has variable width characters, while the text on the right is written in an Arial variant with monospacing. The two words written in monospaced font have equal width, whereas the two words that are written in a variable-width font have different widths. With a monospaced font, each glyph is placed inside a maximum width constraint. The glyph does not need to take up the entire width, but monospacing guarantees that there are no strokes outside the constraint. In our problem, we do not define where a character ``starts'' or ``stops'', so we do not know the location of these constraints. However, the use of a variable-width font may give increased variance in the distances between two glyphs.
 
 \subsection{Typography Techniques}
 \label{sec:other_factors}
@@ -76,7 +77,7 @@ There is a chance our input data may end up being ambiguous. A character signatu
 
 Consider the bottom signature in Figure \ref{fig:thesis-signature-comparison}. Because Arial is monolinear, we know that the strokes on the C and the T have equal width. The T could be represented as a series of some white pixels, three black pixels, and optionally more white pixels. We can not know for sure just how many white pixels is before and after the three black pixels, because this may vary depending on what character is before and after the T (if any). Now, if our system learns this mapping, it will incorrectly recognize various other characters, such as parts of the C as a potential T. This means that our system has to learn the recognize a huge variety of sequences and correctly map them to an output character while ignoring invalid sequences.
 
-\begin{table}[H]
+\begin{table}[ht]
     \centering
     \begin{tabular}{|l|l|l|}
         \hline 
@@ -116,7 +117,7 @@ This all boils down to the fact that the complete sequences of words may have ma
 \label{sec:evaluating_problem_input_and_output}
 In our problem, we have an input that is a matrix or a vector of binary data. The binary input denotes the color of a particular pixel at the given location in our ``signature''. The output, or the correct labels, will correspond to the correct letter in the word. For convenience, the letters will be given a unique integer value. For example, if the words are written in upper-cased letters of the English language, we could use the numbers in the range 1 to 26, denoting A through Z.
 
-\begin{figure}[h]
+\begin{figure}[ht]
     \renewcommand\figurename{Example}
     \begin{equation*}
         \begin{aligned}
@@ -137,7 +138,7 @@ Our input has the feature that they form a sequence. Both the values in the sequ
 
 Because the input forms a sequence, it is important that the entire sequence is read, and that we do not cut the sequence off at the end, removing important information that we need. Truncating or ignoring values in the input sequence would result in mislearning. Instead of our model correctly identify subsequences, the model would attempt to find patters in the data that is not there. This mislearning would cripple the model, and the overall accuracy may suffer due to contradicting sequences. Keeping the input data unaltered and complete is therefore essential.
 
-\begin{figure}[h]
+\begin{figure}[ht]
     \renewcommand\figurename{Example}
     \begin{equation*}
         \begin{aligned}
@@ -163,7 +164,7 @@ We have now considered the input and output separately. Considering the input an
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.7\textwidth]{fig/background_theory/number_translation.png}
+    \includegraphics[width=0.8\textwidth]{fig/background_theory/number_translation.png}
     \caption{Illustrative translation between our two languages}
     \label{fig:number_translation}
 \end{figure}

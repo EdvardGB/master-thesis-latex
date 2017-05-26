@@ -13,6 +13,7 @@ Our models use supervised learning, a task which revolves around two phases: tra
 
 The system consists of several separate modules, each responsible for its individual task. The two first modules are the {\tt Trainer} and the {\tt Tester}. These modules are responsible for starting whatever other modules are required to run before the actual training or testing can take place, as well as invoking the action on the correct model. The {\tt Preprocessor} is responsible for creating the datasets we use in both the training and testing phase. The {\tt Transformator} module ``transform'' the input and label data stored from the {\tt Preprocessor} into a format that the models expect. Finally, the system calls the {\tt Predictor} which loads the correct model and either starts training or testing it.
 
+\newpage
 \begin{figure}[ht]
     \centering
     \includegraphics[width=0.7\textwidth]{fig/system_design/system_design.png}

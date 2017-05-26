@@ -11,9 +11,9 @@ In this chapter we introduce the background theory relevant to the related work 
 \label{sec:feedforward_neural_network}
 Artificial neural network is a computational model used in machine learning and computer science. The idea behind neural networks lies in the use of artificial neurons, an idea that can be traced back to the 1940s. These artificial neurons are loosely analogous to axons in a biological brain, and artificial neural networks is an attempt at modeling the information process capabilities of nervous systems \citep{russell2010aimodernapproach}.
 
-\begin{figure}[ht]
+\begin{figure}[h]
     \centering
-    \includegraphics[width=1\textwidth]{fig/related_work/perceptron.png}
+    \includegraphics[width=0.8\textwidth]{fig/related_work/perceptron.png}
     \caption{Illustration of a mathematical model of a neuron}
     \label{fig:nn-perceptron}
 \end{figure}
@@ -28,7 +28,7 @@ A feedforward network consists of units which have connections that only goes in
 \label{sec:reccurent_neural_network}
 A recurrent neural network (RNN) is a type of artificial neural network. This type of neural networks creates an internal state of the network which allows it to express dynamic temporal behavior. The structure of a recurrent neural network is much like a feedforward network, but in addition to feeding ``downstream'' nodes, nodes also feed its output back into its own inputs. This type of architecture can support a short-term memory, a feature that is necessary in problems where input depends on previous input \citep{russell2010aimodernapproach}, for example in areas such as speech recognition.
 
-\begin{figure}[ht]
+\begin{figure}[h]
     \centering
     \includegraphics[width=0.8\textwidth]{fig/related_work/nn_recurrent.png}
     \caption{A compact and an unfolded recurrent neural network}
@@ -37,7 +37,7 @@ A recurrent neural network (RNN) is a type of artificial neural network. This ty
 
 We can consider recurrent neural networks as a loop, and we can unfold it into a complete sequence, as illustrated in Figure \ref{fig:nn-rnn}. In the figure, \(X_{t}\) is the input, and \(h_{t}\) is the hidden state of the recurrent network at timestep \(t\). The hidden state function as the unit's memory. The hidden state from timestep \(t\) is reused in the next timestep \(t+1\), along with the input of the current timestep. It is also important to note that the network shares the same weights \(W\) across several timesteps. The recurrent neural network has input to hidden connections parametrized by a weight matrix \(U\), as well as hidden-to-hidden recurrent connections parametrized by a weight matrix \(W\). In addition, the network has hidden-to-output connection parametrized by a weight matrix \(V\) \citep{goodfellow2016deeplearning}.
 
-\begin{align}
+\begin{align}[h]
     \begin{split}\label{eq:rnn-eq-1}
         h_{t}&=\sigma(b+Wh_{t-1}+Ux_{t})
     \end{split}\\
@@ -52,7 +52,7 @@ Equations \ref{eq:rnn-eq-1} and \ref{eq:rnn-eq-2} are slightly simplified from \
 \label{sec:input_and_output_shapes}
 Recurrent neural networks are usually fed data that has an input shape of {\tt (timesteps, features)}, where the first dimension defines how many timesteps our data consists of, and the last dimension defines the number of features for each timestep. Table \ref{table:temporal_weather_data} contains weather data for Trondheim in Norway in the period June 2016 to September 2016\footnote{\url{https://www.yr.no/sted/Norge/Sør-Trøndelag/Trondheim/Trondheim/statistikk.html}}. This example has a total of four timesteps, one for each month in the period, and a total of three separate features: temperature, rain, and wind. This data would have an input shape of {\tt (4, 3)}. We can consider this data as recording a total of three features over the course of four timesteps.
 
-\begin{table}[H]
+\begin{table}[h]
     \centering
     \begin{tabular}{|l|l|l|l|l|}
         \hline
@@ -165,7 +165,7 @@ One-hot vector encoding is a common way to represent a vocabulary. In this encod
 
 Although this encoding method is simple and easy to implement, this approach becomes troublesome when the vocabulary is big. If the vocabulary has a total of 90,000 unique words, the one-hot vector would correspondingly need to have a size of 90,000. This vector would also consist almost exclusively of zeroes. Besides, one-hot encoded vectors neither define relationships between nearby or related words nor define any notion of semantic.
 
-\begin{table}[H]
+\begin{table}[h]
     \centering
     \begin{tabular}{|l|l|l|l|l|l|}
         \hline

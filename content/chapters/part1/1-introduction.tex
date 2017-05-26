@@ -33,6 +33,8 @@ OCR is, in a broad sense, a branch of artificial intelligence, and a research br
 OCR systems have achieved up to 99\% recognition rates when working with clean and well-formatted documents under optimal conditions in some cases. However, in suboptimal conditions, where the OCR system faces variants of text layouts and fonts, uneven illuminations, and other obstacles, the systems typically have lower rates of detection and recognition \citep{ye2015text}. Pasting of paper, ink spreading, fading, or dirt, are just a few ways text can be damaged or obfuscated \citep{bhardwaj2014imaging}, which leads to obstacles and difficulties for OCR systems. In this thesis, we take on a particular kind of obfuscated text, and present a new way to recognize it by utilizing their ``signature''.
 
 \subsection{Real World Example}
+An example of the type of obfuscated text we will attempt to handle in this thesis can be found in a Tweet from Markus ``Notch'' Persson. Persson is a Swedish video game programmer and designer and is most famous for creating the highly acclaimed video game Minecraft. He was an inveterate user of Twitter and used to hint or tease upcoming features of Minecraft. Figure \ref{ref:notch_twitter} contains a Tweet from Persson, which was Tweeted on June 12th, 2011.
+
 \begin{figure}[ht]
     \centering
     \includegraphics[width=0.8\textwidth]{fig/chapter1/notch_tweet.jpg}
@@ -40,10 +42,7 @@ OCR systems have achieved up to 99\% recognition rates when working with clean a
     \label{ref:notch_twitter}
 \end{figure}
 
-An example of the type of obfuscated text we will attempt to handle in this thesis can be found in a Tweet from Markus ``Notch'' Persson. Persson is a Swedish video game programmer and designer and is most famous for creating the highly acclaimed video game Minecraft. He was an inveterate user of Twitter and used to hint or tease upcoming features of Minecraft. Figure \ref{ref:notch_twitter} contains a Tweet from Persson, which was Tweeted on June 12th, 2011.
-
-Persson's Tweet is referring to an image which can be seen in Figure \ref{fig:notch_imgur}. The image is a print screen of what looks like a text editor or IDE\footnote{Integrated Development Environment}. Although the image is heavily blurred and cropped, some of the text is partially visible, like the lower portion of the file names in the tab pane at the top of the image. When this Tweet was posted, one user who called himself tmcaffeine on Reddit\footnote{\url{https://www.reddit.com}}, was able to identify the text in the tabs. He installed the same IDE Persson used and matched the default font in the program against the letters that were partially visible in the image. His decoded image can be seen in in Figure \ref{fig:notch_eclipse_decoded}. More than four months later, when version 1.7 of Minecraft was released, it was clear that the decoding was correct as big mushrooms started to appear in the game\footnote{The experience orbs were postponed, and introduced in the 1.8 update instead.} \citep{misc-minecraft.172-changelog}.
-
+\newpage
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.8\textwidth]{fig/chapter1/notch_eclipse.jpg}
@@ -51,10 +50,12 @@ Persson's Tweet is referring to an image which can be seen in Figure \ref{fig:no
     \label{fig:notch_imgur}
 \end{figure}
 
+Persson's Tweet is referring to an image which can be seen in Figure \ref{fig:notch_imgur}. The image is a print screen of what looks like a text editor or IDE\footnote{Integrated Development Environment}. Although the image is heavily blurred and cropped, some of the text is partially visible, like the lower portion of the file names in the tab pane at the top of the image. When this Tweet was posted, one user who called himself tmcaffeine on Reddit\footnote{\url{https://www.reddit.com}}, was able to identify the text in the tabs. He installed the same IDE Persson used and matched the default font in the program against the letters that were partially visible in the image. His decoded image can be seen in in Figure \ref{fig:notch_eclipse_decoded}. More than four months later, when version 1.7 of Minecraft was released, it was clear that the decoding was correct as big mushrooms started to appear in the game\footnote{The experience orbs were postponed, and introduced in the 1.8 update instead.} \citep{misc-minecraft.172-changelog}.
+
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.8\textwidth]{fig/chapter1/notch_eclipse_decoded.jpg}
     \captionsetup{justification=centering}
+    \includegraphics[width=0.8\textwidth]{fig/chapter1/notch_eclipse_decoded.jpg}
     \caption{Decoding of the blurred image from @notch's tweet done by Reddit user tmcaffeine}
     \label{fig:notch_eclipse_decoded}
 \end{figure}
@@ -65,6 +66,8 @@ The decoding that was done to match the letters poses an interesting problem. Ca
 
 \section{Goals and Research Questions}
 \label{sec:goals_and_research_questions}
+Our goal is to use the ``signature'' of letters in a word to recognize it. We can imagine a ``signature'' by applying two masks to an image with some written text. These masks span the total width of the image, and also cover most of the image from top to bottom, and from the bottom to the top. The only area that is not covered by the masks is the gap between the masks. The pixels in this gap defines the ``signature'' for our image and the text written in it.
+
 \begin{figure}[ht]
     \centering
     \includegraphics[width=1.\textwidth]{fig/chapter1/signature2.png}
@@ -72,9 +75,7 @@ The decoding that was done to match the letters poses an interesting problem. Ca
     \label{fig:thesis-signature}
 \end{figure}
 
-Our goal is to use the ``signature'' of letters in a word to recognize it. We can imagine a ``signature'' by applying two masks to an image with some written text. These masks span the total width of the image, and also cover most of the image from top to bottom, and from the bottom to the top. The only area that is not covered by the masks is the gap between the masks. The pixels in this gap defines the ``signature'' for our image and the text written in it.
-
-Figure \ref{fig:thesis-signature} is an image with the word ``THESIS''. The original text in the image has a height of 50 pixels. Our masks are applied at both the top and bottom, exposing only a single line that has a height of one pixel. This line defines the ``signature'' for this word, and is highlighted in red. The areas that are covered by the masks are translucent and only shown for illustrative purposes. This approach was used to extract signature sequences from machine-written words in this thesis.
+Figure \ref{fig:thesis-signature} is an image with the word ``THESIS''. The original text in the image has a height of 50 pixels. Our masks are applied at both the top and bottom, exposing only a single line that has a height of one pixel. This line defines the ``signature'' for this word, and is highlighted in red. The areas that are covered by the masks are translucent and only shown for illustrative purposes. This approach was used to extract signature sequences from words in this thesis.
 
 Our overarching research goal is stated below. This was the main goal we focused on archiving throughout the work on this thesis. In addition to the research goal, we also created three research questions that we wanted to answer as well. Our research goal is somewhat open and mainly explores whether or not an approach like the one we propose is possible or not while our research questions are more specific and concrete. The research questions are asked to get more insight and knowledge related to the approach we propose. The research questions and their meaning are explained in greater detail in Section \ref{sec:research_questions_and_approach}.
 
@@ -96,39 +97,31 @@ The contribution of this thesis is mainly the exploration of how to use machine 
 \section{Thesis Structure}
 The remainder of this thesis is structured as follows:
 
-\vspace{0.5cm}\noindent
-\begin{minipage}{\linewidth}
-    \textbf{{\hyperref[part1]{Part \ref{part1} -- \nameref{part1}}}}
-    \begin{itemize}
-        \item\textbf{\hyperref[ch:methodology]{Chapter \ref{ch:methodology} -- \nameref{ch:methodology}}} establishes the methodology used throughout the thesis. It explains how the research was carried out and how we chose our research approach.
-    \end{itemize}
-\end{minipage}
+\vspace{0.25cm}\noindent
+\textbf{{\hyperref[part1]{Part \ref{part1} -- \nameref{part1}}}}
+\begin{itemize}
+    \item\textbf{\hyperref[ch:methodology]{Chapter \ref{ch:methodology} -- \nameref{ch:methodology}}} establishes the methodology used throughout the thesis. It explains how the research was carried out and how we chose our research approach.
+\end{itemize}
 
-\vspace{0.5cm}\noindent
-\begin{minipage}{\linewidth}
-    \textbf{{\hyperref[part2]{Part \ref{part2} -- \nameref{part2}}}}
-    \begin{itemize}
-        \item\textbf{\hyperref[ch:problem]{Chapter \ref{ch:problem} -- \nameref{ch:problem}}} explains the problem in greater detail. It explains the various factors that define our problem. We also look into how we can interpret our problem in the context of established fields of machine learning. We also establish our method and approach to solve the problem.
-        \item\textbf{\hyperref[ch:background]{Chapter \ref{ch:background} -- \nameref{ch:background}}} introduces some of the background information relevant to the proceeding chapter.
-        \item\textbf{\hyperref[ch:related_work]{Chapter \ref{ch:related_work} -- \nameref{ch:related_work}}} presents related work done in the area of natural language processing, with a focus on machine translation. We present some of the earlier work as well as establishing state-of-the-art methods.
-    \end{itemize}
-\end{minipage}
+\noindent
+\textbf{{\hyperref[part2]{Part \ref{part2} -- \nameref{part2}}}}
+\begin{itemize}
+    \item\textbf{\hyperref[ch:problem]{Chapter \ref{ch:problem} -- \nameref{ch:problem}}} explains the problem in greater detail. It explains the various factors that define our problem. We also look into how we can interpret our problem in the context of established fields of machine learning. We also establish our method and approach to solve the problem.
+    \item\textbf{\hyperref[ch:background]{Chapter \ref{ch:background} -- \nameref{ch:background}}} introduces some of the background information relevant to the proceeding chapter.
+    \item\textbf{\hyperref[ch:related_work]{Chapter \ref{ch:related_work} -- \nameref{ch:related_work}}} presents related work done in the area of natural language processing, with a focus on machine translation. We present some of the earlier work as well as establishing state-of-the-art methods.
+\end{itemize}
 
-\vspace{0.5cm}\noindent
-\begin{minipage}{\linewidth}
-    \textbf{{\hyperref[part3]{Part \ref{part3} -- \nameref{part3}}}}
-    \begin{itemize}
-        \item\textbf{\hyperref[ch:system_design]{Chapter \ref{ch:system_design} -- \nameref{ch:system_design}}} introduces the system we developed to run our experiments. This brief introduction includes overall design and general approach, as well as key components.
-        \item\textbf{\hyperref[ch:models]{Chapter \ref{ch:models} -- \nameref{ch:models}}} presents the three models we developed as a part of our research based on state-of-the-art technologies.
-        \item\textbf{\hyperref[ch:experiments]{Chapter \ref{ch:experiments} -- \nameref{ch:experiments}}} establishes how we conducted our experiments, as well as presenting the structure of each experiment and what our goals and expectations were. This chapter also presents the configuration of the models and choice of hyper-parameters.
-    \end{itemize}
-\end{minipage}
+\noindent
+\textbf{{\hyperref[part3]{Part \ref{part3} -- \nameref{part3}}}}
+\begin{itemize}
+    \item\textbf{\hyperref[ch:system_design]{Chapter \ref{ch:system_design} -- \nameref{ch:system_design}}} introduces the system we developed to run our experiments. This brief introduction includes overall design and general approach, as well as key components.
+    \item\textbf{\hyperref[ch:models]{Chapter \ref{ch:models} -- \nameref{ch:models}}} presents the three models we developed as a part of our research based on state-of-the-art technologies.
+    \item\textbf{\hyperref[ch:experiments]{Chapter \ref{ch:experiments} -- \nameref{ch:experiments}}} establishes how we conducted our experiments, as well as presenting the structure of each experiment and what our goals and expectations were. This chapter also presents the configuration of the models and choice of hyper-parameters.
+\end{itemize}
 
-\vspace{0.5cm}\noindent
-\begin{minipage}{\linewidth}
-    \textbf{{\hyperref[part4]{Part \ref{part4} -- \nameref{part4}}}}
-    \begin{itemize}
-        \item\textbf{\hyperref[ch:results]{Chapter \ref{ch:results} -- \nameref{ch:results}}} presents the result of each experiment presented in the previous chapter. We discuss the results and evaluation the models. We also analyze the models in the context of the results from the experiments.
-        \item\textbf{\hyperref[ch:conclusion]{Chapter \ref{ch:conclusion} -- \nameref{ch:conclusion}}} draws the conclusion for our research. We state our research contribution and present thoughts on possible paths for future work.
-    \end{itemize}
-\end{minipage}
+\noindent
+\textbf{{\hyperref[part4]{Part \ref{part4} -- \nameref{part4}}}}
+\begin{itemize}
+    \item\textbf{\hyperref[ch:results]{Chapter \ref{ch:results} -- \nameref{ch:results}}} presents the result of each experiment presented in the previous chapter. We discuss the results and evaluation the models. We also analyze the models in the context of the results from the experiments.
+    \item\textbf{\hyperref[ch:conclusion]{Chapter \ref{ch:conclusion} -- \nameref{ch:conclusion}}} draws the conclusion for our research. We state our research contribution and present thoughts on possible paths for future work.
+\end{itemize}

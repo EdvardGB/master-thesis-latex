@@ -11,7 +11,7 @@ This chapter presents the results of the experiments we conducted. Section \ref{
 \label{sec:accuracy_on_datasets_results}
 Table \ref{table:accuracy_model_data_sets} contains the accuracy for each model on each of the three datasets of various sizes. The accuracy and loss plots for each test are presented below, showing the progression over the epochs.
 
-\begin{table}[H]
+\begin{table}[h]
     \centering
     \begin{tabular}{|l|l|l|l|}
         \hline 
@@ -29,15 +29,16 @@ The {\tt EncDecAtt} model had the best results on all three datasets. The lowest
 
 \subsection{VecRep}
 \subsubsection{Accuracy and Loss}
-\resultplots{fig/results/experiment1/small/vecrep/}{plot_accuracy.png}{plot_loss.png}{result1_small_vecrep}{Accuracy and loss for {\tt VecRep} on small dataset}
-\resultplots{fig/results/experiment1/medium/vecrep/}{plot_accuracy.png}{plot_loss.png}{result1_medium_vecrep}{Accuracy and loss for {\tt VecRep} on medium dataset}
-\resultplots{fig/results/experiment1/big/vecrep/}{plot_accuracy.png}{plot_loss.png}{result1_big_vecrep}{Accuracy and loss for {\tt VecRep} on big dataset}
+\resultplots{fig/results/experiment1/small/vecrep/}{plot_accuracy.png}{plot_loss.png}{result1_small_vecrep}{Accuracy and loss for {\tt VecRep} on small dataset}{ht}
+\resultplots{fig/results/experiment1/medium/vecrep/}{plot_accuracy.png}{plot_loss.png}{result1_medium_vecrep}{Accuracy and loss for {\tt VecRep} on medium dataset}{hp}
+\newpage
+\resultplots{fig/results/experiment1/big/vecrep/}{plot_accuracy.png}{plot_loss.png}{result1_big_vecrep}{Accuracy and loss for {\tt VecRep} on big dataset}{ht}
 
 The minimal increase in accuracy for all three {\tt VecRep} models across the epochs indicates that the model was unable to learn. The loss values for the tests on the small and medium datasets seem to decrease during the first couple of epochs, while the loss value for the test on the big dataset appears highly erratic.
 
 \newpage
 \subsubsection{Confusion Matrix}
-\begin{figure}[H]
+\begin{figure}[h]
     \centering
     \includegraphics[width=1\textwidth]{fig/results/experiment1/big/vecrep/confusion_matrix.png}
     \caption{Confusion matrix for the best {\tt VecRep} model on the big dataset}
@@ -46,11 +47,13 @@ The minimal increase in accuracy for all three {\tt VecRep} models across the ep
 
 The confusion matrix illustrated in Figure \ref{fig:result1_big_vecrep_confusion_matrix} explains how the {\tt VecRep} model was able to achieve an accuracy of over 50\% on the big dataset. The big dataset had a maximum word length of 20 letters, while most words in the English language, as well as in our datasets, are shorter than this. To compensate for the different word-lengths, the labels were zero-padded to fill the empty output labels. The {\tt VecRep} seem to base its predictions on the most common labels, which would be the padding symbol. It also looks to prefer other common labels such as O, R, and S. Every other cell in the confusion matrix is zero, meaning the model did not predict on more than four of the total 27 classes. The confusion matrix clearly indicates that the {\tt VecRep} model was not able to translate between our two constructed languages. 
 
+\newpage
 \subsection{EncDecReg}
 \subsubsection{Accuracy and Loss}
-\resultplots{fig/results/experiment1/small/encdecreg/}{plot_accuracy.png}{plot_loss.png}{result1_small_encdecreg}{Accuracy and loss for {\tt EncDecReg} on small dataset}
-\resultplots{fig/results/experiment1/medium/encdecreg/}{plot_accuracy.png}{plot_loss.png}{result1_medium_encdecreg}{Accuracy and loss for {\tt EncDecReg} on medium dataset}
-\resultplots{fig/results/experiment1/big/encdecreg/}{plot_accuracy.png}{plot_loss.png}{result1_big_encdecreg}{Accuracy and loss for {\tt EncDecReg} on big dataset}
+\resultplots{fig/results/experiment1/small/encdecreg/}{plot_accuracy.png}{plot_loss.png}{result1_small_encdecreg}{Accuracy and loss for {\tt EncDecReg} on small dataset}{ht}
+\resultplots{fig/results/experiment1/medium/encdecreg/}{plot_accuracy.png}{plot_loss.png}{result1_medium_encdecreg}{Accuracy and loss for {\tt EncDecReg} on medium dataset}{hp}
+\newpage
+\resultplots{fig/results/experiment1/big/encdecreg/}{plot_accuracy.png}{plot_loss.png}{result1_big_encdecreg}{Accuracy and loss for {\tt EncDecReg} on big dataset}{ht}
 
 The plots for the three best {\tt EncDecReg} models indicates that the models were able to learn. The accuracy for all three of them indicates improvement, although the accuracy for the small and medium datasets never improves beyond 60\% accuracy. The loss plots also indicate overfitting, especially on the smallest dataset. The model ran on the biggest dataset seem to improve almost continuously for 400 epochs. This model also had a big spike in the loss values at around epoch 500 but was able to recover after this. These spikes seem to appear with the Adam optimizer when a model is stuck on a plateau and the average of past squared gradients becomes small, although we are not entirely sure this is the cause.
 
@@ -65,11 +68,13 @@ The plots for the three best {\tt EncDecReg} models indicates that the models we
 
 The {\tt EncDecReg} had an accuracy of almost 95.5\% on the big dataset, which is reflected in the confusion matrix in Figure \ref{fig:result1_big_encdecreg_confusion_matrix}. The confusion matrix has a clearly defined diagonal line with a very high individual accuracy. Most of the labels have an accuracy of over 0.9 with a few exceptions. Y is wrongly labeled as an I in 14.5\% of the instances, and as a T in 8.5\% of the instances. The most wrongly labeled classes are F as an E (18\%) and Q as O (17.8\%).
 
+\newpage
 \subsection{EncDecAtt}
 \subsubsection{Accuracy and Loss}
-\resultplots{fig/results/experiment1/small/encdecatt/}{plot_accuracy.png}{plot_loss.png}{result1_small_encdecatt}{Accuracy and loss for {\tt EncDecAtt} on small dataset}
-\resultplots{fig/results/experiment1/medium/encdecatt/}{plot_accuracy.png}{plot_loss.png}{result1_medium_encdecatt}{Accuracy and loss for {\tt EncDecAtt} on medium dataset}
-\resultplots{fig/results/experiment1/big/encdecatt/}{plot_accuracy.png}{plot_loss.png}{result1_big_encdecatt}{Accuracy and loss for {\tt EncDecAtt} on big dataset}
+\resultplots{fig/results/experiment1/small/encdecatt/}{plot_accuracy.png}{plot_loss.png}{result1_small_encdecatt}{Accuracy and loss for {\tt EncDecAtt} on small dataset}{ht}
+\resultplots{fig/results/experiment1/medium/encdecatt/}{plot_accuracy.png}{plot_loss.png}{result1_medium_encdecatt}{Accuracy and loss for {\tt EncDecAtt} on medium dataset}{hp}
+\newpage
+\resultplots{fig/results/experiment1/big/encdecatt/}{plot_accuracy.png}{plot_loss.png}{result1_big_encdecatt}{Accuracy and loss for {\tt EncDecAtt} on big dataset}{ht}
 
 These plots show much the same as the plots for the {\tt EncDecReg} model. The overfitting is less apparent than the {\tt EncDecReg}, although this model also seems to overfit on both the small and medium datasets. The big dataset also has multiple spikes, similar to the {\tt EncDecReg} model. This model also seems to improve for many epochs on the biggest dataset.
 
@@ -104,19 +109,21 @@ Table \ref{table:accuracy_two_fonts} contains the results for each model on the 
 \end{table}
 
 \subsection{Accuracy and Loss For Each Model}
-\resultplots{fig/results/experiment2/vecrep/}{plot_accuracy.png}{plot_loss.png}{result2_vecrep}{Accuracy and loss for {\tt VecRep} handling two fonts}
-\resultplots{fig/results/experiment2/encdecreg/}{plot_accuracy.png}{plot_loss.png}{result2_encdecreg}{Accuracy and loss for {\tt EncDecReg} handling two fonts}
-\resultplots{fig/results/experiment2/encdecatt/}{plot_accuracy.png}{plot_loss.png}{result2_encdecatt}{Accuracy and loss for {\tt EncDecAtt} handling two fonts}
+\resultplots{fig/results/experiment2/vecrep/}{plot_accuracy.png}{plot_loss.png}{result2_vecrep}{Accuracy and loss for {\tt VecRep} handling two fonts}{ht}
+\resultplots{fig/results/experiment2/encdecreg/}{plot_accuracy.png}{plot_loss.png}{result2_encdecreg}{Accuracy and loss for {\tt EncDecReg} handling two fonts}{hp}
+\newpage
+\resultplots{fig/results/experiment2/encdecatt/}{plot_accuracy.png}{plot_loss.png}{result2_encdecatt}{Accuracy and loss for {\tt EncDecAtt} handling two fonts}{ht}
 
 Again the loss plot for the {\tt VecRep} indicates that this model is unable to learn properly, and the loss value seems to worsen after a few couple of epochs. Both the encoder-decoder models seem to overfit, although the {\tt EncDecReg} model overfits significantly after about 130 epochs.
 
 %%=========================================
 
+\newpage
 \section{Noise Handling}
 \label{sec:noise_handling}
 Table \ref{table:noise_accuracy} contains the accuracy of the {\tt EncDegAtt} model as the amount of noise was increased. The ``Noise alterations'', e.i. the actual amount of bits altered from a correct 1 to an incorrect 0, or vice versa, is also listed. 
 
-\begin{table}[H]
+\begin{table}[ht]
     \centering
     \begin{tabular}{|l|l|l|}
         \hline 
@@ -138,7 +145,7 @@ Table \ref{table:noise_accuracy} contains the accuracy of the {\tt EncDegAtt} mo
     \label{table:noise_accuracy}
 \end{table}
 
-\begin{figure}[H]
+\begin{figure}[ht]
     \centering
     \captionsetup{justification=centering}
     \begin{tikzpicture}
@@ -167,7 +174,7 @@ This shows the difference in accuracy when learning and predicting on datasets t
 \label{sec:stress_test}
 This experiment was done on the models {\tt EncDecReg} and {\tt EncDecAtt}, as the {\tt VecRep} model already had poor results on the experiment that was significantly simpler.
 
-\begin{table}[H]
+\begin{table}[ht]
     \centering
     \begin{tabular}{|l|l|}
         \hline 
@@ -179,8 +186,9 @@ This experiment was done on the models {\tt EncDecReg} and {\tt EncDecAtt}, as t
     \label{table:accuracy_stress_test}
 \end{table}
 
+\newpage
 \subsection{EncDecReg Results}
-\begin{figure}[H]
+\begin{figure}[ht]
     \centering
     \includegraphics[width=1\textwidth]{fig/results/experiment4/encdecreg/confusion_matrix.png}
     \caption{Confusion matrix for the best {\tt EncDecReg} model on the stress test}
@@ -189,8 +197,9 @@ This experiment was done on the models {\tt EncDecReg} and {\tt EncDecAtt}, as t
 
 Shown in Figure \ref{fig:result4_encdecreg_confusion_matrix} is the confusion matrix for the best {\tt EncDecReg} model on the stress test. As depicted in this matrix, the model had a hard time classifying the labels correctly, which corresponds to its accuracy of 55\%. However, the confusion matrix shows traces of a faint diagonal line going from corner-to-corner, indicating correct classifications. In general, the model seems capable of separating the upper-cased and lower-cased letters from each other, having almost no incorrect classifications shared between the two halves of the matrix. For both groups of upper-cased and lower-cased classes, the model seems to favor a few letters in each, wrongly classifying them across a wide spectrum of other letters.
 
+\newpage
 \subsection{EncDecAtt Results}
-\begin{figure}[H]
+\begin{figure}[ht]
     \centering
     \includegraphics[width=1\textwidth]{fig/results/experiment4/encdecatt/confusion_matrix.png}
     \caption{Confusion matrix for the best {\tt EncDecAtt} model on the stress test}
@@ -217,6 +226,7 @@ Comparing these sets to the confusion matrices, we can see that some of these ch
 
 These numbers indicate that there is still room for improvement, and that ambiguity may be a concern.
 
+\newpage
 \subsubsection{Handling of Multiple Fonts}
 Experiments have indicated that both the encoder-decoder models were able to handle more than one font, as questioned in \textbf{RQ2}. The model without the attention mechanism had visible lower results than experiments carried out on datasets consisting of one font. The {\tt EncDecAtt} model was more or less unaffected by the introduction of an additional font in the second experiment. The same model also yielded good results in the stress test, where the input consisted of five different fonts. On the same test, the {\tt EncDecReg} model had much lower results, indicating that this model may be unsuitable for input with such high variance in the sequences.
 
@@ -224,7 +234,7 @@ Experiments have indicated that both the encoder-decoder models were able to han
 Lastly, \textbf{RQ3} asked if the model(s) were able to adapt to noise and imperfect input data. Experiments have shown that the {\tt EncDecAtt} model was able to handle increasing amounts of noise, although the accuracy decreased as the noise factor increased. For a noise factor of 5\%, the accuracy decreased by a little less than 5\%, while a noise factor of 10\% decreased the accuracy by more than 28\%. As there is no ``answer'' to how much noise a model should handle, or how robust a model should be to noise, there is no way to define a hard threshold between reasonable amounts of noise, and excessive amounts of noise. We have decided to conclude this question by stating that the {\tt EncDecAtt} was able to handle noise in a satisfactory manner. 
 
 \subsection{Discussing the Research Goal}
-Our goal in this thesis was to create a model that was able to use signature sequences to recognize letters and words in machine-written text. The results from our experiments, which has been presented in this chapter, indicates that we were successful in reaching this goal. The two encoder-decoder models, especially the {\tt EncDecAtt}, has been successful in recognizing words with a high accuracy, and we have found these results satisfactory for our evaluation.
+Our goal in this thesis was to create a model that was able to use signature sequences to recognize letters and words in text. The results from our experiments, which has been presented in this chapter, indicates that we were successful in reaching this goal. The two encoder-decoder models, especially the {\tt EncDecAtt}, has been successful in recognizing words with a high accuracy, and we have found these results satisfactory for our evaluation.
 
 %%=========================================
 
@@ -259,7 +269,7 @@ The plot can be seen in Figure \ref{fig:context_vector_plot}, where the three cl
 \subsection{Decoding}
 The decoder and its ability to feed the previous output back as input is one of the corner-stones in the encoder-decoder framework. Allowing the decoder to read the previous output helps the decoder know something about the current state of the ``translation'' process from the vector passed on from the encoder. If the decoder did not feed the output back as input, it would have to rely solely on the hidden states and cell states for the decoding process.
 
-\begin{figure}[!ht]
+\begin{figure}[ht]
     \centering
     \includegraphics[width=1\textwidth]{fig/results/kittens_correct.png}
     \caption{Decoding the word ``KITTENS''}
@@ -268,7 +278,7 @@ The decoder and its ability to feed the previous output back as input is one of 
 
 During decoding, the decoder outputs a vector for each timestep, ran through a softmax function. The framework uses {\tt argmax} to find the element in the vector with the highest value, e.i. the predicted value, and feeds this value back to the decoder for the next timestep. Here we have altered this functionality, instead of feeding back the predicted value, we send something else back and see how the decoder reacts. Without any modification to the behavior of feeding back output, the model we used is perfectly able to classify each label in the word and produces the correct output ``KITTENS'', as illustrated in Figure \ref{fig:kittens_correct}. 
 
-\begin{figure}[!ht]
+\begin{figure}[ht]
     \centering
     \includegraphics[width=1\textwidth]{fig/results/kittens_wrong.png}
     \caption{Decoding the word ``KITTENS'' by feeding back wrong label}
@@ -282,14 +292,14 @@ These observations indicate that the encoded context vector contains partial kno
 \subsection{Use of Attention}
 The experiments carried out in this thesis have shown that both the models based on the encoder-decoder were powerful, but the model that utilized the attention mechanism was significantly better on the most complex experiment. Figure \ref{fig:attention_heatmap} shows the attention heatmap, in other words, the areas in which the attention mechanism focused while classifying each label. In this example, the model correctly classifies the word ``IMAGINED'' without any errors. 
 
-The heatmap shows how the attention mechanism scanned both the related input, as well as input ahead of time, making use of the additional data to do the classifications. Comparing the heatmap in Figure \ref{fig:attention_heatmap} with the actual text and signature in Figure  \ref{fig:imagine_highlighted}\footnote{In this illustration the white pixels are highlighted in green, and black pixels are highlighted in red}, we can see that the heatmap focus almost matches the related input areas for each label. This additional information gives the {\tt EncDecAtt} a significant advantage over the {\tt EncDecReg} model, which can only rely on the information in the context vector. We see that this benefit pays off in the consistently better results the {\tt EncDegAtt} model has compared to the {\tt EncDecReg}. The heatmap also shows how the attention mechanism was able to keep attention fixed on longer subsequences, accounting for the different width ratio between input and output.
-
 \begin{figure}[ht]
     \centering
     \includegraphics[width=1\textwidth]{fig/conclusion/attention_crop.png}
     \caption{Attention heatmap}
     \label{fig:attention_heatmap}
 \end{figure}
+
+The heatmap shows how the attention mechanism scanned both the related input, as well as input ahead of time, making use of the additional data to do the classifications. Comparing the heatmap in Figure \ref{fig:attention_heatmap} with the actual text and signature in Figure  \ref{fig:imagine_highlighted}\footnote{In this illustration the white pixels are highlighted in green, and black pixels are highlighted in red}, we can see that the heatmap focus almost matches the related input areas for each label. This additional information gives the {\tt EncDecAtt} a significant advantage over the {\tt EncDecReg} model, which can only rely on the information in the context vector. We see that this benefit pays off in the consistently better results the {\tt EncDegAtt} model has compared to the {\tt EncDecReg}. The heatmap also shows how the attention mechanism was able to keep attention fixed on longer subsequences, accounting for the different width ratio between input and output.
 
 \begin{figure}[ht]
     \centering

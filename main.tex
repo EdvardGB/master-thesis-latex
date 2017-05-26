@@ -25,7 +25,8 @@
 
 %%===================================
 
-\setcounter{page}{0}
+\cleardoublepage
+\setcounter{page}{1}
 \pagenumbering{arabic}
 
 %%=========================================
@@ -57,6 +58,7 @@
 %%=========================================
 
 \appendix
+\input{content/parts/appendices}
 \input{content/other/images}
 \input{content/other/example_words}
 
@@ -64,7 +66,7 @@
 
 \bibliographystyle{apalike}
 
-\addcontentsline{toc}{chapter}{\bibname}
+%%\addcontentsline{toc}{chapter}{\bibname}
 \bibliography{content/lookup/refs}  
 
 \end{document}
