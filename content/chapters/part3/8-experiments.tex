@@ -3,13 +3,13 @@
 
 \chapter{Experiments}
 \label{ch:experiments}
-In this chapter, we present the final experiments that were carried out as a part of this thesis. Section \ref{sec:approach} presents the general experiment approach. We present the setup of our models in the preparation of the experiments in Section \ref{sec:setup}. Section \ref{sec:dataset_details} presents details about the datasets, and Section \ref{sec:experiments_details} presents the experiment details.
+In this chapter, we present the final experiments that were carried out as a part of this thesis. Section \ref{sec:approach} presents the general experiment approach. We present the setup of our models in Section \ref{sec:setup}. Section \ref{sec:dataset_details} presents details about the datasets, and Section \ref{sec:experiments_details} presents the experiment details.
 
 %%=========================================
 
 \section{Approach}
 \label{sec:approach}
-Our experiments followed a traditional pattern with individual training, validation, and testing datasets. Carried out in iterations, our models were first fed the entire training set with the correct labels. After iterating the entire training set, we let the models predict on the validation set, recording their calculated accuracy and loss values. This alternating process went on until the model had reached a convergence where the loss for validation no longer made significant changes. As this process went on, we saved the weights for the model with the lowest validation loss value. When the alternating training and validation process was stopped, we loaded the weights for the best model, and tested that model on the testing dataset, recording the final accuracy.
+Our experiments followed a traditional pattern with individual training, validation, and testing datasets. Our models were first fed the entire training set with the correct labels. After iterating the entire training set, we let the models predict on the validation set, recording their calculated accuracy and loss values. This alternating process went on until the model had reached a convergence where the loss for validation no longer made significant changes. As this process went on, we saved the weights for the model with the lowest validation loss value. When the alternating training and validation process was stopped, we loaded the weights for the best model, and tested that model on the testing dataset, recording the final accuracy.
 
 %%=========================================
 
@@ -18,14 +18,14 @@ Our experiments followed a traditional pattern with individual training, validat
 In this section, we present the setup, configurations, and choice of hyper-parameters in our three models. 
 
 \begin{itemize}
-    \item All three of our models used embedding to represent the input. This embedding was represented in a vector space with dimension 128. Using a higher dimension representation, like 1024 gave tiny improvements in results, but increased the computational time tremendously. A dimension size of 128 was a good trade-off, and made sense for our relatively small vocabulary. \cite{britz2017massive} concluded that using high embedding dimensions, such as 2048 achieved the best results, but only by a small margin, and that embeddings with smaller margins, such as 128 seem to have sufficient capacity to capture most of the necessary semantic information in their vocabulary which was significantly larger than ours. The encoder-decoder models also used embedding to represent the output.
+    \item All three of our models used embedding to represent the input. This embedding was represented in a vector space with dimension 128. Using a higher dimension representation, like 1024 gave tiny improvements in results, but increased the computational time tremendously. A dimension size of 128 was a good trade-off, and made sense for our relatively small vocabulary. \cite{britz2017massive} concluded that using high embedding dimensions, such as 2048 achieved the best results, but only by a small margin.  They also concluded that embeddings with smaller margins, such as 128, seem to have sufficient capacity to capture most of the necessary semantic information in their vocabulary. This vocabulary was significantly larger than ours. The encoder-decoder models also used embedding to represent the output.
     \item The embeddings were randomly initialized with an uniform distribution over the half-open interval \(\big[-\sqrt{3}, \sqrt{3}\big)\). As the embeddings were trainable, their placement in the vector space would change, which meant that the original placement was less important.
     \item Both LSTMs and GRUs have been used in neural machine translation architectures. We decided to use the LSTM cell in all our networks. 
-    \item The LSTM units were based on the implementation of \cite{hochreiter1997long}. The inner activation function was hyperbolic tangent (see Equation \ref{eq:function_tanh} and plot in Figure \ref{fig:plot_function_tanh}), and the activation applied over the current timestep was a regular sigmoid function (see Equation \ref{eq:function_sigmoid} and plot in Figure \ref{fig:plot_function_sigmoid}). These configurations are pseudo-standard for the LSTM, although some variations exists.
-    \item The weights in the LSTMs were initialized with ``Glorot uniform initializer'', also called ``Xavier uniform initializer'' \citep{glorot2010understanding}.
+    \item The LSTM units were based on the implementation of \cite{hochreiter1997long}. The inner activation function was hyperbolic tangent (see Equation \ref{eq:function_tanh} and plot in Figure \ref{fig:plot_function_tanh}), and the activation applied over the current timestep was a regular sigmoid function (see Equation \ref{eq:function_sigmoid} and plot in Figure \ref{fig:plot_function_sigmoid}). These configurations are pseudo-standard for the LSTM, although some variations exist.
+    \item The weights in the LSTMs were initialized with ``Glorot uniform initializer,'' also called ``Xavier uniform initializer'' \citep{glorot2010understanding}.
     \item All three models used groups of LSTMs. These had a depth of three. Smaller and bigger stacks affected results slightly, but a depth of three was a good trade-off between computational time and results.
     \item The forget gate in the LSTM module was initialized to 1.0. This was done to reduce the scale of forgetting at the beginning of training and is something that is recommended by \cite{zaremba2015empirical}.
-    \item After each LSTM cell, we had a dropout layer, which randomly dropped units, along with their weights, by setting their values to 0 \citep{srivastava2014dropout}. The dropout rate after \emph{each} LSTM was 0.2, which meant that around 20\% of all output was ignored after each LSTM unit. The rate was a result of trial-and-error, but the rate did not significantly affect results in the range of \(\pm 0.1\).
+    \item After each LSTM cell, we had a dropout layer, which randomly dropped units, along with their weights, by setting their values to 0 \citep{srivastava2014dropout}. The dropout rate after \emph{each} LSTM was 0.2, which meant that around 20\% of all output was ignored after each LSTM unit. This rate was a result of trial-and-error, but the rate did not significantly affect results in the range of \(\pm 0.1\).
 \end{itemize}
 
 \newpage
@@ -133,10 +133,10 @@ The first, and simplest experiment we did was to check how well our models could
     \item[Big:]{25,000 training, 2,500 validation, 2,500 testing, max 20 chars}
 \end{description}
 
-Our goal with this experiment was to record how the recognition rates for each model were affected by the size of the datasets. This could potentially say something about the robustness of the models and how well they were able to learn from either a limited or big dataset. Our expectations for this experiment was that all three models should have relativity good accuracy across all datasets. We suspected that the accuracy would increase with the size of the datasets.
+Our goal with this experiment was to record how the recognition rates for each model were affected by the size of the datasets. This experiment could potentially say something about the robustness of the models and how well they were able to learn from either a limited or big dataset. Our expectations for this experiment was that all three models should have relativity good accuracy across all datasets. We suspected that the accuracy would increase with the size of the datasets.
 
 \subsection{Handling of Two Fonts}
-The dataset used in this experiment had a training set of size 10,000 and validation and test sets of size 1000. The sets had a maximum length of 15 characters. The distribution between the two fonts are listed below:
+In this experiment, we used text written in two fonts. The previous experiment had text written in only monospaced Arial, while this experiment also used the font Times New Roman. The dataset used in this experiment had a training set of size 10,000 and validation and test sets of size 1000. The sets had a maximum length of 15 characters. The distribution between the two fonts are listed below:
 
 \vspace{0.5cm}
 \begin{minipage}{0.8\linewidth}
@@ -151,7 +151,7 @@ The dataset used in this experiment had a training set of size 10,000 and valida
     \centering
     \captionsetup{justification=centering}
     \includegraphics[width=1\textwidth]{fig/experiments/SHORTCUTS_dpi.png}
-    \caption{The word ``SHORTCUTS'' written in Arial Mono. Size 186x31}
+    \caption{The word ``SHORTCUTS'' written in Arial (monospaced). Size 186x31}
 \end{figure}
 
 \begin{figure}[ht]
@@ -161,10 +161,10 @@ The dataset used in this experiment had a training set of size 10,000 and valida
     \caption{The word ``UPLIFTER'' written in Times New Roman. Size 180x31}
 \end{figure}
 
-Our goal with this experiment was to record how the individual models were able to handle input written in more than one font. We expected the two encoder-decoder models to perform better in this experiment than the {\tt VecRep} model but did not exclude that the {\tt VecRep} model could reach satisfactory results either.
+Our goal with this experiment was to record how the individual models were able to handle input written in more than one font. We expected the two encoder-decoder models to perform better in this experiment than the {\tt VecRep} model. However, we did not exclude that the {\tt VecRep} model could reach satisfactory results either.
 
 \subsection{Noise Handling}
-In the third experiment, we added more noise increasingly to the input data. This experiment was conducted to record how resilient and robust the model was to noise in the data. For this experiment, we only used the best performing model. The amount of noise added for each test was based on results underway, as we did not know how the model would respond to the noise beforehand.
+In the third experiment, we added more noise increasingly to the input data. This experiment was conducted to record how resilient and robust the model was to noise in the data. For this experiment, we only used the best performing model, based on the results of the previous experiments. The amount of noise added for each test was based on results underway, as we did not know how the model would respond to the noise beforehand.
 
 The goal of this experiment was to record how the accuracy would decrease while the amount of noise increased, and we expected the model to handle noise to a degree we found satisfactory.
 
