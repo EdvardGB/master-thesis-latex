@@ -121,7 +121,7 @@ Only words consisting of actual letters were added, and the words had to have a 
 
 \section{Experiments}
 \label{sec:experiments_details}
-This section presents the various experiments we conducted to achieve our research goal and answer our research questions.
+This section presents the various experiments we conducted to evaluate if we reached our research goal and to answer our research questions.
 
 \subsection{Accuracy on Datasets}
 \label{sec:accuracy_on_datasets}
@@ -136,7 +136,7 @@ The first, and simplest experiment we did was to check how well our models could
 Our goal with this experiment was to record how the recognition rates for each model were affected by the size of the datasets. This experiment could potentially say something about the robustness of the models and how well they were able to learn from either a limited or big dataset. Our expectations for this experiment was that all three models should have relativity good accuracy across all datasets. We suspected that the accuracy would increase with the size of the datasets.
 
 \subsection{Handling of Two Fonts}
-In this experiment, we used text written in two fonts. The previous experiment had text written in only monospaced Arial, while this experiment also used the font Times New Roman. The dataset used in this experiment had a training set of size 10,000 and validation and test sets of size 1000. The sets had a maximum length of 15 characters. The distribution between the two fonts are listed below:
+In this experiment, we used text written in two fonts. The previous experiment had text written in only monospaced Arial (example in Figure \ref{fig:word_arial}), while this experiment also used the font Times New Roman (example in Figure \ref{fig:word_times_new_roman}). The dataset used in this experiment had a training set of size 10,000 and validation and test sets of size 1000. The sets had a maximum length of 15 characters. The distribution between the two fonts are listed below:
 
 \vspace{0.5cm}
 \begin{minipage}{0.8\linewidth}
@@ -152,6 +152,7 @@ In this experiment, we used text written in two fonts. The previous experiment h
     \captionsetup{justification=centering}
     \includegraphics[width=1\textwidth]{fig/experiments/SHORTCUTS_dpi.png}
     \caption{The word ``SHORTCUTS'' written in Arial (monospaced). Size 186x31}
+    \label{fig:word_arial}
 \end{figure}
 
 \begin{figure}[ht]
@@ -159,6 +160,7 @@ In this experiment, we used text written in two fonts. The previous experiment h
     \captionsetup{justification=centering}
     \includegraphics[width=1\textwidth]{fig/experiments/UPLIFTER_dpi.png}
     \caption{The word ``UPLIFTER'' written in Times New Roman. Size 180x31}
+    \label{fig:word_times_new_roman}
 \end{figure}
 
 Our goal with this experiment was to record how the individual models were able to handle input written in more than one font. We expected the two encoder-decoder models to perform better in this experiment than the {\tt VecRep} model. However, we did not exclude that the {\tt VecRep} model could reach satisfactory results either.
@@ -166,7 +168,7 @@ Our goal with this experiment was to record how the individual models were able 
 \subsection{Noise Handling}
 In the third experiment, we added more noise increasingly to the input data. This experiment was conducted to record how resilient and robust the model was to noise in the data. For this experiment, we only used the best performing model, based on the results of the previous experiments. The amount of noise added for each test was based on results underway, as we did not know how the model would respond to the noise beforehand.
 
-The goal of this experiment was to record how the accuracy would decrease while the amount of noise increased, and we expected the model to handle noise to a degree we found satisfactory.
+The goal of this experiment was to record how the accuracy decreased while the amount of noise increased, and we expected the model to handle noise to a degree we found satisfactory.
 
 \subsection{Stress Test}
 The final experiment was a ``stress test'' where we increased the complexity of the task in various ways. For this experiment, we used a total of five fonts:
@@ -179,8 +181,8 @@ The final experiment was a ``stress test'' where we increased the complexity of 
     \item Verdana
 \end{itemize}
 
-These fonts are variants of serif fonts (Georgia and Times New Roman), sans-serif fonts (Arial, Verdana), and monospaced fonts (Arial monospaced, Courier).
+These fonts are variants of serif fonts (Georgia and Times New Roman), sans-serif fonts (Arial monospaced, Verdana), and monospaced fonts (Arial monospaced, Courier).
 
-This experiment had words written in both upper-cased and lower-cased letters, in contrast to the other experiments which only had upper-cased words. The other experiments, having exclusively upper-cased letters, had a total of 27 classes (A-Z plus an ``empty'' class), whereas this experiment would have a total of 53 classes (A-Z, a-z, and the ``empty'' class). The ``empty'' class was used to pad the values as the words had different lengths. The datasets had a size of 50,000, 5,000, and 5,000 for the training, testing, and validation sets respectively. We also added a noise factor of 10\%. Some of the generated words are listed in Appendix \ref{ch:example_words}.
+This experiment had words written in both upper-case and lower-case letters, in contrast to the other experiments which only had upper-case letters. The other experiments, having exclusively upper-case letters, had a total of 27 classes (A-Z plus an ``empty'' class), whereas this experiment would have a total of 53 classes (A-Z, a-z, and the ``empty'' class). The ``empty'' class was used to pad the values as the words had different lengths. The datasets had a size of 50,000, 5,000, and 5,000 for the training, testing, and validation sets respectively. We also added a noise factor of 10\%. Some of the generated words are listed in Appendix \ref{ch:example_words}.
 
 The goal of this experiment was primarily to see just how far we could go with the models. We had little information on how the two encoder-decoder models would perform under these conditions. Our general expectations for this experiment was for the {\tt EncDecAtt} model to outperform the {\tt EncDecReg} model.

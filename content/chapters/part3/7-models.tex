@@ -14,7 +14,7 @@ The first model, called {\tt VecRep} for short, has a similar structure to that 
 \begin{figure}[ht]
     \centering
     \includegraphics[width=0.7\textwidth]{fig/development_process/lstm-vector-projection-encoder.png}
-    \caption{An LSTM outputting its final hidden state after reading a sequence}
+    \caption{An LSTM outputting its final output after reading a sequence}
     \label{fig:lstm-vector-projection-encoder}
 \end{figure}
 
@@ -23,7 +23,7 @@ Figure \ref{fig:lstm-vector-projection-encoder} illustrates a regular LSTM that 
 \begin{figure}[ht]
     \centering
     \includegraphics[width=0.5\textwidth]{fig/development_process/lstm-vector-projection-decoder.png}
-    \caption{Repeating the output from a LSTM and feeding it to another LSTM}
+    \caption{Repeating the output from an LSTM and feeding it to another LSTM}
     \label{fig:lstm-vector-projection-decoder}
 \end{figure}
 
@@ -34,7 +34,8 @@ Figure \ref{fig:lstm-vector-projection-encoder} illustrates a regular LSTM that 
     \label{fig:vecrep_model}
 \end{figure}
 
-The {\tt VecRep} model is illustrated in Figure \ref{fig:vecrep_model}. The ``encoder'' and ``decoder'' both consists of three recurrent units. These units are stacked sequentially, which means that the first cell, \(\text{RNN'}_1\) completed all its iterations, and the output from this cell is then fed to the next RNN cell which does the same. The recurrent cells that are marked, such as \(\text{RNN'}_1\), indicates that the cell returns its output for every iteration, whereas a cell that is not marked only outputs from the last iteration. The ``encoding'' in this model is done by the \(\text{RNN}_3\) cell, which only outputs in the last iteration, an approach that is similar to the encoded context vector in the encoder-decoder framework. Between the two stacks of recurrent units is the layer which repeats the final output of \(\text{RNN}_3\) in the dimension of time. Embedding is used to represent the input data, whereas one-hot vectors represent the output. 
+\newpage
+The {\tt VecRep} model is illustrated in Figure \ref{fig:vecrep_model}. The ``encoder'' and ``decoder'' both consists of three recurrent units. These units are stacked sequentially, which means that the first cell, \(\text{RNN'}_1\) completed all its iterations, and the output from this cell is then fed to the next RNN cell which does the same. The recurrent cells that are marked, such as \(\text{RNN'}_1\), indicates that the cell returns its output for every iteration, whereas a cell that is not marked only outputs from the last iteration. The ``encoding'' in this model is done by the \(\text{RNN}_3\) cell, which only outputs in the last iteration. This approach is somewhat similar to the encoded context vector in the encoder-decoder framework. Between the two stacks of recurrent units is the layer which repeats the final output of \(\text{RNN}_3\) in the dimension of time. Embedding is used to represent the input data, whereas one-hot vectors represent the output. 
 
 %%=========================================
 
