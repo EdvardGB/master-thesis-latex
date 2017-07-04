@@ -1,3 +1,0 @@
-
-
-The vector approach is different from the one described in the previous iteration, and does not suffer from the same problem with alignment. Because we read the entire input sequence before anything is outputted, we no longer output anything that is dependent on data in future time steps. The vector from the first LSTM has essentially encoded the temporal dependencies in a single representation vector. This is not that different from how encoder-decoders create their fixed width context vector. The main difference between this approach and general encoder-decoders is that the output in the last LSTM is not fed back as input. This may cause problems because the output is not only dependent on the encoded input sequence, but also what it has already outputted.
